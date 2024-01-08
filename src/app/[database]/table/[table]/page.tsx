@@ -31,11 +31,15 @@ export default async function Page({ params }: { params: { database: string; tab
    // const [table, setTable] = React.useState<any | null>();
 
    return (
-      <div className="modern-scroll w-full overflow-x-auto">
+      <div className="modern-scroll max-h-[calc(100dvh-37px)] w-full overflow-x-auto">
          <table className="h-fit w-full overflow-auto text-sm">
             <thead className="sticky left-0 top-0 h-9 border-b border-b-zinc-200 bg-zinc-100 text-zinc-700 dark:border-b-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
                <tr className="px-2">
-                  {table?.fields?.map((field: any) => <th key={field.columnID}>{field.name}</th>)}
+                  {table?.fields?.map((field: any) => (
+                     <th key={field.columnID} className="px-3 font-normal">
+                        {field.name}
+                     </th>
+                  ))}
                </tr>
             </thead>
             <tbody className="text-zinc-800 dark:text-zinc-200">
