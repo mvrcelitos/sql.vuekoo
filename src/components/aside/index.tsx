@@ -30,3 +30,5 @@ const Aside = React.forwardRef<HTMLElement>((props, ref) => {
 });
 
 Aside.displayName = "Aside";
+
+export { Aside };
