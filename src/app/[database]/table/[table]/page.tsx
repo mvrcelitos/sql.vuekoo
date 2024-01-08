@@ -34,8 +34,8 @@ export default async function Page({ params }: { params: { database: string; tab
 
    return (
       <div className="modern-scroll w-full overflow-x-auto">
-         <table className="h-fit w-full overflow-hidden text-sm">
-            <thead className="h-9 border-b border-b-zinc-200 bg-zinc-100 text-zinc-700 dark:border-b-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
+         <table className="h-fit w-full overflow-auto text-sm">
+            <thead className="sticky left-0 top-0 h-9 border-b border-b-zinc-200 bg-zinc-100 text-zinc-700 dark:border-b-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
                <tr className="px-2">
                   {table?.fields?.map((field: any) => <th key={field.columnID}>{field.name}</th>)}
                </tr>
