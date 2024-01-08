@@ -71,6 +71,7 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
                            title={db.name}
                            description={db?.url}
                            forceMount
+                           renderOutside
                            status={
                               ["connecting", "refreshing"].includes(db.status)
                                  ? "loading"
