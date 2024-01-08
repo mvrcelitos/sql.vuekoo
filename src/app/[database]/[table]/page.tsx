@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { Check, X } from "lucide-react";
 import * as pg from "pg";
 
-export const getTable = async (uuid: string, table: string) => {
+const getTable = async (uuid: string, table: string) => {
    try {
       const c = cookies();
       const databases = c.get("databases")?.value;
