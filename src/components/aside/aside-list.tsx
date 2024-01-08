@@ -58,7 +58,7 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
       );
 
    return (
-      <ul className="grid grid-cols-1 gap-1">
+      <ul className="modern-scroll rounded-scroll -mr-4 grid grid-cols-1 gap-1 overflow-y-auto">
          {Object.values(databases)?.map((db: DatabaseType, index: number) => (
             <Dialog
                key={db.uuid}
@@ -66,7 +66,7 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
                onOpenChange={(x) => setIndexModal(x ? db.uuid : null)}>
                <ContextMenu>
                   <ContextMenuTrigger asChild>
-                     <li aria-orientation="vertical" className="flex flex-col gap-1 rounded-lg">
+                     <li aria-orientation="vertical" className="flex flex-col gap-1 rounded-lg pr-4">
                         <AsideGroup
                            title={db.name}
                            description={db?.url}
