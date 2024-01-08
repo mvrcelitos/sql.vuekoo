@@ -22,37 +22,42 @@
    body {
       @apply bg-background text-foreground;
    }
-}
+   .modern-scroll {
+      --scrollbar-background: #4a5568 #2d3748 scrollbar-width: 8px;
+      scrollbar-color: red blue;
+   }
 
-.modern-scroll {
-   --scrollbar-background: #4a5568 #2d3748 scrollbar-width: 8px;
-   scrollbar-color: red blue;
-}
+   .modern-scroll::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+   }
 
-.modern-scroll::-webkit-scrollbar {
-   width: 8px;
-   height: 8px;
-}
+   .modern-scroll::-webkit-scrollbar-track {
+      background: #e4e4e7;
+   }
+   .dark .modern-scroll::-webkit-scrollbar-track {
+      background: #27272a;
+   }
 
-.modern-scroll::-webkit-scrollbar-track {
-   background: #e4e4e7;
-}
-.dark .modern-scroll::-webkit-scrollbar-track {
-   background: #27272a;
-}
+   .modern-scroll::-webkit-scrollbar-thumb {
+      background: #52525b;
+      /* border-radius: 6px; */
+      animation-duration: 0.15s;
+   }
 
-.modern-scroll::-webkit-scrollbar-thumb {
-   background: #52525b;
-   /* border-radius: 6px; */
-   animation-duration: 0.15s;
-}
+   .modern-scroll::-webkit-scrollbar-thumb:hover {
+      background: #3f3f46;
+   }
+   .dark .modern-scroll::-webkit-scrollbar-thumb {
+      background: #a1a1aa;
+   }
+   .dark .modern-scroll::-webkit-scrollbar-thumb:hover {
+      background: #f4f4f5;
+   }
 
-.modern-scroll::-webkit-scrollbar-thumb:hover {
-   background: #3f3f46;
-}
-.dark .modern-scroll::-webkit-scrollbar-thumb {
-   background: #a1a1aa;
-}
-.dark .modern-scroll::-webkit-scrollbar-thumb:hover {
-   background: #f4f4f5;
+   .rounded-scroll::-webkit-scrollbar,
+   .rounded-scroll::-webkit-scrollbar-track,
+   .rounded-scroll::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+   }
 }
