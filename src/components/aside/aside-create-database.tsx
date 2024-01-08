@@ -87,7 +87,7 @@ export const AsideCreateDatabaseForm = () => {
                      onClick={() => {
                         startTransition(async () => {
                            try {
-                              const res = axios.post("/api/v1/databases/test", { url: form.watch("url") });
+                              axios.post("/api/v1/databases/test", { url: form.watch("url") });
                               toast.custom(
                                  (t) => (
                                     <div className="flex items-center gap-2 rounded-lg bg-emerald-400 p-4 dark:bg-emerald-500">
