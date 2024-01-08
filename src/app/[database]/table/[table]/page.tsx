@@ -4,26 +4,24 @@ import { Check, X } from "lucide-react";
 import * as pg from "pg";
 
 const getTable = async (uuid: string, table: string) => {
+   let client;
    try {
       const c = cookies();
-      const databases = c.get("databases")?.value;
 
+      const databases = c.get("databases")?.value;
       if (!databases) return;
 
-      const db = JSON.parse(databases);
+      const database = JSON.parse(databases);
+      client = new pg.Client({ connectionString: database?.[uuid]?.url });
 
-      const client = new pg.Client({ connectionString: db?.[uuid]?.url });
       await client.connect();
-
       const res = await client.query(`SELECT * FROM ${table}`);
-
-      await client.end();
-
-      console.log("response", res);
 
       return { ...res };
    } catch (err) {
       console.error(err);
+   } finally {
+      await client?.end();
    }
 };
 
