@@ -55,7 +55,10 @@ export default async function Page({ params }: { params: { database: string; tab
                               ) : (
                                  <X className="mx-auto h-5 w-5 shrink-0" size={20} />
                               ))}
-                           {typeof cell == "object" && JSON.stringify(cell)}
+                           {typeof cell == "object" &&
+                              (cell.constructor.name === "Date"
+                                 ? (cell as Date).toLocaleString(undefined, { dateStyle: "short" })
+                                 : JSON.stringify(cell))}
                            {["string", "number"].includes(typeof cell) ? cell : ""}
                         </td>
                      ))}
