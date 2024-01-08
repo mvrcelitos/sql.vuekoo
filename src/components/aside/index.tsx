@@ -9,8 +9,8 @@ import { AsideList } from "./aside-list";
 
 const Aside = React.forwardRef<HTMLElement>((props, ref) => {
    return (
-      <aside className="max-h-[100dvh] min-h-[50svh] border-r border-r-zinc-200 bg-zinc-100 p-4 md:w-80 md:min-w-80 2xl:w-[336px] 2xl:min-w-[336px] dark:border-r-zinc-800 dark:bg-zinc-900">
-         <div className="flex flex-col gap-2 pt-2">
+      <aside className="max-h-[calc(100dvh-37px)] min-h-[50svh] border-r border-r-zinc-200 bg-zinc-100 p-4 md:w-80 md:min-w-80 2xl:w-[336px] 2xl:min-w-[336px] dark:border-r-zinc-800 dark:bg-zinc-900">
+         <div className="flex max-h-[inherit] flex-col gap-2 pt-2">
             <div className="flex items-center justify-between">
                <h4 className="text-sm font-semibold">Your databases</h4>
                <AsideCreateDatabaseForm />
