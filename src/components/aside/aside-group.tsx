@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
+import { Slot } from "@radix-ui/react-slot";
 import { ChevronRight, Loader2, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Slot } from "@radix-ui/react-slot";
 
 interface AsideGroupProps {
    children?: React.ReactNode;
@@ -65,7 +65,7 @@ export const AsideGroup = ({
             </div>
          </div>
          {props.forceMount !== true && open && children}
-         {props.forceMount === true && <Slot className={cn(!open && "hidden")} children={children} />}
+         {props.forceMount === true && <Slot className={cn(!open && "hidden")}>{children}</Slot>}
       </div>
    );
 };

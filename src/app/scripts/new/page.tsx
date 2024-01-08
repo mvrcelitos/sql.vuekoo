@@ -1,8 +1,8 @@
-import { Form } from "@/components/form-components";
+import { ChevronRight, Redo2, Undo2, X } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/textarea";
-import { TooltipContent, Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
-import { ChevronRight, Play, Redo2, Undo2, X } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function Page() {
    return (

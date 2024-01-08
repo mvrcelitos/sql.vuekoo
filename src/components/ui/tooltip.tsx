@@ -69,4 +69,4 @@ const TooltipReady = ({ children }: React.PropsWithChildren) => (
    </Tooltip>
 );
 
-export { TooltipRoot, TooltipContent, TooltipProvider, TooltipReady, Tooltip, TooltipTrigger };
+export { Tooltip, TooltipContent, TooltipProvider, TooltipReady, TooltipRoot, TooltipTrigger };

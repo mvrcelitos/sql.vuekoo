@@ -1,8 +1,8 @@
 "use client";
 import { useTheme } from "next-themes";
+import { Check } from "lucide-react";
 
 import { DropdownMenuItem, DropdownMenuSubContent } from "@/components/ui/dropdown-menu";
-import { Check } from "lucide-react";
 
 export const HeaderThemeContent = () => {
    const { setTheme, theme } = useTheme();

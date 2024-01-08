@@ -20,8 +20,9 @@ export interface SeparatorProps extends VariantProps<typeof separatorVariants> {
    className?: string;
 }
 
-export const Separator = React.forwardRef<HTMLHRElement, SeparatorProps>(
-   ({ orientation, className }: SeparatorProps) => {
-      return <hr className={cn(separatorVariants({ orientation, className }))} />;
-   },
-);
+const Separator = React.forwardRef<HTMLHRElement, SeparatorProps>(({ orientation, className }: SeparatorProps) => {
+   return <hr className={cn(separatorVariants({ orientation, className }))} />;
+});
+Separator.displayName = "Separator";
+
+export { Separator };

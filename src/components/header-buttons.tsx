@@ -2,11 +2,11 @@
 
 // import { appWindow } from "@tauri-apps/api/window";
 import * as React from "react";
-
-import { Button, ButtonProps } from "@/components/ui/button";
 import { Minus, Square, X } from "lucide-react";
 
-export const MinimizeButton = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+import { Button, ButtonProps } from "@/components/ui/button";
+
+const MinimizeButton = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
    return (
       <Button
          intent="ghost"
@@ -20,7 +20,9 @@ export const MinimizeButton = React.forwardRef<HTMLButtonElement, ButtonProps>((
       </Button>
    );
 });
-export const MaximizeButton = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+MinimizeButton.displayName = "MinimizeButton";
+
+const MaximizeButton = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
    return (
       <Button
          intent="ghost"
@@ -34,7 +36,9 @@ export const MaximizeButton = React.forwardRef<HTMLButtonElement, ButtonProps>((
       </Button>
    );
 });
-export const CloseButton = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+MaximizeButton.displayName = "MaximizeButton";
+
+const CloseButton = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
    return (
       <Button
          intent="ghost"
@@ -48,3 +52,6 @@ export const CloseButton = React.forwardRef<HTMLButtonElement, ButtonProps>((pro
       </Button>
    );
 });
+CloseButton.displayName = "CloseButton";
+
+export { CloseButton,MaximizeButton, MinimizeButton };

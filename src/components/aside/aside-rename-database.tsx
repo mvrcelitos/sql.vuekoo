@@ -1,10 +1,11 @@
 "use client";
 
+import { useForm } from "react-hook-form";
+import { Pencil } from "lucide-react";
+
 import { Form, FormField, FormInput, FormLabel, FormMessage } from "@/components/form-components";
 import { Button } from "@/components/ui/button";
 import { DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Pencil } from "lucide-react";
-import { useForm } from "react-hook-form";
 
 export interface AsideRenameDatabaseReturn {
    name: string;

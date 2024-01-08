@@ -1,5 +1,13 @@
 "use client";
 
+import * as React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle, Check, ChevronRight, Loader2, Plug, Plus } from "lucide-react";
+import { toast } from "sonner";
+import * as z from "zod";
+
+import { useDatabaseStore } from "@/components/aside/storage";
 import { Form, FormField, FormInput, FormLabel, FormMessage } from "@/components/form-components";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,14 +18,6 @@ import {
    DialogTitle,
    DialogTrigger,
 } from "@/components/ui/dialog";
-import { AlertCircle, Check, ChevronRight, Loader2, Plug, Plus, X } from "lucide-react";
-import * as React from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
-
-import { useDatabaseStore } from "@/components/aside/storage";
 
 const asideDatabaseCreateSchema = z.object({
    name: z

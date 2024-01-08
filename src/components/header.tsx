@@ -1,6 +1,6 @@
-import { CloseButton, MaximizeButton, MinimizeButton } from "@/components/header-buttons";
+import * as React from "react";
+
 import { HeaderThemeContent } from "@/components/header-theme-content";
-import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import {
    DropdownMenu,
@@ -12,7 +12,6 @@ import {
    DropdownMenuSubTrigger,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import * as React from "react";
 
 export const Header = React.forwardRef((props, ref) => {
    return (
@@ -116,5 +115,6 @@ export const Header = React.forwardRef((props, ref) => {
       </header>
    );
 });
+Header.displayName = "Header";
 
 export default Header;

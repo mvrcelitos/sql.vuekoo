@@ -1,8 +1,7 @@
 import React from "react";
 import { cookies } from "next/headers";
-import * as pg from "pg";
-
 import { Check, X } from "lucide-react";
+import * as pg from "pg";
 
 export const getTable = async (uuid: string, table: string) => {
    try {

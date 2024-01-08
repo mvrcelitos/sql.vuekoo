@@ -1,9 +1,14 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Copy, Info, Pencil, Plug, RefreshCw, Table, Trash2, Unplug } from "lucide-react";
+
+import { AsideGroup } from "@/components/aside/aside-group";
+import { AsideSeeDatabase } from "@/components/aside/aside-see-database";
+import { useDatabaseStore } from "@/components/aside/storage";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Copy, Info, Loader2, Pencil, Plug, RefreshCw, Table, Trash2, Unplug, X } from "lucide-react";
-import { cn } from "@/lib/utils";
 import {
    ContextMenu,
    ContextMenuContent,
@@ -12,13 +17,9 @@ import {
    ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { AsideRenameDatabase } from "./aside-rename-database";
-import Link from "next/link";
+
 import { AsideDeleteDatabase } from "./aside-delete-database";
-import { useDatabaseStore } from "@/components/aside/storage";
-import { AsideGroup } from "@/components/aside/aside-group";
-import { AsideSeeDatabase } from "@/components/aside/aside-see-database";
-import { usePathname } from "next/navigation";
+import { AsideRenameDatabase } from "./aside-rename-database";
 
 export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes<HTMLUListElement>>(() => {
    const pathname = usePathname()?.split("?")?.[0];
@@ -204,3 +205,4 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
       </ul>
    );
 });
+AsideList.displayName = "AsideList";

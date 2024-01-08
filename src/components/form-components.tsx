@@ -9,10 +9,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input, type InputProps } from "@/components/ui/input";
 import { InputPassword } from "@/components/ui/input-password";
 import { Label } from "@/components/ui/label";
+import { Radio } from "@/components/ui/radio";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TextArea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { Radio } from "@/components/ui/radio";
 // import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 // import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 // import { CaretSortIcon } from "@radix-ui/react-icons";
@@ -453,7 +453,6 @@ const ComboBoxContext = React.createContext(
 export {
    Form,
    FormCheckbox,
-   FormRadio,
    FormControl,
    FormDescription,
    FormField,
@@ -463,6 +462,7 @@ export {
    FormMessage,
    FormOption,
    FormPassword,
+   FormRadio,
    FormSelect,
    FormTextarea,
    useFormField,
