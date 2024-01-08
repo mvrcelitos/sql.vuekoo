@@ -14,7 +14,7 @@ export const GET = async (request: Request, context: { params: { uuid: string } 
 
       await client.connect();
       const res = await client.query(
-         "SELECT table_name FROM information_schema.tables as ist WHERE ist.table_schema = 'public' AND ist.table_type = 'BASE TABLE' ",
+         "SELECT table_name FROM information_schema.tables as ist WHERE ist.table_schema = 'public' AND ist.table_type = 'BASE TABLE' ORDER BY table_name ",
       );
       await client.end();
 
