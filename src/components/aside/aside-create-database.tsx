@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, Check, ChevronRight, Loader2, Plug, Plus } from "lucide-react";
 import { toast } from "sonner";
 import * as z from "zod";
+import axios from "axios";
 
 import { useDatabaseStore } from "@/components/aside/storage";
 import { Form, FormField, FormInput, FormLabel, FormMessage } from "@/components/form-components";
@@ -85,12 +86,8 @@ export const AsideCreateDatabaseForm = () => {
                      disabled={(form?.watch?.("url")?.length || 0) < 8 || isPending}
                      onClick={() => {
                         startTransition(async () => {
-                           const res = await fetch("http://localhost:3000/api/v1/db/test", {
-                              method: "POST",
-                              headers: { "Content-Type": "application/json" },
-                              body: JSON.stringify({ url: form.watch("url") }),
-                           });
-                           if (res.ok) {
+                           try {
+                              const res = axios.post("/api/v1/databases/test", { url: form.watch("url") });
                               toast.custom(
                                  (t) => (
                                     <div className="flex items-center gap-2 rounded-lg bg-emerald-400 p-4 dark:bg-emerald-500">
@@ -107,7 +104,8 @@ export const AsideCreateDatabaseForm = () => {
                                  ),
                                  { style: { width: "min(100%, calc(100vw - 32px))", fontSize: 13 } },
                               );
-                           } else {
+                           } catch (err) {
+                              console.error(err);
                               toast.custom(
                                  (t) => (
                                     <div className="flex items-center gap-2 rounded-lg bg-red-500 p-4 dark:bg-red-600">

@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Copy, Info, Pencil, Plug, RefreshCw, Table, Trash2, Unplug } from "lucide-react";
+import { Copy, Info, Pencil, Plug, RefreshCw, Scroll, Table, Trash2, Unplug } from "lucide-react";
 
 import { AsideGroup } from "@/components/aside/aside-group";
 import { AsideSeeDatabase } from "@/components/aside/aside-see-database";
@@ -97,12 +97,12 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
                                     db.tables?.map((table, index: number) => (
                                        <li key={index}>
                                           <Link
-                                             href={`/${db.uuid}/${table}`}
-                                             aria-selected={pathname == `/${db.uuid}/${table}`}
-                                             data-state={pathname == `/${db.uuid}/${table}` ? "selected" : "idle"}
+                                             href={`/${db.uuid}/table/${table}`}
+                                             aria-selected={pathname == `/${db.uuid}/table/${table}`}
+                                             data-state={pathname == `/${db.uuid}/table/${table}` ? "selected" : "idle"}
                                              className="flex items-center gap-2 overflow-hidden rounded-md p-1 text-zinc-600 aria-selected:text-zinc-900 aria-selected:underline aria-selected:underline-offset-2 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:aria-selected:text-zinc-50">
                                              <Table
-                                                className="h-4 w-4 shrink-0 text-zinc-600 opacity-70 dark:text-zinc-300"
+                                                className="size-4 shrink-0 text-zinc-600 opacity-70 dark:text-zinc-300"
                                                 height={16}
                                                 width={16}
                                              />
@@ -118,7 +118,7 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
                   </ContextMenuTrigger>
                   <ContextMenuContent>
                      <ContextMenuItem disabled={db.status !== "disconnected"} onSelect={() => connect(db.uuid)}>
-                        <Plug className="mr-2 h-4 w-4 shrink-0" height={16} width={16} />
+                        <Plug className="mr-2 size-4 shrink-0" height={16} width={16} />
                         Connect
                      </ContextMenuItem>
                      <ContextMenuItem
@@ -127,26 +127,34 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
                            close(db.uuid);
                            setDbsOpened((x) => x.filter((y) => y !== db.uuid));
                         }}>
-                        <Unplug className="mr-2 h-4 w-4 shrink-0" height={16} width={16} />
+                        <Unplug className="mr-2 size-4 shrink-0" height={16} width={16} />
                         Close
                      </ContextMenuItem>
                      <ContextMenuItem disabled={db.status !== "connected"} onSelect={() => refresh(db.uuid)}>
-                        <RefreshCw className="mr-2 h-4 w-4 shrink-0" height={16} width={16} />
+                        <RefreshCw className="mr-2 size-4 shrink-0" height={16} width={16} />
                         Refresh
+                     </ContextMenuItem>
+                     <ContextMenuSeparator />
+
+                     <ContextMenuItem asChild>
+                        <Link href={`/${db.uuid}/script`}>
+                           <Scroll className="mr-2 size-4 shrink-0" height={16} width={16} />
+                           SQL Script
+                        </Link>
                      </ContextMenuItem>
                      <ContextMenuItem
                         onSelect={() => {
                            setIndexModal(db.uuid);
                            setOpenModal("see");
                         }}>
-                        <Info className="mr-2 h-4 w-4 shrink-0" height={16} width={16} />
+                        <Info className="mr-2 size-4 shrink-0" height={16} width={16} />
                         See connection
                      </ContextMenuItem>
                      <ContextMenuItem
                         onSelect={() => {
                            navigator.clipboard.writeText(db.url);
                         }}>
-                        <Copy className="mr-2 h-4 w-4 shrink-0" height={16} width={16} />
+                        <Copy className="mr-2 size-4 shrink-0" height={16} width={16} />
                         Copy URL
                      </ContextMenuItem>
                      <ContextMenuSeparator />
@@ -156,7 +164,7 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
                            setIndexModal(db.uuid);
                            setOpenModal("rename");
                         }}>
-                        <Pencil className="mr-2 h-4 w-4 shrink-0" height={16} width={16} />
+                        <Pencil className="mr-2 size-4 shrink-0" height={16} width={16} />
                         Rename
                      </ContextMenuItem>
                      <ContextMenuItem
@@ -165,7 +173,7 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
                            setIndexModal(db.uuid);
                            setOpenModal("delete");
                         }}>
-                        <Trash2 className="mr-2 h-4 w-4 shrink-0" height={16} width={16} />
+                        <Trash2 className="mr-2 size-4 shrink-0" height={16} width={16} />
                         Delete
                      </ContextMenuItem>
                   </ContextMenuContent>
@@ -183,8 +191,8 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
                   {openModal === "rename" && (
                      <AsideRenameDatabase
                         defaultValues={{ name: db?.name }}
-                        onRename={(d) => {
-                           rename(db.uuid, d.name);
+                        onRename={async (d) => {
+                           await rename(db.uuid, d.name);
                            setOpenModal(null);
                            setIndexModal(null);
                         }}
@@ -192,8 +200,8 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
                   )}
                   {openModal === "delete" && (
                      <AsideDeleteDatabase
-                        onDelete={(v) => {
-                           if (v) deleteDb(db.uuid);
+                        onDelete={async (v) => {
+                           if (v) await deleteDb(db.uuid);
                            setOpenModal(null);
                            setIndexModal(null);
                         }}
