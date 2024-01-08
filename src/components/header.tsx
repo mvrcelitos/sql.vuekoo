@@ -15,7 +15,7 @@ import {
 
 export const Header = React.forwardRef((props, ref) => {
    return (
-      <header className="z-40 w-full shrink-0 border-b border-b-zinc-200 bg-background px-4 py-1.5 text-foreground dark:border-b-zinc-800">
+      <header className="sticky left-0 top-0 z-40 w-full shrink-0 border-b border-b-zinc-200 bg-background px-4 py-1.5 text-foreground dark:border-b-zinc-800">
          <div data-tauri-drag-region className="flex items-center justify-between">
             <div className="flex items-center gap-1">
                <div className="select-none text-sm font-bold uppercase">
