@@ -7,13 +7,13 @@
       --background: #fafafa;
       --foreground: #09090b;
       /* --primary: #e11d48; */
-      --primary: #ff0055;
+      --primary: #634043;
    }
    .dark {
       --background: #09090b;
       --foreground: #fafafa;
       /* --primary: #818cf8; */
-      --primary: #ff0055;
+      --primary: #634043;
    }
 }
 
@@ -37,6 +37,12 @@
    }
    .dark .modern-scroll::-webkit-scrollbar-track {
       background: #27272a;
+   }
+   .modern-scroll::-webkit-scrollbar-corner {
+      background: #e4e4e7;
+   }
+   .dark .modern-scroll::-webkit-scrollbar-corner {
+      background: var(--primary);
    }
 
    .modern-scroll::-webkit-scrollbar-thumb {
