@@ -49,11 +49,12 @@ export default async function Page({ params }: { params: { database: string; tab
                         <td
                            className="truncate border-r border-r-zinc-200 px-2 last:border-r-0 dark:border-r-zinc-800"
                            key={cell}>
-                           {cell === true && <Check className="mx-auto h-5 w-5 shrink-0" size={20} />}
-                           {cell === false && <X className="mx-auto h-5 w-5 shrink-0" size={20} />}
-                           {typeof cell != "boolean" &&
-                              new Date(cell).toString() !== "Invalid Date" &&
-                              new Date(cell).toISOString()}
+                           {typeof cell === "boolean" && cell ? (
+                              <Check className="mx-auto h-5 w-5 shrink-0" size={20} />
+                           ) : (
+                              <X className="mx-auto h-5 w-5 shrink-0" size={20} />
+                           )}
+                           {typeof cell == "object" && JSON.stringify(cell)}
                            {["string", "number"].includes(typeof cell) ? cell : ""}
                         </td>
                      ))}
