@@ -1,27 +1,56 @@
 {
-  "name": "tablesql",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.0.3"
-  },
-  "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "autoprefixer": "^10.0.1",
-    "postcss": "^8",
-    "tailwindcss": "^3.3.0",
-    "eslint": "^8",
-    "eslint-config-next": "14.0.3"
-  }
+   "name": "vuekoo-sql",
+   "version": "0.1.0",
+   "private": true,
+   "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "next lint",
+      "tauri": "tauri"
+   },
+   "dependencies": {
+      "@hookform/resolvers": "^3.3.2",
+      "@radix-ui/react-context-menu": "^2.1.5",
+      "@radix-ui/react-dialog": "^1.0.5",
+      "@radix-ui/react-dropdown-menu": "^2.0.6",
+      "@radix-ui/react-popover": "^1.0.7",
+      "@radix-ui/react-select": "^2.0.0",
+      "@radix-ui/react-slot": "^1.0.2",
+      "@radix-ui/react-tabs": "^1.0.4",
+      "@radix-ui/react-tooltip": "^1.0.7",
+      "@types/pg": "^8.10.9",
+      "@types/uuid": "^9.0.7",
+      "clsx": "^2.0.0",
+      "cva": "^1.0.0-beta.1",
+      "lucide-react": "^0.294.0",
+      "next": "14.0.3",
+      "next-themes": "^0.2.1",
+      "pg": "^8.11.3",
+      "react": "^18",
+      "react-dom": "^18",
+      "react-hook-form": "^7.48.2",
+      "sonner": "^1.2.3",
+      "tailwind-merge": "^2.0.0",
+      "uuid": "^9.0.1",
+      "zod": "^3.22.4",
+      "zustand": "^4.4.7"
+   },
+   "devDependencies": {
+      "@types/node": "^20",
+      "@types/react": "^18",
+      "@types/react-dom": "^18",
+      "autoprefixer": "^10.0.1",
+      "eslint": "^8",
+      "eslint-config-next": "14.0.3",
+      "eslint-config-prettier": "^9.0.0",
+      "eslint-plugin-next": "^0.0.0",
+      "eslint-plugin-simple-import-sort": "^10.0.0",
+      "eslint-plugin-unused-imports": "^3.0.0",
+      "postcss": "^8",
+      "prettier-plugin-tailwindcss": "^0.5.7",
+      "tailwindcss": "^3.4.0",
+      "tailwindcss-animate": "^1.0.7",
+      "typescript": "^5"
+   }
 }
