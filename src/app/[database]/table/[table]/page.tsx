@@ -59,7 +59,7 @@ export default async function Page({ params }: { params: { database: string; tab
                               ))}
                            {typeof cell == "object" &&
                               (cell?.constructor?.name === "Date"
-                                 ? (cell as Date).toLocaleString(undefined, { dateStyle: "short" })
+                                 ? (cell as Date).toLocaleString()
                                  : JSON.stringify(cell))}
                            {["string", "number"].includes(typeof cell) ? cell : ""}
                         </td>
