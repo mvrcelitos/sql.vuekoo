@@ -57,11 +57,13 @@ export const buttonVariants = cva({
       },
       size: {
          "alt": "h-6 px-2",
+         "xxs": "h-7 px-2",
          "xs": "h-8 px-2",
          "sm": "h-9 px-3",
          "md": "h-10 px-4",
          "lg": "h-11 px-6",
          "icon-custom": "px-0 shrink-0",
+         "icon-xxs": "size-7 px-0 shrink-0",
          "icon-xs": "size-8 px-0 shrink-0",
          "icon-sm": "size-9 px-0 shrink-0",
          "icon": "size-10 px-0 shrink-0",
