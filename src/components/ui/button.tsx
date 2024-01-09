@@ -61,9 +61,10 @@ export const buttonVariants = cva({
          "sm": "h-9 px-3",
          "md": "h-10 px-4",
          "lg": "h-11 px-6",
-         "icon-xs": "h-8 w-8 px-0 shrink-0",
-         "icon-sm": "h-9 w-9 px-0 shrink-0",
-         "icon": "h-10 w-10 px-0 shrink-0",
+         "icon-custom": "px-0 shrink-0",
+         "icon-xs": "size-8 px-0 shrink-0",
+         "icon-sm": "size-9 px-0 shrink-0",
+         "icon": "size-10 px-0 shrink-0",
       },
    },
    defaultVariants: {
