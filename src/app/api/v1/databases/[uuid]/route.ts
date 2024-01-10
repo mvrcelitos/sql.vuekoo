@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import * as pg from "pg";
 
-import { putSchema, type putSchemaReturn } from "../schema";
+import { postSchema, type postSchemaReturn, putSchema, type putSchemaReturn } from "./schema";
 
 export const GET = async (request: Request, context: { params: { uuid: string } }) => {
    let client;
@@ -12,13 +12,47 @@ export const GET = async (request: Request, context: { params: { uuid: string } 
       const databases = JSON.parse(c.get("databases")?.value || "{}");
 
       client = new pg.Client({ connectionString: databases?.[context.params.uuid]?.url });
-
       await client.connect();
+
       const res = await client.query(
          "SELECT table_name FROM information_schema.tables as ist WHERE ist.table_schema = 'public' AND ist.table_type = 'BASE TABLE' ORDER BY table_name ",
       );
 
       return NextResponse.json(res?.rows, { status: 200 });
+   } catch (err) {
+      console.error(err);
+      return new Response("Internal server error", { status: 500 });
+   } finally {
+      await client?.end();
+   }
+};
+
+export const POST = async (request: Request, context: { params: { uuid: string } }) => {
+   let client;
+   try {
+      const body = await request.text();
+      console.log("body:", body);
+
+      const c = cookies();
+
+      const databases = c.has("databases") ? JSON.parse(c.get("databases")?.value || "{}") : {};
+      console.log("databases:", databases);
+      const database = databases?.[context?.params?.uuid];
+      if (!database) {
+         return new Response("Not found", { status: 404 });
+      }
+
+      client = new pg.Client({ connectionString: database.url });
+      client.connect();
+
+      const res = await client.query(body);
+
+      console.log("response: ", res);
+
+      return NextResponse.json({
+         meta: { count: res.rowCount },
+         data: { oid: res.oid, fields: res.fields, rows: res?.rows },
+      });
    } catch (err) {
       console.error(err);
       return new Response("Internal server error", { status: 500 });
