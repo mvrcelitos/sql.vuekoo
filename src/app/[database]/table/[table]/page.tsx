@@ -1,9 +1,11 @@
 import React from "react";
 import { cookies } from "next/headers";
-import { Check, ChevronDown, MoreVertical, X } from "lucide-react";
+import { Check, ChevronDown, X } from "lucide-react";
 import * as pg from "pg";
-import { cn } from "@/lib/utils";
+
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
 import { Toolbar } from "./_components/toolbar";
 
 const getTable = async (uuid: string, table: string) => {

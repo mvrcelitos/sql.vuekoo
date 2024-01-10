@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { Slot } from "@radix-ui/react-slot";
 import React from "react";
 import { useContext } from "react";
+import { Slot } from "@radix-ui/react-slot";
+
+import { cn } from "@/lib/utils";
 
 const AccordionContext = React.createContext({});
 
@@ -65,6 +65,7 @@ const AccordionTrigger = React.forwardRef<
       />
    );
 });
+AccordionTrigger.displayName = "AccordionTrigger";
 
 export interface AccordionContentProps {
    asChild?: boolean;
@@ -81,5 +82,6 @@ const AccordionContent = React.forwardRef<
    const Comp = asChild ? Slot : "div";
    return <Comp ref={ref} {...props} className={cn(!open && "hidden", className)} hidden={!open} />;
 });
+AccordionContent.displayName = "AccordionContent";
 
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger };

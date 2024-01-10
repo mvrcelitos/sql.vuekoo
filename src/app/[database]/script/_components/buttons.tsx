@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { toast } from "sonner";
-import { X, AlertCircle, ChevronRight, Loader2 } from "lucide-react";
+import { ChevronRight, Loader2,X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+
 import { useScriptStore } from "./use-script-store";
 
 export interface ClearButtonProps extends React.ComponentPropsWithoutRef<typeof Button> {

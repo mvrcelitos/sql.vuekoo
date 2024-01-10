@@ -21,6 +21,7 @@ import {
 import { AsideGroup } from "@/components/aside/aside-group";
 import { AsideSeeDatabase } from "@/components/aside/aside-see-database";
 import { useDatabaseStore } from "@/components/aside/use-database-store";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion-2";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
    ContextMenu,
@@ -30,11 +31,10 @@ import {
    ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion-2";
+import { cn } from "@/lib/utils";
 
 import { AsideDeleteDatabase } from "./aside-delete-database";
 import { AsideRenameDatabase } from "./aside-rename-database";
-import { cn } from "@/lib/utils";
 
 export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes<HTMLUListElement>>(() => {
    const pathname = usePathname()?.split("?")?.[0];

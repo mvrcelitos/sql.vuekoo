@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { AlertCircle } from "lucide-react";
-import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 import { create } from "zustand";
 

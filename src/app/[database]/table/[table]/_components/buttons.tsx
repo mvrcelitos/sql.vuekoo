@@ -1,12 +1,12 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { AlertCircle, ArrowUpFromLine, RefreshCw, Scroll } from "lucide-react";
-
-import { Button, buttonVariants } from "@/components/ui/button";
 import React from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { AlertCircle, ArrowUpFromLine, RefreshCw, Scroll } from "lucide-react";
+import { toast } from "sonner";
+
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export const RefreshPageButton = React.forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<typeof Button>>(
    ({ ...props }, ref) => {
@@ -19,6 +19,7 @@ export const RefreshPageButton = React.forwardRef<HTMLButtonElement, React.Compo
       );
    },
 );
+RefreshPageButton.displayName = "RefreshPageButton";
 
 export const ScriptPageButton = React.forwardRef<
    React.ElementRef<typeof Link>,
@@ -36,6 +37,7 @@ export const ScriptPageButton = React.forwardRef<
       </Link>
    );
 });
+ScriptPageButton.displayName = "ScriptPageButton";
 
 export const ExportTableButton = React.forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<typeof Button>>(
    ({ ...props }, ref) => {
@@ -68,3 +70,4 @@ export const ExportTableButton = React.forwardRef<HTMLButtonElement, React.Compo
       );
    },
 );
+ExportTableButton.displayName = "ExportTableButton";

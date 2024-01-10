@@ -4,8 +4,9 @@ import React from "react";
 import { usePathname } from "next/navigation";
 
 import { TextArea } from "@/components/ui/textarea";
-import { useScriptStore } from "./use-script-store";
 import { cn } from "@/lib/utils";
+
+import { useScriptStore } from "./use-script-store";
 
 export const ScriptTextArea = () => {
    const { script, set, setDatabase, submit, result } = useScriptStore();

@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import * as pg from "pg";
 
-import { postSchema, type postSchemaReturn, putSchema, type putSchemaReturn } from "./schema";
+import { putSchema, type putSchemaReturn } from "./schema";
 
 export const GET = async (request: Request, context: { params: { uuid: string } }) => {
    let client;
