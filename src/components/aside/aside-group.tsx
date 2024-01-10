@@ -42,7 +42,7 @@ export const AsideGroup = ({
                <Button
                   type="button"
                   intent="ghost"
-                  className="relative h-6 w-6 shrink-0 p-0 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
+                  className="relative size-6 shrink-0 p-0 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
                   disabled={["loading", "error"].includes(status) || disabled}
                   onClick={async (ev) => {
                      await onSelect?.(ev);
@@ -51,11 +51,11 @@ export const AsideGroup = ({
                         props?.onOpenChange?.(!open);
                      }
                   }}>
-                  {status == "loading" && <Loader2 className="h-4 w-4 shrink-0 animate-spin" />}
-                  {status == "error" && <X className="h-4 w-4 shrink-0" />}
+                  {status == "loading" && <Loader2 className="size-4 shrink-0 animate-spin" />}
+                  {status == "error" && <X className="size-4 shrink-0" />}
                   {status == "ok" && (
                      <ChevronRight
-                        className={cn("h-4 w-4 shrink-0 duration-100", open && "rotate-90")}
+                        className={cn("size-4 shrink-0 duration-100", open && "rotate-90")}
                         height={16}
                         width={16}
                      />

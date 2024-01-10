@@ -8,7 +8,7 @@ import { AlertCircle, Check, ChevronRight, Loader2, Plug, Plus } from "lucide-re
 import { toast } from "sonner";
 import * as z from "zod";
 
-import { useDatabaseStore } from "@/components/aside/storage";
+import { useDatabaseStore } from "@/components/aside/use-database-store";
 import { Form, FormField, FormInput, FormLabel, FormMessage } from "@/components/form-components";
 import { Button } from "@/components/ui/button";
 import {

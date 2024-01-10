@@ -143,7 +143,7 @@ export const useDatabaseStore = create<DatabaseStore>((set) => ({
    delete: async (uuid: string) => {
       try {
          // deletes the database from the cookies
-         const res = await fetch(`/api/v1/databases/${uuid}`, {
+         await fetch(`/api/v1/databases/${uuid}`, {
             method: "DELETE",
          });
 
