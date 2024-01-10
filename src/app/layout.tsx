@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 import { Aside } from "@/components/aside";
 import Header from "@/components/header";
