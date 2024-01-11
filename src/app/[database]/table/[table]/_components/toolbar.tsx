@@ -1,6 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 
-import { ExportTableButton, RefreshPageButton, ScriptPageButton } from "./buttons";
+import { ExportTableButton, RefreshPageButton, ScriptPageButton, VisibilityColumnsButton } from "./buttons";
 
 export interface ToolbarProps {
    rows?: number;
@@ -16,6 +16,9 @@ export const Toolbar = ({ rows }: ToolbarProps) => {
             <Separator orientation="vertical" className="inline-block h-6 align-middle" />
             <li className="inline-block align-middle">
                <ScriptPageButton />
+            </li>
+            <li className="inline-block align-middle">
+               <VisibilityColumnsButton />
             </li>
             <li className="inline-block align-middle">
                <ExportTableButton />

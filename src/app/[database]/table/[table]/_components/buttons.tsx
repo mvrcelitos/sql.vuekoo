@@ -2,11 +2,18 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { AlertCircle, ArrowUpFromLine, RefreshCw, Scroll } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { AlertCircle, ArrowUpFromLine, Eye, RefreshCw, Scroll } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button, buttonVariants } from "@/components/ui/button";
+import {
+   DropdownMenu,
+   DropdownMenuContent,
+   DropdownMenuItem,
+   DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { SearchParamsManager } from "@/lib/search-params";
 
 export const RefreshPageButton = React.forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<typeof Button>>(
    ({ ...props }, ref) => {
@@ -71,3 +78,37 @@ export const ExportTableButton = React.forwardRef<HTMLButtonElement, React.Compo
    },
 );
 ExportTableButton.displayName = "ExportTableButton";
+
+export const VisibilityColumnsButton = () => {
+   const router = useRouter();
+   const searchParams = useSearchParams();
+   const hiddenColumns = searchParams?.get("hide")?.split(",") ?? [];
+
+   return (
+      <DropdownMenu>
+         <DropdownMenuTrigger
+            disabled={hiddenColumns.length == 0}
+            data-test={hiddenColumns.length}
+            className={buttonVariants({ size: "icon-xs", intent: "ghost" })}>
+            <Eye className="size-4 shrink-0" />
+         </DropdownMenuTrigger>
+         <DropdownMenuContent side="top">
+            {hiddenColumns.map((column: string, index) => (
+               <DropdownMenuItem
+                  key={index}
+                  onClick={() => {
+                     const searchParamsManager = new SearchParamsManager();
+                     if (hiddenColumns.length > 1) {
+                        searchParamsManager.set("hide", hiddenColumns.filter((col) => col !== column).join(","));
+                     } else {
+                        searchParamsManager.delete("hide");
+                     }
+                     router.push(`?${searchParamsManager.toString()}`);
+                  }}>
+                  {column}
+               </DropdownMenuItem>
+            ))}
+         </DropdownMenuContent>
+      </DropdownMenu>
+   );
+};
