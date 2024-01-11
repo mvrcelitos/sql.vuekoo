@@ -86,7 +86,12 @@ export const useDatabaseStore = create<DatabaseStore>((set) => ({
          set((state) => ({
             databases: {
                ...state.databases,
-               [uuid]: { ...state.databases[uuid], status: "connected", tables: data.map((x: any) => x.table_name) },
+               [uuid]: {
+                  ...state.databases[uuid],
+                  status: "connected",
+                  tables: data?.data?.tables,
+                  views: data?.data?.views,
+               },
             },
          }));
       } catch (err) {
@@ -119,7 +124,12 @@ export const useDatabaseStore = create<DatabaseStore>((set) => ({
          set((state) => ({
             databases: {
                ...state.databases,
-               [uuid]: { ...state.databases[uuid], status: "connected", tables: data.map((x: any) => x.table_name) },
+               [uuid]: {
+                  ...state.databases[uuid],
+                  status: "connected",
+                  tables: data?.data?.tables,
+                  views: data?.data?.views,
+               },
             },
          }));
       } catch (err) {
