@@ -7,8 +7,21 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 import { Toolbar } from "./_components/toolbar";
+import { TableColumnHeader } from "@/components/table-column-header";
 
-const getTable = async (uuid: string, table: string) => {
+// export const revalidate = 60;
+
+interface paramsProps {
+   database: string;
+   table: string;
+}
+interface searchParamsProps {
+   sort?: string;
+   sortType?: string;
+   hide?: string;
+}
+
+const getTable = async (uuid: string, table: string, params: searchParamsProps) => {
    let client;
    try {
       const c = cookies();
@@ -20,9 +33,12 @@ const getTable = async (uuid: string, table: string) => {
       client = new pg.Client({ connectionString: database?.[uuid]?.url });
 
       await client.connect();
-      const res = await client.query(`SELECT * FROM ${table} ORDER BY 1`);
+      const ordenation = params.sortType?.toLowerCase() === "desc" ? "DESC" : "ASC";
+      const res = await client.query(`SELECT * FROM ${table} ORDER BY ${params?.sort ?? 1} ${ordenation}`);
 
-      return { ...res };
+      const hiddenColumns = params?.hide?.split(",") ?? [];
+      res.fields = res.fields.filter((field: any) => !hiddenColumns.includes(field.name));
+      return res;
    } catch (err) {
       console.error(err);
    } finally {
@@ -30,10 +46,8 @@ const getTable = async (uuid: string, table: string) => {
    }
 };
 
-export default async function Page({ params }: { params: { database: string; table: string } }) {
-   const table = await getTable(params.database, params.table);
-
-   // const [table, setTable] = React.useState<any | null>();
+export default async function Page({ params, searchParams }: { params: paramsProps; searchParams: searchParamsProps }) {
+   const table = await getTable(params.database, params.table, searchParams);
 
    return (
       <div className="grid w-full grid-cols-1">
@@ -42,16 +56,9 @@ export default async function Page({ params }: { params: { database: string; tab
                <thead className="sticky left-0 top-0 h-9 border-b border-b-zinc-200 bg-zinc-100 text-zinc-700 dark:border-b-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
                   <tr>
                      {table?.fields?.map((field: any) => (
-                        <th
-                           key={field.columnID}
-                           className="border-r border-r-zinc-200 px-3 font-normal last:border-r-0 dark:border-r-zinc-800">
-                           <div className="flex items-center justify-between gap-2">
-                              <span>{field.name}</span>
-                              <Button size="icon-custom" intent="ghost" className="-mr-2 size-7">
-                                 <ChevronDown className="size-4 shrink-0" />
-                              </Button>
-                           </div>
-                        </th>
+                        <TableColumnHeader key={field.columnID} id={field.name}>
+                           {field.name}
+                        </TableColumnHeader>
                      ))}
                   </tr>
                </thead>
