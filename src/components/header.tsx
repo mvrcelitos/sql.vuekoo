@@ -12,6 +12,7 @@ import {
    DropdownMenuSubTrigger,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 export const Header = () => {
    return (
@@ -76,7 +77,12 @@ export const Header = () => {
                      </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start" sideOffset={2}>
-                     <DropdownMenuItem>Welcome</DropdownMenuItem>
+                     <DropdownMenuItem asChild>
+                        <Link href="https://github.com/mvrcelitos/sql.vuekoo">Source code</Link>
+                     </DropdownMenuItem>
+                     <DropdownMenuItem>
+                        <Link href="/welcome">Welcome</Link>
+                     </DropdownMenuItem>
                   </DropdownMenuContent>
                </DropdownMenu>
             </div>
