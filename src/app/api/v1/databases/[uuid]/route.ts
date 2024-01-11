@@ -42,12 +42,9 @@ export const POST = async (request: Request, context: { params: { uuid: string }
    let client;
    try {
       const body = await request.text();
-      console.log("body:", body);
-
       const c = cookies();
 
       const databases = c.has("databases") ? JSON.parse(c.get("databases")?.value || "{}") : {};
-      console.log("databases:", databases);
       const database = databases?.[context?.params?.uuid];
       if (!database) {
          return new Response("Not found", { status: 404 });
