@@ -5,7 +5,11 @@ export const POST = async (request: Request) => {
    let client;
    try {
       const body = await request.json();
-      client = new pg.Client({ connectionString: body.url });
+      client = new pg.Client({
+         application_name: "vuekoo/sql",
+         connectionTimeoutMillis: 30000,
+         connectionString: body.url,
+      });
 
       await client.connect();
       const res = await client.query(

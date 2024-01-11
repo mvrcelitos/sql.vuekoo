@@ -11,7 +11,11 @@ export const GET = async (request: Request, context: { params: { uuid: string } 
       if (!c.has("databases")) return new Response("Not found", { status: 404 });
       const databases = JSON.parse(c.get("databases")?.value || "{}");
 
-      client = new pg.Client({ connectionString: databases?.[context.params.uuid]?.url });
+      client = new pg.Client({
+         application_name: "vuekoo/sql",
+         connectionTimeoutMillis: 30000,
+         connectionString: databases?.[context.params.uuid]?.url,
+      });
       await client.connect();
 
       const [tables, views] = await Promise.all([

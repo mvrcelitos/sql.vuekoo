@@ -4,7 +4,7 @@ import { Check, X } from "lucide-react";
 import * as pg from "pg";
 
 import { TableColumnHeader } from "@/components/table-column-header";
-import { Table, TBody, Td, Th,THead, TRow } from "@/components/ui/table";
+import { Table, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 
 import { Toolbar } from "./_components/toolbar";
 
@@ -29,7 +29,11 @@ const getTable = async (uuid: string, table: string, params: searchParamsProps) 
       if (!databases) return;
 
       const database = JSON.parse(databases);
-      client = new pg.Client({ connectionString: database?.[uuid]?.url });
+      client = new pg.Client({
+         application_name: "vuekoo/sql",
+         connectionTimeoutMillis: 30000,
+         connectionString: database?.[uuid]?.url,
+      });
 
       await client.connect();
       const ordenation = params.sortType?.toLowerCase() === "desc" ? "DESC" : "ASC";
