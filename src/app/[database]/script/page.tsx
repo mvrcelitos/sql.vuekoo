@@ -9,7 +9,7 @@ import { ScriptTextArea } from "./_components/script-textarea";
 
 export default function Page() {
    return (
-      <main className="flex h-full grow flex-col gap-2 overflow-hidden p-6 md:gap-4">
+      <main className="flex h-full max-h-[calc(100dvh-37px)] grow flex-col gap-2 overflow-hidden p-6 md:gap-4">
          <div data-toolbar className="flex w-full items-center gap-2">
             <Tooltip>
                <TooltipTrigger asChild>
