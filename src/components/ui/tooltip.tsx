@@ -7,11 +7,9 @@ import { Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // const TooltipProvider = TooltipPrimitive.Provider;
-const TooltipProvider = React.forwardRef<
-   React.ElementRef<typeof TooltipPrimitive.Provider>,
-   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>
->(({ ...props }) => <TooltipPrimitive.Provider delayDuration={100} disableHoverableContent={true} {...props} />);
-TooltipProvider.displayName = TooltipPrimitive.Provider.displayName;
+const TooltipProvider = ({ ...props }: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>) => (
+   <TooltipPrimitive.Provider delayDuration={100} disableHoverableContent={true} {...props} />
+);
 
 const TooltipRoot = TooltipPrimitive.Root;
 
