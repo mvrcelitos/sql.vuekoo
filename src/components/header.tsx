@@ -77,10 +77,10 @@ export const Header = () => {
                      </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start" sideOffset={2}>
-                     <DropdownMenuItem asChild>
+                     <DropdownMenuItem className="text-[13px]" asChild>
                         <Link href="https://github.com/mvrcelitos/sql.vuekoo">Source code</Link>
                      </DropdownMenuItem>
-                     <DropdownMenuItem>
+                     <DropdownMenuItem className="text-[13px]" asChild>
                         <Link href="/welcome">Welcome</Link>
                      </DropdownMenuItem>
                   </DropdownMenuContent>
