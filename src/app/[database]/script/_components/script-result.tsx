@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 import { useScriptStore } from "./use-script-store";
+import { TBody, THead, TRow, Table, Td, Th } from "@/components/ui/table";
 
 export const ScriptResult = () => {
    const { result } = useScriptStore();
@@ -13,78 +14,70 @@ export const ScriptResult = () => {
    if (!result) return null;
 
    return (
-      <div className="modern-scroll -mx-6 -mb-6 h-[calc(100%+1.5rem)] w-[calc(100%+3rem)] overflow-x-auto">
-         <table className="h-fit w-full overflow-auto border-t border-t-zinc-200 text-sm dark:border-t-zinc-800">
-            <thead className="sticky left-0 top-0 h-9 border-b border-b-zinc-200 bg-zinc-100 text-zinc-700 dark:border-b-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
-               <tr>
+      <div className="modern-scroll -mx-6 -mb-6 h-[calc(100%+1.5rem)] w-[calc(100%+3rem)] overflow-x-auto border-t border-t-zinc-200 dark:border-t-zinc-800">
+         <Table className="h-fit w-full overflow-auto text-sm ">
+            <THead>
+               <TRow>
+                  <Th className="sticky left-0 top-0 z-20 border-zinc-300 bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800">
+                     #
+                  </Th>
                   {result?.data?.fields?.map((field: any) => (
-                     <th
-                        key={field.columnID}
-                        className="border-r border-r-zinc-200 px-3 font-normal last:border-r-0 dark:border-r-zinc-800">
+                     <Th key={field.columnID}>
                         <div className="flex items-center justify-between gap-2">
                            <span>{field.name}</span>
                            <Button size="icon-custom" intent="ghost" className="-mr-2 size-7">
                               <ChevronDown className="size-4 shrink-0" />
                            </Button>
                         </div>
-                     </th>
+                     </Th>
                   ))}
-               </tr>
-            </thead>
-            <tbody className="text-zinc-800 dark:text-zinc-200">
+               </TRow>
+            </THead>
+            <TBody>
                {result?.data?.rows?.map((row: any, index: number) => (
-                  <tr
+                  <TRow
                      className="h-7 border-b border-b-zinc-200 hover:bg-zinc-100 hover:text-zinc-950 dark:border-b-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
                      key={index}>
-                     {result?.data?.fields.map((field: any, index: number) => {
+                     <Td className="sticky left-0 z-10 bg-zinc-100 dark:bg-zinc-900">{index + 1}</Td>
+
+                     {result?.data?.fields?.map((field: any, index: number) => {
                         const cell = row[field.name];
-                        return (
-                           <td
-                              className={cn(
-                                 "truncate border-r border-r-zinc-200 px-2 last:border-r-0 dark:border-r-zinc-800",
-                                 typeof cell == "number" && "text-right",
-                                 typeof cell == "object" && cell?.constructor?.name === "Date" && "text-right",
-                              )}
-                              key={field.columnID}>
-                              {typeof cell === "boolean" &&
-                                 (cell ? (
-                                    <Check className="mx-auto h-5 w-5 shrink-0" size={20} />
-                                 ) : (
-                                    <X className="mx-auto h-5 w-5 shrink-0" size={20} />
-                                 ))}
-                              {typeof cell == "object" &&
-                                 (cell?.constructor?.name === "Date"
-                                    ? (cell as Date).toLocaleString()
-                                    : JSON.stringify(cell))}
-                              {["string", "number"].includes(typeof cell) ? cell : ""}
-                           </td>
-                        );
+                        switch (cell?.constructor?.name) {
+                           case "Date":
+                              return (
+                                 <Td key={field.columnID} className="text-right">
+                                    {(cell as Date).toLocaleString()}
+                                 </Td>
+                              );
+                           case "Number":
+                              return (
+                                 <Td key={field.columnID} className="text-right">
+                                    {(cell as Date).toLocaleString()}
+                                 </Td>
+                              );
+                           case "String":
+                              return <Td key={field.columnID}>{cell}</Td>;
+                           case "Boolean":
+                              const Icon = cell ? Check : X;
+                              return (
+                                 <Td key={field.columnID}>
+                                    <Icon className="mx-auto size-5 shrink-0" size={20} />
+                                 </Td>
+                              );
+                           default:
+                              if (cell === null)
+                                 return (
+                                    <Td key={field.columnID} className="text-center opacity-50">
+                                       {"[NULL]"}
+                                    </Td>
+                                 );
+                              return <Td key={field.columnID}>{cell}</Td>;
+                        }
                      })}
-                     {/* {Object?.values?.(row)?.map((cell: any, index) => (
-                        <td
-                           className={cn(
-                              "truncate border-r border-r-zinc-200 px-2 last:border-r-0 dark:border-r-zinc-800",
-                              typeof cell == "number" && "text-right",
-                              typeof cell == "object" && cell?.constructor?.name === "Date" && "text-right",
-                           )}
-                           key={index}>
-                           {typeof cell === "boolean" &&
-                              (cell ? (
-                                 <Check className="mx-auto h-5 w-5 shrink-0" size={20} />
-                              ) : (
-                                 <X className="mx-auto h-5 w-5 shrink-0" size={20} />
-                              ))}
-                           {typeof cell == "object" &&
-                              (cell?.constructor?.name === "Date"
-                                 ? (cell as Date).toLocaleString()
-                                 : JSON.stringify(cell))}
-                           {["string", "number"].includes(typeof cell) ? cell : ""}
-                        </td>
-                     ))} */}
-                  </tr>
+                  </TRow>
                ))}
-            </tbody>
-         </table>
+            </TBody>
+         </Table>
       </div>
    );
 };

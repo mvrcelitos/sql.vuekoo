@@ -4,7 +4,7 @@ import { Check, X } from "lucide-react";
 import * as pg from "pg";
 
 import { TableColumnHeader } from "@/components/table-column-header";
-import { Td } from "@/components/ui/table";
+import { TBody, THead, TRow, Table, Td, Th } from "@/components/ui/table";
 
 import { Toolbar } from "./_components/toolbar";
 
@@ -53,21 +53,25 @@ export default async function Page({ params, searchParams }: { params: paramsPro
    return (
       <div className="grid w-full grid-cols-1">
          <div className="modern-scroll h-[calc(100dvh-37px-40px)] max-h-[calc(100dvh-37px-40px)] w-full overflow-x-auto">
-            <table className="h-fit w-full overflow-auto text-sm">
-               <thead className="sticky left-0 top-0 h-9 border-b border-b-zinc-200 bg-zinc-100 text-zinc-700 dark:border-b-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
-                  <tr>
+            <Table className="h-fit w-full overflow-auto text-sm">
+               <THead className="sticky left-0 top-0 h-9 border-b border-b-zinc-200 bg-zinc-100 text-zinc-700 dark:border-b-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
+                  <TRow>
+                     <Th className="sticky left-0 z-10 border-zinc-300 bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800">
+                        #
+                     </Th>
                      {table?.fields?.map((field: any) => (
                         <TableColumnHeader key={field.columnID} id={field.name}>
                            {field.name}
                         </TableColumnHeader>
                      ))}
-                  </tr>
-               </thead>
-               <tbody className="text-zinc-800 dark:text-zinc-200">
+                  </TRow>
+               </THead>
+               <TBody>
                   {table?.rows?.map((row: any, index: number) => (
-                     <tr
+                     <TRow
                         className="h-7 border-b border-b-zinc-200 hover:bg-zinc-100 hover:text-zinc-950 dark:border-b-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
                         key={index}>
+                        <Td className="sticky left-0 z-10 bg-zinc-100 dark:bg-zinc-900">{index + 1}</Td>
                         {table?.fields?.map((field: any, index: number) => {
                            const cell = row[field.name];
                            switch (cell?.constructor?.name) {
@@ -102,10 +106,10 @@ export default async function Page({ params, searchParams }: { params: paramsPro
                                  return <Td key={field.columnID}>{cell}</Td>;
                            }
                         })}
-                     </tr>
+                     </TRow>
                   ))}
-               </tbody>
-            </table>
+               </TBody>
+            </Table>
          </div>
          <Toolbar rows={table?.rowCount ?? undefined} />
       </div>
