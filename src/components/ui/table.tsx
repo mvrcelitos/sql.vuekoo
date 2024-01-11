@@ -7,7 +7,10 @@ export const Table = React.forwardRef<HTMLTableElement, React.ComponentPropsWith
       return (
          <table
             ref={ref}
-            className={cn("modern-scroll w-full overflow-x-auto text-zinc-800 dark:text-zinc-200", className)}
+            className={cn(
+               "modern-scroll w-full border-separate border-spacing-0 overflow-x-auto text-zinc-800 dark:text-zinc-200",
+               className,
+            )}
             {...props}
          />
       );
@@ -21,7 +24,7 @@ export const THead = React.forwardRef<HTMLTableSectionElement, React.ComponentPr
          <thead
             ref={ref}
             className={cn(
-               "sticky left-0 top-0 h-9 border-b border-b-zinc-200 bg-zinc-100 dark:border-b-zinc-800 dark:bg-zinc-900",
+               "sticky left-0 top-0 z-20 h-9 border-b border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900",
                className,
             )}
             {...props}
@@ -40,7 +43,7 @@ TBody.displayName = "Tbody";
 
 export const TRow = React.forwardRef<HTMLTableRowElement, React.ComponentPropsWithoutRef<"tr">>(
    ({ className, ...props }, ref) => {
-      return <tr ref={ref} className={cn(className)} {...props} />;
+      return <tr ref={ref} className={cn("[&:last>td]:border-b-0 [&>td]:border-b", className)} {...props} />;
    },
 );
 TRow.displayName = "TRow";
@@ -51,7 +54,7 @@ export const Th = React.forwardRef<HTMLTableHeaderCellElement, React.ComponentPr
          <th
             ref={ref}
             className={cn(
-               "border-r border-r-zinc-200 px-3 font-medium last:border-r-0 dark:border-r-zinc-800",
+               "border-b border-r border-zinc-200 bg-zinc-100 px-3 font-medium last:border-r-0 dark:border-zinc-800 dark:bg-zinc-900",
                className,
             )}
             {...props}
@@ -66,7 +69,7 @@ export const Td = React.forwardRef<HTMLTableDataCellElement, React.ComponentProp
       return (
          <td
             ref={ref}
-            className={cn("truncate border-r border-r-zinc-200 px-2 last:border-r-0 dark:border-r-zinc-800", className)}
+            className={cn("truncate border-r border-zinc-200 px-2 last:border-r-0 dark:border-zinc-800", className)}
             {...props}
          />
       );
