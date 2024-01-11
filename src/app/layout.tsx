@@ -4,11 +4,11 @@ import { Inter } from "next/font/google";
 import { Aside } from "@/components/aside";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
+import { FlexDiv } from "@/components/ui/layouts";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
 import "./globals.css";
-import { FlexDiv } from "@/components/ui/layouts";
 
 const inter = Inter({ subsets: ["latin"] });
 
