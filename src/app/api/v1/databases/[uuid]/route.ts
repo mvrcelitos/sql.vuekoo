@@ -14,11 +14,28 @@ export const GET = async (request: Request, context: { params: { uuid: string } 
       client = new pg.Client({ connectionString: databases?.[context.params.uuid]?.url });
       await client.connect();
 
-      const res = await client.query(
-         "SELECT table_name FROM information_schema.tables as ist WHERE ist.table_schema = 'public' AND ist.table_type = 'BASE TABLE' ORDER BY table_name ",
-      );
+      const [tables, views] = await Promise.all([
+         client.query(
+            "SELECT table_name FROM information_schema.tables as ist WHERE ist.table_schema = 'public' AND ist.table_type = 'BASE TABLE' ORDER BY table_name ",
+         ),
+         client.query("SELECT table_name FROM information_schema.views as isv where isv.table_schema = 'public'"),
+      ]);
+      // const tables = await client.query(
+      //    "SELECT table_name FROM information_schema.tables as ist WHERE ist.table_schema = 'public' AND ist.table_type = 'BASE TABLE' ORDER BY table_name ",
+      // );
+      // const views = await client.query(
+      //    "SELECT table_name FROM information_schema.views as isv where isv.table_schema = 'public'",
+      // );
 
-      return NextResponse.json(res?.rows, { status: 200 });
+      return NextResponse.json(
+         {
+            data: {
+               tables: tables.rows.map((row) => row.table_name),
+               views: views.rows.map((row) => row.table_name),
+            },
+         },
+         { status: 200 },
+      );
    } catch (err) {
       console.error(err);
       return new Response("Internal server error", { status: 500 });
@@ -46,8 +63,6 @@ export const POST = async (request: Request, context: { params: { uuid: string }
       client.connect();
 
       const res = await client.query(body);
-
-      console.log("response: ", res);
 
       return NextResponse.json({
          meta: { count: res.rowCount },
