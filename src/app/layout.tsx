@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
 import "./globals.css";
+import { FlexDiv } from "@/components/ui/layouts";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,10 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
          <body className={cn("grid min-h-[100svh] grid-cols-1", inter.className)}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                <Header />
-               <div className="min-h-[calc(100svh-37px)] md:flex">
+               <FlexDiv className="min-h-[calc(100svh-37px)]">
                   <Aside />
                   {children}
-               </div>
+               </FlexDiv>
                <Toaster />
             </ThemeProvider>
          </body>
