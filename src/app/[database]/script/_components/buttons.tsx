@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ChevronRight, Loader2,X } from "lucide-react";
+import { ChevronRight, Loader2, RefreshCw, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -53,3 +53,16 @@ export const SubmitButton = React.forwardRef<HTMLButtonElement, SubmitButtonProp
    );
 });
 SubmitButton.displayName = "SubmitButton";
+
+export const RefreshPageButton = React.forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<typeof Button>>(
+   ({ ...props }, ref) => {
+      const { lastScript, submit } = useScriptStore();
+      return (
+         <Button ref={ref} {...props} size="xs" intent="ghost" className="gap-2" onClick={() => submit(lastScript)}>
+            <RefreshCw className="size-4 shrink-0" />
+            <p className="sm:inline">Refresh</p>
+         </Button>
+      );
+   },
+);
+RefreshPageButton.displayName = "RefreshPageButton";
