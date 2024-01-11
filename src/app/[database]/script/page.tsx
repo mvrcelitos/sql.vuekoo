@@ -2,7 +2,7 @@ import { Redo2, Undo2 } from "lucide-react";
 
 import { ScriptResult } from "@/app/[database]/script/_components/script-result";
 import { Button } from "@/components/ui/button";
-import { FlexDiv } from "@/components/ui/layouts";
+import { FlexDiv } from "@/components/ui/layout";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { ClearButton, SubmitButton } from "./_components/buttons";
