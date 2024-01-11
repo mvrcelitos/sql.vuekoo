@@ -4,7 +4,7 @@ import { Check, X } from "lucide-react";
 import * as pg from "pg";
 
 import { TableColumnHeader } from "@/components/table-column-header";
-import { TBody, THead, TRow, Table, Td, Th } from "@/components/ui/table";
+import { Table, TBody, Td, Th,THead, TRow } from "@/components/ui/table";
 
 import { Toolbar } from "./_components/toolbar";
 

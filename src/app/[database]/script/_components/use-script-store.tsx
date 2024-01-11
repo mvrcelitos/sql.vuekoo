@@ -19,7 +19,7 @@ export interface ScriptStore {
    clear: () => void;
 
    submitStatus: "idle" | "loading";
-   submit: () => Promise<boolean>;
+   submit: (script?: string) => Promise<boolean>;
 }
 
 export interface UseScriptStoreProps {
@@ -50,11 +50,12 @@ export const useScriptStore = create<ScriptStore>((set, get) => ({
    redo: () => set((state) => ({ script: state.history.pop() })),
 
    submitStatus: "idle",
-   submit: async () => {
+   submit: async (sql?: string) => {
       if (!get().database) return false;
+      const script = sql || get().script;
       try {
          set(() => ({ submitStatus: "loading" }));
-         const res = await axios.post(`/api/v1/databases/${get().database}`, get().script);
+         const res = await axios.post(`/api/v1/databases/${get().database}`, script);
          console.log(res.data);
          set(() => ({ result: res.data, submitStatus: "idle" }));
          return true;

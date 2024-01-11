@@ -34,7 +34,17 @@ export const ScriptTextArea = () => {
          onKeyDown={(ev) => {
             if (ev.key === "Enter" && ev.ctrlKey) {
                ev.preventDefault();
-               submit();
+
+               const start = ev.currentTarget.selectionStart;
+               const end = ev.currentTarget.selectionEnd;
+
+               if (start !== end) {
+                  const text = ev.currentTarget.value;
+                  if (!text) return;
+                  submit(text.slice(start, end));
+               } else {
+                  submit();
+               }
             }
          }}
       />

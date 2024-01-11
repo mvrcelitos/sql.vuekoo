@@ -3,10 +3,9 @@
 import { Check, ChevronDown, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Table, TBody, Td, Th,THead, TRow } from "@/components/ui/table";
 
 import { useScriptStore } from "./use-script-store";
-import { TBody, THead, TRow, Table, Td, Th } from "@/components/ui/table";
 
 export const ScriptResult = () => {
    const { result } = useScriptStore();
