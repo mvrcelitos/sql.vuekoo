@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils";
 import React from "react";
+
+import { cn } from "@/lib/utils";
 
 export const Table = React.forwardRef<HTMLTableElement, React.ComponentPropsWithoutRef<"table">>(
    ({ className, ...props }, ref) => {
@@ -12,6 +13,7 @@ export const Table = React.forwardRef<HTMLTableElement, React.ComponentPropsWith
       );
    },
 );
+Table.displayName = "Table";
 
 export const THead = React.forwardRef<HTMLTableSectionElement, React.ComponentPropsWithoutRef<"thead">>(
    ({ className, ...props }, ref) => {
@@ -27,18 +29,21 @@ export const THead = React.forwardRef<HTMLTableSectionElement, React.ComponentPr
       );
    },
 );
+THead.displayName = "Thead";
 
 export const TBody = React.forwardRef<HTMLTableSectionElement, React.ComponentPropsWithoutRef<"tbody">>(
    ({ className, ...props }, ref) => {
       return <tbody ref={ref} className={cn(className)} {...props} />;
    },
 );
+TBody.displayName = "Tbody";
 
 export const TRow = React.forwardRef<HTMLTableRowElement, React.ComponentPropsWithoutRef<"tr">>(
    ({ className, ...props }, ref) => {
       return <tr ref={ref} className={cn(className)} {...props} />;
    },
 );
+TRow.displayName = "TRow";
 
 export const Th = React.forwardRef<HTMLTableHeaderCellElement, React.ComponentPropsWithoutRef<"th">>(
    ({ className, ...props }, ref) => {
@@ -54,6 +59,7 @@ export const Th = React.forwardRef<HTMLTableHeaderCellElement, React.ComponentPr
       );
    },
 );
+Th.displayName = "Th";
 
 export const Td = React.forwardRef<HTMLTableDataCellElement, React.ComponentPropsWithoutRef<"td">>(
    ({ className, ...props }, ref) => {
@@ -66,3 +72,4 @@ export const Td = React.forwardRef<HTMLTableDataCellElement, React.ComponentProp
       );
    },
 );
+Td.displayName = "Td";
