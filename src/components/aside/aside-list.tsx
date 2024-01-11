@@ -36,7 +36,7 @@ import { cn } from "@/lib/utils";
 import { AsideDeleteDatabase } from "./aside-delete-database";
 import { AsideRenameDatabase } from "./aside-rename-database";
 
-export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes<HTMLUListElement>>(() => {
+export const AsideList = () => {
    const pathname = usePathname()?.split("?")?.[0];
 
    // aside context menus
@@ -86,6 +86,7 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
                            <ContextMenuTrigger>
                               <div className="flex gap-2 rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800">
                                  <AccordionTrigger
+                                    disabled={["connecting", "refreshing"].includes(db.status)}
                                     className={cn(
                                        " [&[data-state=open]>svg]:rotate-90",
                                        buttonVariants({
@@ -154,6 +155,40 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
                                                    width={16}
                                                 />
                                                 <p className="truncate text-sm">{table}</p>
+                                             </Link>
+                                          </li>
+                                       ))
+                                    )}
+                                 </ul>
+                              </AsideGroup>
+                              <AsideGroup title={"Views"} className="pl-4">
+                                 <ul
+                                    aria-orientation="vertical"
+                                    data-state={dbsOpened.includes(db.uuid) ? "open" : "closed"}
+                                    aria-expanded={dbsOpened.includes(db.uuid)}
+                                    className="grid grid-cols-1 gap-1 pl-4">
+                                    {["connecting", "refreshing"].includes(db.status) ? (
+                                       <>
+                                          <li className="h-7 animate-pulse rounded-md dark:bg-zinc-800" />
+                                          <li className="h-7 animate-pulse rounded-md dark:bg-zinc-800" />
+                                          <li className="h-7 animate-pulse rounded-md dark:bg-zinc-800" />
+                                       </>
+                                    ) : (
+                                       db.views?.map((view, index: number) => (
+                                          <li key={index}>
+                                             <Link
+                                                href={`/${db.uuid}/table/${view}`}
+                                                aria-selected={pathname == `/${db.uuid}/table/${view}`}
+                                                data-state={
+                                                   pathname == `/${db.uuid}/table/${view}` ? "selected" : "idle"
+                                                }
+                                                className="flex items-center gap-2 overflow-hidden rounded-md p-1 text-zinc-600 aria-selected:text-zinc-900 aria-selected:underline aria-selected:underline-offset-2 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:aria-selected:text-zinc-50">
+                                                <Table
+                                                   className="size-4 shrink-0 text-zinc-600 opacity-70 dark:text-zinc-300"
+                                                   height={16}
+                                                   width={16}
+                                                />
+                                                <p className="truncate text-sm">{view}</p>
                                              </Link>
                                           </li>
                                        ))
@@ -308,5 +343,4 @@ export const AsideList = React.forwardRef<HTMLUListElement, React.HTMLAttributes
          ))}
       </ul>
    );
-});
-AsideList.displayName = "AsideList";
+};
