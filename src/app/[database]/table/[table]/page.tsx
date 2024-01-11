@@ -33,7 +33,9 @@ const getTable = async (uuid: string, table: string, params: searchParamsProps) 
 
       await client.connect();
       const ordenation = params.sortType?.toLowerCase() === "desc" ? "DESC" : "ASC";
-      const res = await client.query(`SELECT * FROM ${table} ORDER BY ${params?.sort ?? 1} ${ordenation}`);
+      const res = await client.query(
+         `SELECT * FROM ${table} as t ORDER BY ${params?.sort ? `t."${params?.sort}"` : 1} ${ordenation}`,
+      );
 
       const hiddenColumns = params?.hide?.split(",") ?? [];
       res.fields = res.fields.filter((field: any) => !hiddenColumns.includes(field.name));
