@@ -32,11 +32,55 @@ export const ScriptTextArea = () => {
          onChange={(ev) => set(ev.currentTarget.value)}
          // On press ctrl+enter, submit the script
          onKeyDown={(ev) => {
+            const start = ev.currentTarget.selectionStart;
+            const end = ev.currentTarget.selectionEnd;
+
+            if (ev.key === "ArrowUp" && ev.altKey) {
+               ev.preventDefault();
+               const text = ev.currentTarget.value;
+               if (!text || start === 0) return;
+
+               const sections = text?.split("\n\n");
+
+               let startPos = 0;
+               for (const i in sections) {
+                  if (start > startPos + (sections[+i]?.length || 0)) {
+                     startPos += (sections[+i]?.length || 0) + 2;
+                     continue;
+                  }
+                  if (+i === 0) return;
+                  if ((sections[+i - 1]?.length || 0) == 0) return;
+                  startPos -= (sections[+i - 1]?.length || 0) + 2;
+                  const endPos = startPos + (sections[+i - 1]?.length || 0);
+
+                  ev.currentTarget.setSelectionRange(startPos, endPos);
+                  return;
+               }
+            }
+
+            if (ev.key === "ArrowDown" && ev.altKey) {
+               ev.preventDefault();
+               const text = ev.currentTarget.value;
+               if (!text) return;
+
+               const sections = text.split("\n\n");
+
+               let startPos = 0;
+               for (const i in sections) {
+                  if (start >= startPos) {
+                     startPos += sections[+i].length + 2;
+                     continue;
+                  }
+                  if ((sections[+i]?.length || 0) === 0) continue;
+                  const endPos = startPos + (sections[+i].length || 0);
+
+                  ev.currentTarget.setSelectionRange(startPos, endPos);
+                  return;
+               }
+            }
+
             if (ev.key === "Enter" && ev.ctrlKey) {
                ev.preventDefault();
-
-               const start = ev.currentTarget.selectionStart;
-               const end = ev.currentTarget.selectionEnd;
 
                if (start !== end) {
                   const text = ev.currentTarget.value;
