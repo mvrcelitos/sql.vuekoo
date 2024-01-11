@@ -12,13 +12,13 @@ import {
    Plug,
    RefreshCw,
    Scroll,
-   Table,
+   Table2,
    Trash2,
    Unplug,
+   View,
    X,
 } from "lucide-react";
 
-import { AsideGroup } from "@/components/aside/aside-group";
 import { AsideSeeDatabase } from "@/components/aside/aside-see-database";
 import { useDatabaseStore } from "@/components/aside/use-database-store";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion-2";
@@ -73,7 +73,7 @@ export const AsideList = () => {
       );
 
    return (
-      <ul className="modern-scroll rounded-scroll -mr-4 grid grid-cols-1 gap-1 overflow-y-auto">
+      <ul className="modern-scroll rounded-scroll -mr-4 grid grid-cols-1 overflow-y-auto">
          {Object.values(databases)?.map((db: DatabaseType, index: number) => (
             <Dialog
                key={db.uuid}
@@ -83,8 +83,8 @@ export const AsideList = () => {
                   <ContextMenu>
                      <li aria-orientation="vertical" className="flex flex-col gap-1 rounded-lg pr-4">
                         <AccordionItem value={db.uuid}>
-                           <ContextMenuTrigger>
-                              <div className="flex gap-2 rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800">
+                           <ContextMenuTrigger asChild>
+                              <div className="flex items-center gap-2 overflow-hidden rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800">
                                  <AccordionTrigger
                                     disabled={["connecting", "refreshing"].includes(db.status)}
                                     className={cn(
@@ -126,21 +126,38 @@ export const AsideList = () => {
                                  </div>
                               </div>
                            </ContextMenuTrigger>
-                           <AccordionContent>
-                              <AsideGroup title={"Tables"} className="pl-4">
-                                 <ul
-                                    aria-orientation="vertical"
-                                    data-state={dbsOpened.includes(db.uuid) ? "open" : "closed"}
-                                    aria-expanded={dbsOpened.includes(db.uuid)}
-                                    className="grid grid-cols-1 gap-1 pl-4">
-                                    {["connecting", "refreshing"].includes(db.status) ? (
-                                       <>
-                                          <li className="h-7 animate-pulse rounded-md dark:bg-zinc-800" />
-                                          <li className="h-7 animate-pulse rounded-md dark:bg-zinc-800" />
-                                          <li className="h-7 animate-pulse rounded-md dark:bg-zinc-800" />
-                                       </>
-                                    ) : (
-                                       db.tables?.map((table, index: number) => (
+                           <AccordionContent forceMount>
+                              <AccordionItem value="tables" className="pl-4">
+                                 <div className="flex items-center gap-2 overflow-hidden rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800">
+                                    <AccordionTrigger
+                                       className={cn(
+                                          " [&[data-state=open]>svg]:rotate-90",
+                                          buttonVariants({
+                                             intent: "ghost",
+                                             size: "icon-custom",
+                                          }),
+                                          "size-6 hover:bg-zinc-300 focus-visible:bg-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700",
+                                       )}>
+                                       <ChevronRight
+                                          className={cn("size-4 shrink-0 duration-150", false && "rotate-90")}
+                                          height={16}
+                                          width={16}
+                                       />
+                                    </AccordionTrigger>
+                                    <p className="grow truncate text-sm font-medium text-zinc-700 dark:text-zinc-200">
+                                       Tables{" "}
+                                       <span className="text-xs font-normal opacity-70">{`(${db?.tables?.length})`}</span>
+                                    </p>
+                                    {/* <Table2 className="ml-auto mr-1 size-4 shrink-0 opacity-50" size={16} /> */}
+                                 </div>
+                                 <AccordionContent>
+                                    <ul aria-orientation="vertical" className="grid grid-cols-1 gap-1 pl-4">
+                                       {!db?.tables?.length && (
+                                          <li className="-mt-1 truncate rounded-md px-3 py-1 text-xs text-zinc-500 dark:text-zinc-400">
+                                             No tables found
+                                          </li>
+                                       )}
+                                       {db?.tables?.map((table, index: number) => (
                                           <li key={index}>
                                              <Link
                                                 href={`/${db.uuid}/table/${table}`}
@@ -148,33 +165,55 @@ export const AsideList = () => {
                                                 data-state={
                                                    pathname == `/${db.uuid}/table/${table}` ? "selected" : "idle"
                                                 }
-                                                className="flex items-center gap-2 overflow-hidden rounded-md p-1 text-zinc-600 aria-selected:text-zinc-900 aria-selected:underline aria-selected:underline-offset-2 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:aria-selected:text-zinc-50">
-                                                <Table
-                                                   className="size-4 shrink-0 text-zinc-600 opacity-70 dark:text-zinc-300"
+                                                className="flex items-center gap-2 overflow-hidden rounded-md p-1 text-zinc-600 aria-selected:font-medium aria-selected:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:aria-selected:text-zinc-50">
+                                                <Table2
+                                                   className={cn(
+                                                      "size-4 shrink-0",
+                                                      pathname == `/${db.uuid}/table/${table}`
+                                                         ? "text-primary"
+                                                         : "opacity-70",
+                                                   )}
                                                    height={16}
                                                    width={16}
                                                 />
                                                 <p className="truncate text-sm">{table}</p>
                                              </Link>
                                           </li>
-                                       ))
-                                    )}
-                                 </ul>
-                              </AsideGroup>
-                              <AsideGroup title={"Views"} className="pl-4">
-                                 <ul
-                                    aria-orientation="vertical"
-                                    data-state={dbsOpened.includes(db.uuid) ? "open" : "closed"}
-                                    aria-expanded={dbsOpened.includes(db.uuid)}
-                                    className="grid grid-cols-1 gap-1 pl-4">
-                                    {["connecting", "refreshing"].includes(db.status) ? (
-                                       <>
-                                          <li className="h-7 animate-pulse rounded-md dark:bg-zinc-800" />
-                                          <li className="h-7 animate-pulse rounded-md dark:bg-zinc-800" />
-                                          <li className="h-7 animate-pulse rounded-md dark:bg-zinc-800" />
-                                       </>
-                                    ) : (
-                                       db.views?.map((view, index: number) => (
+                                       ))}
+                                    </ul>
+                                 </AccordionContent>
+                              </AccordionItem>
+                              <AccordionItem value="tables" className="flex flex-col gap-1 overflow-hidden pl-4">
+                                 <div className="flex items-center gap-2 overflow-hidden rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800">
+                                    <AccordionTrigger
+                                       className={cn(
+                                          " [&[data-state=open]>svg]:rotate-90",
+                                          buttonVariants({
+                                             intent: "ghost",
+                                             size: "icon-custom",
+                                          }),
+                                          "size-6 hover:bg-zinc-300 focus-visible:bg-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700",
+                                       )}>
+                                       <ChevronRight
+                                          className={cn("size-4 shrink-0 duration-150", false && "rotate-90")}
+                                          height={16}
+                                          width={16}
+                                       />
+                                    </AccordionTrigger>
+                                    <p className="grow truncate text-sm font-medium text-zinc-700 dark:text-zinc-200">
+                                       Views{" "}
+                                       <span className="text-xs font-normal opacity-70">{`(${db?.views?.length})`}</span>
+                                    </p>
+                                    {/* <View className="ml-auto mr-1 size-4 shrink-0 opacity-50" size={16} /> */}
+                                 </div>
+                                 <AccordionContent>
+                                    <ul aria-orientation="vertical" className="grid grid-cols-1 gap-1 pl-4">
+                                       {!db?.views?.length && (
+                                          <li className="-mt-1 truncate rounded-md px-3 py-1 text-xs text-zinc-500 dark:text-zinc-400">
+                                             No views found
+                                          </li>
+                                       )}
+                                       {db?.views?.map((view, index: number) => (
                                           <li key={index}>
                                              <Link
                                                 href={`/${db.uuid}/table/${view}`}
@@ -182,69 +221,25 @@ export const AsideList = () => {
                                                 data-state={
                                                    pathname == `/${db.uuid}/table/${view}` ? "selected" : "idle"
                                                 }
-                                                className="flex items-center gap-2 overflow-hidden rounded-md p-1 text-zinc-600 aria-selected:text-zinc-900 aria-selected:underline aria-selected:underline-offset-2 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:aria-selected:text-zinc-50">
-                                                <Table
-                                                   className="size-4 shrink-0 text-zinc-600 opacity-70 dark:text-zinc-300"
-                                                   height={16}
-                                                   width={16}
+                                                className="flex items-center gap-2 overflow-hidden rounded-md p-1 text-zinc-600 hover:bg-zinc-200 aria-selected:font-medium aria-selected:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:aria-selected:text-zinc-50">
+                                                <View
+                                                   className={cn(
+                                                      "size-4 shrink-0",
+                                                      pathname == `/${db.uuid}/table/${view}`
+                                                         ? "text-primary"
+                                                         : "opacity-70",
+                                                   )}
+                                                   size={16}
                                                 />
                                                 <p className="truncate text-sm">{view}</p>
                                              </Link>
                                           </li>
-                                       ))
-                                    )}
-                                 </ul>
-                              </AsideGroup>
+                                       ))}
+                                    </ul>
+                                 </AccordionContent>
+                              </AccordionItem>
                            </AccordionContent>
                         </AccordionItem>
-                        {/* <AsideGroup
-                           title={db.name}
-                           description={db?.url}
-                           forceMount
-                           renderOutside
-                           status={
-                              ["connecting", "refreshing"].includes(db.status)
-                                 ? "loading"
-                                 : db.status === "error"
-                                   ? "error"
-                                   : "ok"
-                           }
-                           onSelect={async (ev) => {
-                              if (db.status == "disconnected") await connect(db.uuid);
-                           }}>
-                           <AsideGroup title={"Tables"} className="pl-4">
-                              <ul
-                                 aria-orientation="vertical"
-                                 data-state={dbsOpened.includes(db.uuid) ? "open" : "closed"}
-                                 aria-expanded={dbsOpened.includes(db.uuid)}
-                                 className="grid grid-cols-1 gap-1 pl-4">
-                                 {["connecting", "refreshing"].includes(db.status) ? (
-                                    <>
-                                       <li className="h-7 animate-pulse rounded-md dark:bg-zinc-800" />
-                                       <li className="h-7 animate-pulse rounded-md dark:bg-zinc-800" />
-                                       <li className="h-7 animate-pulse rounded-md dark:bg-zinc-800" />
-                                    </>
-                                 ) : (
-                                    db.tables?.map((table, index: number) => (
-                                       <li key={index}>
-                                          <Link
-                                             href={`/${db.uuid}/table/${table}`}
-                                             aria-selected={pathname == `/${db.uuid}/table/${table}`}
-                                             data-state={pathname == `/${db.uuid}/table/${table}` ? "selected" : "idle"}
-                                             className="flex items-center gap-2 overflow-hidden rounded-md p-1 text-zinc-600 aria-selected:text-zinc-900 aria-selected:underline aria-selected:underline-offset-2 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:aria-selected:text-zinc-50">
-                                             <Table
-                                                className="size-4 shrink-0 text-zinc-600 opacity-70 dark:text-zinc-300"
-                                                height={16}
-                                                width={16}
-                                             />
-                                             <p className="truncate text-sm">{table}</p>
-                                          </Link>
-                                       </li>
-                                    ))
-                                 )}
-                              </ul>
-                           </AsideGroup>
-                        </AsideGroup> */}
                      </li>
                      <ContextMenuContent>
                         <ContextMenuItem disabled={db.status !== "disconnected"} onSelect={() => connect(db.uuid)}>
