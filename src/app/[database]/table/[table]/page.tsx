@@ -1,13 +1,12 @@
 import React from "react";
 import { cookies } from "next/headers";
-import { Check, ChevronDown, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import * as pg from "pg";
 
-import { Button } from "@/components/ui/button";
+import { TableColumnHeader } from "@/components/table-column-header";
 import { cn } from "@/lib/utils";
 
 import { Toolbar } from "./_components/toolbar";
-import { TableColumnHeader } from "@/components/table-column-header";
 
 // export const revalidate = 60;
 
