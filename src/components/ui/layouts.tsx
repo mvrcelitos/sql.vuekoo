@@ -1,6 +1,7 @@
-import { cn } from "@/lib/utils";
-import { VariantProps, cva } from "cva";
 import React from "react";
+import { cva, VariantProps } from "cva";
+
+import { cn } from "@/lib/utils";
 
 export const Center = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>(
    ({ className, ...props }, ref) => {
@@ -9,6 +10,7 @@ export const Center = React.forwardRef<HTMLDivElement, React.ComponentPropsWitho
       );
    },
 );
+Center.displayName = "Center";
 
 export const flexVariants = cva({
    base: "flex overflow-hidden",
@@ -30,3 +32,4 @@ export const FlexDiv = React.forwardRef<HTMLDivElement, FlexProps>(({ className,
       <div data-orientation={orientation} ref={ref} className={flexVariants({ orientation, className })} {...props} />
    );
 });
+FlexDiv.displayName = "FlexDiv";
