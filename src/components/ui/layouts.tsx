@@ -30,15 +30,3 @@ export const FlexDiv = React.forwardRef<HTMLDivElement, FlexProps>(({ className,
       <div data-orientation={orientation} ref={ref} className={flexVariants({ orientation, className })} {...props} />
    );
 });
-
-export const Column = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>(
-   ({ className, ...props }, ref) => {
-      return <div ref={ref} className={cn("flex flex-col overflow-hidden", className)} {...props} />;
-   },
-);
-
-export const Row = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>(
-   ({ className, ...props }, ref) => {
-      return <div ref={ref} className={cn("flex items-center overflow-hidden", className)} {...props} />;
-   },
-);
