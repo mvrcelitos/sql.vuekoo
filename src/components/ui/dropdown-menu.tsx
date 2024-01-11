@@ -49,16 +49,12 @@ export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
 export const DropdownMenuSubTrigger = React.forwardRef<
    React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
-   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
-      inset?: boolean;
-   }
->(({ className, inset, children, ...props }, ref) => (
+   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> &
+      VariantProps<typeof dropdownMenuItemsVariants>
+>(({ intent, className, children, ...props }, ref) => (
    <DropdownMenuPrimitive.SubTrigger
       ref={ref}
-      className={cn(
-         "flex cursor-default select-none items-center rounded px-2 py-1 pr-1 text-sm outline-none focus:bg-zinc-200 focus:text-zinc-900 data-[state=open]:bg-zinc-200 data-[state=open]:text-zinc-900 dark:focus:bg-zinc-800 dark:focus:text-zinc-50 dark:data-[state=open]:bg-zinc-800 dark:data-[state=open]:text-zinc-50",
-         className,
-      )}
+      className={cn(cn(dropdownMenuItemsVariants({ intent, className })), "pr-1", className)}
       {...props}>
       {children}
       <ChevronRight className="ml-auto h-4 w-4 opacity-70" />
