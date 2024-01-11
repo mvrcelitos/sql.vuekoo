@@ -7,6 +7,7 @@ import { create } from "zustand";
 
 export interface ScriptStore {
    script: string;
+   lastScript: string;
    history: any[];
    result: Record<string, any> | null;
 
@@ -28,6 +29,7 @@ export interface UseScriptStoreProps {
 
 export const useScriptStore = create<ScriptStore>((set, get) => ({
    script: "",
+   lastScript: "",
    history: [],
    result: null,
 
@@ -53,6 +55,7 @@ export const useScriptStore = create<ScriptStore>((set, get) => ({
    submit: async (sql?: string) => {
       if (!get().database) return false;
       const script = sql || get().script;
+      set(() => ({ lastScript: script }));
       try {
          set(() => ({ submitStatus: "loading" }));
          const res = await axios.post(`/api/v1/databases/${get().database}`, script);
