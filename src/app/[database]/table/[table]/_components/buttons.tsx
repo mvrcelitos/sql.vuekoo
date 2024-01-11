@@ -11,6 +11,7 @@ import {
    DropdownMenu,
    DropdownMenuContent,
    DropdownMenuItem,
+   DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SearchParamsManager } from "@/lib/search-params";
@@ -108,6 +109,15 @@ export const VisibilityColumnsButton = () => {
                   {column}
                </DropdownMenuItem>
             ))}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+               onClick={() => {
+                  const searchParamsManager = new SearchParamsManager();
+                  searchParamsManager.delete("hide");
+                  router.push(`?${searchParamsManager.toString()}`);
+               }}>
+               Clear all
+            </DropdownMenuItem>
          </DropdownMenuContent>
       </DropdownMenu>
    );
