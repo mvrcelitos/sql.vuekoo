@@ -7,6 +7,7 @@ import { TableColumnHeader } from "@/components/table-column-header";
 import { cn } from "@/lib/utils";
 
 import { Toolbar } from "./_components/toolbar";
+import { Td } from "@/components/ui/table";
 
 // export const revalidate = 60;
 
@@ -70,27 +71,37 @@ export default async function Page({ params, searchParams }: { params: paramsPro
                         key={index}>
                         {table?.fields?.map((field: any, index: number) => {
                            const cell = row[field.name];
-                           return (
-                              <td
-                                 className={cn(
-                                    "truncate border-r border-r-zinc-200 px-2 last:border-r-0 dark:border-r-zinc-800",
-                                    typeof cell == "number" && "text-right",
-                                    typeof cell == "object" && cell?.constructor?.name === "Date" && "text-right",
-                                 )}
-                                 key={field.columnID}>
-                                 {typeof cell === "boolean" &&
-                                    (cell ? (
-                                       <Check className="mx-auto h-5 w-5 shrink-0" size={20} />
-                                    ) : (
-                                       <X className="mx-auto h-5 w-5 shrink-0" size={20} />
-                                    ))}
-                                 {typeof cell == "object" &&
-                                    (cell?.constructor?.name === "Date"
-                                       ? (cell as Date).toLocaleString()
-                                       : JSON.stringify(cell))}
-                                 {["string", "number"].includes(typeof cell) ? cell : ""}
-                              </td>
-                           );
+                           switch (cell?.constructor?.name) {
+                              case "Date":
+                                 return (
+                                    <Td key={field.columnID} className="text-right">
+                                       {(cell as Date).toLocaleString()}
+                                    </Td>
+                                 );
+                              case "Number":
+                                 return (
+                                    <Td key={field.columnID} className="text-right">
+                                       {(cell as Date).toLocaleString()}
+                                    </Td>
+                                 );
+                              case "String":
+                                 return <Td key={field.columnID}>{cell}</Td>;
+                              case "Boolean":
+                                 const Icon = cell ? Check : X;
+                                 return (
+                                    <Td key={field.columnID}>
+                                       <Icon className="mx-auto size-5 shrink-0" size={20} />
+                                    </Td>
+                                 );
+                              default:
+                                 if (cell === null)
+                                    return (
+                                       <Td key={field.columnID} className="text-center opacity-50">
+                                          {"[NULL]"}
+                                       </Td>
+                                    );
+                                 return <Td key={field.columnID}>{cell}</Td>;
+                           }
                         })}
                      </tr>
                   ))}
