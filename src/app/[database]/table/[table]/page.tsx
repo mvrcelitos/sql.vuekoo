@@ -61,7 +61,7 @@ export default async function Page({ params, searchParams }: { params: paramsPro
             <Table className="h-fit w-full overflow-auto text-sm">
                <THead className="sticky left-0 top-0 h-9 border-b border-b-zinc-200 bg-zinc-100 text-zinc-700 dark:border-b-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
                   <TRow>
-                     <Th className="sticky left-0 z-10 border-zinc-300 bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800">
+                     <Th className="sticky left-0 z-10 w-0 border-zinc-300 bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800">
                         #
                      </Th>
                      {table?.fields?.map((field: any) => (
@@ -76,7 +76,7 @@ export default async function Page({ params, searchParams }: { params: paramsPro
                      <TRow
                         className="h-7 border-b border-b-zinc-200 hover:bg-zinc-100 hover:text-zinc-950 dark:border-b-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
                         key={index}>
-                        <Td className="sticky left-0 z-10 bg-zinc-100 dark:bg-zinc-900">{index + 1}</Td>
+                        <Td className="sticky left-0 z-10 w-0 bg-zinc-100 dark:bg-zinc-900">{index + 1}</Td>
                         {table?.fields?.map((field: any, index: number) => {
                            const cell = row[field.name];
                            switch (cell?.constructor?.name) {
