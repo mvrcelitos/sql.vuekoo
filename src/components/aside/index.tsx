@@ -14,7 +14,7 @@ export const Aside = () => {
          <FlexDiv orientation="vertical" className="w-full overflow-y-auto px-3">
             <FlexDiv
                orientation="vertical"
-               className="sticky top-0 z-10 h-auto gap-2 bg-zinc-100 py-3 dark:bg-zinc-900">
+               className="sticky top-0 z-10 h-auto shrink-0 gap-2 bg-zinc-100 py-3 dark:bg-zinc-900">
                <div className="flex items-center justify-between">
                   <h4 className="text-sm font-semibold">Your databases</h4>
                   <AsideCreateDatabaseForm />
