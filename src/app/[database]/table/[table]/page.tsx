@@ -56,9 +56,9 @@ export default async function Page({ params, searchParams }: { params: paramsPro
    const table = await getTable(params.database, params.table, searchParams);
 
    return (
-      <Flex orientation="vertical">
+      <Flex child="main" orientation="vertical">
          <TableWrapper>
-            <Table className="h-fit w-full overflow-auto text-sm">
+            <Table>
                <THead className="sticky left-0 top-0 h-9 border-b border-b-zinc-200 bg-zinc-100 text-zinc-700 dark:border-b-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
                   <TRow>
                      <Th className="sticky left-0 z-10 w-0 border-zinc-300 bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800">
