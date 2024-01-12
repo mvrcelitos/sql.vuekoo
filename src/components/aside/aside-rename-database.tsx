@@ -24,10 +24,7 @@ export const AsideRenameDatabase = ({ defaultValues, onRename }: AsideRenameData
             <DialogTitle>Rename the database</DialogTitle>
             <DialogDescription>Enter the new name of the database</DialogDescription>
          </DialogHeader>
-         <Form
-            form={form}
-            className="grid max-h-[75svh] grid-cols-1 gap-2 md:gap-4"
-            onSubmit={form.handleSubmit(onRename)}>
+         <Form form={form} className="max-h-[75svh]" onSubmit={form.handleSubmit(onRename)}>
             <FormField name="name">
                <FormLabel>Name</FormLabel>
                <FormInput />

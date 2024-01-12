@@ -2,13 +2,19 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 
+export const TableWrapper = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>(
+   ({ className, ...props }, ref) => {
+      return <div ref={ref} {...props} className={cn("modern-scroll w-full grow overflow-x-auto")}></div>;
+   },
+);
+
 export const Table = React.forwardRef<HTMLTableElement, React.ComponentPropsWithoutRef<"table">>(
    ({ className, ...props }, ref) => {
       return (
          <table
             ref={ref}
             className={cn(
-               "modern-scroll w-full border-separate border-spacing-0 overflow-x-auto text-zinc-800 dark:text-zinc-200",
+               "w-full border-separate border-spacing-0 overflow-x-auto text-zinc-800 dark:text-zinc-200",
                className,
             )}
             {...props}

@@ -1,14 +1,14 @@
 import React from "react";
 import { cva, VariantProps } from "cva";
-
+import { cn } from "@/lib/utils";
 
 export const flexDivVariants = cva({
-   base: "flex overflow-hidden",
+   base: "flex flex-initial overflow-hidden",
    variants: {
       orientation: {
          horizontal: "flex-row w-full",
          vertical: "flex-col h-full",
-         center: "items-center justify-center",
+         center: "items-center justify-center w-full h-full",
       },
    },
    defaultVariants: {
@@ -16,18 +16,23 @@ export const flexDivVariants = cva({
    },
 });
 
-export interface FlexDivProps extends React.ComponentPropsWithoutRef<"div">, VariantProps<typeof flexDivVariants> {}
+export interface FlexDivProps extends React.ComponentPropsWithoutRef<"div">, VariantProps<typeof flexDivVariants> {
+   child?: "main" | "div" | "section" | "article" | "aside" | "header" | "footer" | "nav";
+}
 
-export const FlexDiv = React.forwardRef<HTMLDivElement, FlexDivProps>(({ className, orientation, ...props }, ref) => {
-   return (
-      <div
-         data-orientation={orientation}
-         ref={ref}
-         className={flexDivVariants({ orientation, className })}
-         {...props}
-      />
-   );
-});
+export const FlexDiv = React.forwardRef<HTMLDivElement, FlexDivProps>(
+   ({ className, orientation, child, ...props }, ref) => {
+      const Comp = child ?? "div";
+      return (
+         <Comp
+            data-orientation={orientation}
+            ref={ref}
+            className={cn(flexDivVariants({ orientation }), className)}
+            {...props}
+         />
+      );
+   },
+);
 FlexDiv.displayName = "FlexDiv";
 
 export const gridDivVariants = cva({
@@ -43,16 +48,21 @@ export const gridDivVariants = cva({
    },
 });
 
-export interface GridDivProps extends React.ComponentPropsWithoutRef<"div">, VariantProps<typeof flexDivVariants> {}
+export interface GridDivProps extends React.ComponentPropsWithoutRef<"div">, VariantProps<typeof gridDivVariants> {
+   child?: "main" | "div" | "section" | "article" | "aside" | "header" | "footer" | "nav";
+}
 
-export const GridDiv = React.forwardRef<HTMLDivElement, FlexDivProps>(({ className, orientation, ...props }, ref) => {
-   return (
-      <div
-         data-orientation={orientation}
-         ref={ref}
-         className={flexDivVariants({ orientation, className })}
-         {...props}
-      />
-   );
-});
+export const GridDiv = React.forwardRef<HTMLDivElement, GridDivProps>(
+   ({ className, orientation, child, ...props }, ref) => {
+      const Comp = child ?? "div";
+      return (
+         <Comp
+            data-orientation={orientation}
+            ref={ref}
+            className={cn(gridDivVariants({ orientation }), className)}
+            {...props}
+         />
+      );
+   },
+);
 GridDiv.displayName = "GridDiv";

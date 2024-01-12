@@ -4,9 +4,10 @@ import { Check, X } from "lucide-react";
 import * as pg from "pg";
 
 import { TableColumnHeader } from "@/components/table-column-header";
-import { Table, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
+import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 
 import { Toolbar } from "./_components/toolbar";
+import { FlexDiv } from "@/components/ui/layout";
 
 // export const revalidate = 60;
 
@@ -55,8 +56,8 @@ export default async function Page({ params, searchParams }: { params: paramsPro
    const table = await getTable(params.database, params.table, searchParams);
 
    return (
-      <div className="grid w-full grid-cols-1">
-         <div className="modern-scroll h-[calc(100dvh-37px-40px)] max-h-[calc(100dvh-37px-40px)] w-full overflow-x-auto">
+      <FlexDiv orientation="vertical">
+         <TableWrapper>
             <Table className="h-fit w-full overflow-auto text-sm">
                <THead className="sticky left-0 top-0 h-9 border-b border-b-zinc-200 bg-zinc-100 text-zinc-700 dark:border-b-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
                   <TRow>
@@ -114,8 +115,8 @@ export default async function Page({ params, searchParams }: { params: paramsPro
                   ))}
                </TBody>
             </Table>
-         </div>
+         </TableWrapper>
          <Toolbar rows={table?.rowCount ?? undefined} />
-      </div>
+      </FlexDiv>
    );
 }

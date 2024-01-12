@@ -62,7 +62,7 @@ export const AsideCreateDatabaseForm = () => {
             </DialogHeader>
             <Form
                form={form}
-               className="grid max-h-[75svh] grid-cols-1 gap-2 md:gap-4"
+               className="max-h-[75svh]"
                onSubmit={form.handleSubmit((d) => {
                   add(d);
                   setOpen(false);

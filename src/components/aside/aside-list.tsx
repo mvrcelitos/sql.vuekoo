@@ -35,6 +35,7 @@ import { cn } from "@/lib/utils";
 
 import { AsideDeleteDatabase } from "./aside-delete-database";
 import { AsideRenameDatabase } from "./aside-rename-database";
+import { FlexDiv } from "@/components/ui/layout";
 
 export const AsideList = () => {
    const pathname = usePathname()?.split("?")?.[0];
@@ -53,7 +54,7 @@ export const AsideList = () => {
 
    if (Object.values(databases).length == 0)
       return (
-         <div className="mx-auto flex h-full flex-col items-center justify-center gap-2 py-4">
+         <div className="mx-auto flex h-full flex-col items-center justify-center gap-2 py-4 pb-3">
             <p className="text-sm text-zinc-700 dark:text-zinc-200">No databases found</p>
             <Button
                size="xs"
@@ -73,7 +74,7 @@ export const AsideList = () => {
       );
 
    return (
-      <ul className="modern-scroll rounded-scroll -mr-4 grid grid-cols-1 overflow-y-auto">
+      <ul className="flex w-full flex-col pb-3">
          {Object.values(databases)?.map((db: DatabaseType, index: number) => (
             <Dialog
                key={db.uuid}
@@ -116,14 +117,15 @@ export const AsideList = () => {
                                        />
                                     )}
                                  </AccordionTrigger>
-                                 <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 overflow-hidden">
-                                    <p className="grow truncate text-sm font-medium text-zinc-700 dark:text-zinc-200">
+
+                                 <FlexDiv className="items-center gap-2">
+                                    <p className="shrink-0 grow truncate text-sm font-medium text-zinc-700 dark:text-zinc-200">
                                        {db.name}
                                     </p>
                                     <p className="truncate text-xs text-zinc-400 empty:w-0 dark:text-zinc-500">
                                        {db.url}
                                     </p>
-                                 </div>
+                                 </FlexDiv>
                               </div>
                            </ContextMenuTrigger>
                            <AccordionContent forceMount>

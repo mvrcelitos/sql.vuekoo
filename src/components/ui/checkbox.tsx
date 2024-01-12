@@ -24,7 +24,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({ className,
             }}
             {...props}
          />
-         <div className="ease-[cubic-bezier(.18,.89,.32,1.28)] pointer-events-none absolute inset-0 grid scale-0 grid-cols-1 place-items-center rounded-full duration-200 peer-checked:scale-100">
+         <div className="ease-[cubic-bezier(.18,.89,.32,1.28)] pointer-events-none absolute inset-0 flex scale-0 items-center justify-center rounded-full duration-200 peer-checked:scale-100">
             <Check className="aspect-square h-3 w-3 shrink-0 text-zinc-50 dark:text-zinc-900" height={12} width={12} />
          </div>
       </div>

@@ -23,7 +23,7 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(({ className, ...pr
             }}
             {...props}
          />
-         <div className="ease-[cubic-bezier(.18,.89,.32,1.28)] pointer-events-none absolute inset-1 grid scale-0 grid-cols-1 place-items-center rounded-full duration-100 peer-checked:scale-100 peer-checked:bg-zinc-700 dark:peer-checked:bg-zinc-100" />
+         <div className="ease-[cubic-bezier(.18,.89,.32,1.28)] pointer-events-none absolute inset-1 scale-0 rounded-full duration-100 peer-checked:scale-100 peer-checked:bg-zinc-700 dark:peer-checked:bg-zinc-100" />
       </div>
    );
 });

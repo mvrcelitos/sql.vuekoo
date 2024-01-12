@@ -23,10 +23,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
    return (
       <html lang="en">
-         <body className={cn("grid min-h-[100svh] grid-cols-1", inter.className)}>
+         <body className={cn("flex h-dvh max-h-lvh min-h-svh flex-col overflow-hidden", inter.className)}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                <Header />
-               <FlexDiv className="min-h-[calc(100svh-37px)]">
+               <FlexDiv className="md:flxe-nowrap min-h-[calc(100svh-37px)] flex-wrap">
                   <Aside />
                   {children}
                </FlexDiv>

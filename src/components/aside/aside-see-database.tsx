@@ -2,13 +2,7 @@
 
 import { useForm } from "react-hook-form";
 
-import {
-   Form,
-   FormField,
-   FormInput,
-   FormLabel,
-   FormRadio,
-} from "@/components/form-components";
+import { Form, FormField, FormInput, FormLabel, FormRadio } from "@/components/form-components";
 import { DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export interface AsideSeeDatabaseReturn {
@@ -33,7 +27,7 @@ export const AsideSeeDatabase = ({ values, onClose }: AsideSeeDatabaseProps) => 
          </DialogHeader>
          <Form
             form={form}
-            className="grid max-h-[75svh] grid-cols-1 gap-2 md:gap-4"
+            className="max-h-[75svh]"
             onSubmit={(ev) => {
                ev.stopPropagation();
                ev.preventDefault();

@@ -5,8 +5,9 @@ import { Check, ChevronDown, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Table, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 
-import { Toolbar } from "./toolbar";
+import { ScriptResultToolbar } from "./script-result-toolbar";
 import { useScriptStore } from "./use-script-store";
+import { FlexDiv } from "@/components/ui/layout";
 
 export const ScriptResult = () => {
    const { result } = useScriptStore();
@@ -14,7 +15,7 @@ export const ScriptResult = () => {
    if (!result) return null;
 
    return (
-      <div className="-mx-6 -mb-6 flex h-full max-h-[calc(100%+1.5rem)] w-[calc(100%+3rem)] flex-col overflow-hidden">
+      <FlexDiv orientation="vertical" className="max-h-full w-full overflow-hidden">
          <div className="modern-scroll h-auto w-full overflow-x-auto border-t border-t-zinc-200 dark:border-t-zinc-800">
             <Table className="h-fit w-full overflow-auto text-sm ">
                <THead>
@@ -80,7 +81,7 @@ export const ScriptResult = () => {
                </TBody>
             </Table>
          </div>
-         <Toolbar rows={result?.data?.rows?.length || 0} />
-      </div>
+         <ScriptResultToolbar rows={result?.data?.rows?.length || 0} />
+      </FlexDiv>
    );
 };
