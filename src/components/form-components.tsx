@@ -189,7 +189,6 @@ const FormInput = ({ className, name, ...props }: InputProps) => {
       <Input
          aria-invalid={!!error}
          aria-describedby={`${name ?? fieldName}-input`}
-         intent="primary"
          {...props}
          {...registered}
          className={cn(className, error && "border-red-500 dark:border-red-600")}
@@ -210,7 +209,6 @@ const FormPassword = ({ className, name, ...props }: InputProps) => {
       <InputPassword
          aria-invalid={!!error}
          aria-describedby={`${name ?? fieldName}-input`}
-         intent="primary"
          {...props}
          {...registered}
          className={cn(className, error && "border-red-500 dark:border-red-600")}
