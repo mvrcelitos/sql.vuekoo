@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
          <body className={cn("flex h-dvh max-h-lvh min-h-svh flex-col overflow-hidden", inter.className)}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                <Header />
-               <FlexDiv className="md:flxe-nowrap min-h-[calc(100svh-37px)] flex-wrap">
+               <FlexDiv className="min-h-[calc(100svh-37px)] flex-wrap md:flex-nowrap">
                   <Aside />
                   {children}
                </FlexDiv>
