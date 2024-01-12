@@ -3,7 +3,7 @@
 import { Check, ChevronDown, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Table, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
+import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 
 import { ScriptResultToolbar } from "./script-result-toolbar";
 import { useScriptStore } from "./use-script-store";
@@ -16,7 +16,7 @@ export const ScriptResult = () => {
 
    return (
       <FlexDiv orientation="vertical" className="max-h-full w-full overflow-hidden">
-         <div className="modern-scroll h-auto w-full overflow-x-auto border-t border-t-zinc-200 dark:border-t-zinc-800">
+         <TableWrapper className="border-t  border-t-zinc-200 dark:border-t-zinc-800">
             <Table className="h-fit w-full overflow-auto text-sm ">
                <THead>
                   <TRow>
@@ -80,7 +80,7 @@ export const ScriptResult = () => {
                   ))}
                </TBody>
             </Table>
-         </div>
+         </TableWrapper>
          <ScriptResultToolbar rows={result?.data?.rows?.length || 0} />
       </FlexDiv>
    );
