@@ -20,7 +20,7 @@ const textAreaVariants = cva({
       },
    },
    defaultVariants: {
-      intent: "default",
+      intent: "primary",
    },
 });
 
