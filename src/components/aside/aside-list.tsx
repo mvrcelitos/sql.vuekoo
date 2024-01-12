@@ -50,8 +50,6 @@ export const AsideList = () => {
       get();
    }, []);
 
-   const [dbsOpened, setDbsOpened] = React.useState<string[]>([]);
-
    if (Object.values(databases).length == 0)
       return (
          <div className="mx-auto flex h-full flex-col items-center justify-center gap-2 py-4 pb-3">
@@ -252,7 +250,6 @@ export const AsideList = () => {
                            disabled={db.status !== "connected"}
                            onSelect={() => {
                               close(db.uuid);
-                              setDbsOpened((x) => x.filter((y) => y !== db.uuid));
                            }}>
                            <Unplug className="mr-2 size-4 shrink-0" height={16} width={16} />
                            Close
