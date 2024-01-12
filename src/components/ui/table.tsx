@@ -7,6 +7,7 @@ export const TableWrapper = React.forwardRef<HTMLDivElement, React.ComponentProp
       return <div ref={ref} {...props} className={cn("modern-scroll w-full grow overflow-x-auto")}></div>;
    },
 );
+TableWrapper.displayName = "TableWrapper";
 
 export const Table = React.forwardRef<HTMLTableElement, React.ComponentPropsWithoutRef<"table">>(
    ({ className, ...props }, ref) => {
