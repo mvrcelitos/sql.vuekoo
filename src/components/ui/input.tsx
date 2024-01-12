@@ -26,7 +26,7 @@ export const inputVariants = cva({
       },
    },
    defaultVariants: {
-      intent: "default",
+      intent: "primary",
       size: "default",
    },
 });
