@@ -4,10 +4,10 @@ import { Check, X } from "lucide-react";
 import * as pg from "pg";
 
 import { TableColumnHeader } from "@/components/table-column-header";
+import { FlexDiv } from "@/components/ui/layout";
 import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 
 import { Toolbar } from "./_components/toolbar";
-import { FlexDiv } from "@/components/ui/layout";
 
 // export const revalidate = 60;
 

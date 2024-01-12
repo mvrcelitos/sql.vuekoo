@@ -3,11 +3,11 @@
 import { Check, ChevronDown, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { FlexDiv } from "@/components/ui/layout";
 import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 
 import { ScriptResultToolbar } from "./script-result-toolbar";
 import { useScriptStore } from "./use-script-store";
-import { FlexDiv } from "@/components/ui/layout";
 
 export const ScriptResult = () => {
    const { result } = useScriptStore();

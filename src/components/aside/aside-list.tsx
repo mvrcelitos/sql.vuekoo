@@ -31,11 +31,11 @@ import {
    ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { FlexDiv } from "@/components/ui/layout";
 import { cn } from "@/lib/utils";
 
 import { AsideDeleteDatabase } from "./aside-delete-database";
 import { AsideRenameDatabase } from "./aside-rename-database";
-import { FlexDiv } from "@/components/ui/layout";
 
 export const AsideList = () => {
    const pathname = usePathname()?.split("?")?.[0];
