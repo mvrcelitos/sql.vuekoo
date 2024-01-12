@@ -16,6 +16,9 @@ const config: Config = {
          },
       },
       extend: {
+         maxHeight: {
+            content: "calc(100dvh - 37px)",
+         },
          colors: {
             primary: "var(--primary)",
             background: "var(--background)",
