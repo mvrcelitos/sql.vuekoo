@@ -16,8 +16,8 @@ export const ScriptResult = () => {
 
    return (
       <Flex orientation="vertical" className="max-h-full w-full overflow-hidden">
-         <TableWrapper className="border-t  border-t-zinc-200 dark:border-t-zinc-800">
-            <Table className="h-fit w-full overflow-auto text-sm ">
+         <TableWrapper className="border-t border-t-zinc-200 dark:border-t-zinc-800">
+            <Table>
                <THead>
                   <TRow>
                      <Th className="sticky left-0 top-0 z-20 w-0 border-zinc-300 bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800">
