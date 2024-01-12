@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 import { Aside } from "@/components/aside";
 import Header from "@/components/header";
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                <Flex className="min-h-[calc(100svh-37px)] flex-wrap md:flex-nowrap">
                   <Aside />
                   {children}
+                  <Analytics />
                </Flex>
                <Toaster />
             </ThemeProvider>
