@@ -21,7 +21,7 @@ export interface FlexDivProps extends React.ComponentPropsWithoutRef<"div">, Var
    child?: "main" | "div" | "section" | "article" | "aside" | "header" | "footer" | "nav";
 }
 
-export const FlexDiv = React.forwardRef<HTMLDivElement, FlexDivProps>(
+export const Flex = React.forwardRef<HTMLDivElement, FlexDivProps>(
    ({ className, orientation, child, ...props }, ref) => {
       const Comp = child ?? "div";
       return (
@@ -34,7 +34,7 @@ export const FlexDiv = React.forwardRef<HTMLDivElement, FlexDivProps>(
       );
    },
 );
-FlexDiv.displayName = "FlexDiv";
+Flex.displayName = "FlexDiv";
 
 export const gridDivVariants = cva({
    base: "grid overflow-hidden",

@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FlexDiv } from "@/components/ui/layout";
+import { Flex } from "@/components/ui/layout";
 
 import { AsideCreateDatabaseForm } from "./aside-create-database";
 import { AsideList } from "./aside-list";
@@ -11,8 +11,8 @@ import { AsideList } from "./aside-list";
 export const Aside = () => {
    return (
       <aside className="modern-scroll rounded-scroll relative flex max-h-[calc(100dvh-37px)] flex-col overflow-y-auto overflow-x-hidden border-r border-r-zinc-200 bg-zinc-100 pb-0 dark:border-r-zinc-800 dark:bg-zinc-900 md:min-h-[50svh] md:w-80 md:min-w-80 2xl:w-[336px] 2xl:min-w-[336px]">
-         <FlexDiv orientation="vertical" className="w-full overflow-y-auto px-3">
-            <FlexDiv
+         <Flex orientation="vertical" className="w-full overflow-y-auto px-3">
+            <Flex
                orientation="vertical"
                className="sticky top-0 z-10 h-auto shrink-0 gap-2 bg-zinc-100 py-3 dark:bg-zinc-900">
                <div className="flex items-center justify-between">
@@ -27,9 +27,9 @@ export const Aside = () => {
                      <Search className="pointer-events-none left-px top-2 mx-2 h-4 w-4 shrink-0" />
                   </Button>
                </div>
-            </FlexDiv>
+            </Flex>
             <AsideList />
-         </FlexDiv>
+         </Flex>
       </aside>
    );
 };

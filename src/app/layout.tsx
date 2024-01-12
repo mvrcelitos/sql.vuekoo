@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { Aside } from "@/components/aside";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
-import { FlexDiv } from "@/components/ui/layout";
+import { Flex } from "@/components/ui/layout";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
@@ -26,10 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
          <body className={cn("flex h-dvh max-h-lvh min-h-svh flex-col overflow-hidden", inter.className)}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                <Header />
-               <FlexDiv className="min-h-[calc(100svh-37px)] flex-wrap md:flex-nowrap">
+               <Flex className="min-h-[calc(100svh-37px)] flex-wrap md:flex-nowrap">
                   <Aside />
                   {children}
-               </FlexDiv>
+               </Flex>
                <Toaster />
             </ThemeProvider>
          </body>

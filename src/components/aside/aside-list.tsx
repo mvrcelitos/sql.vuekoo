@@ -31,7 +31,7 @@ import {
    ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { FlexDiv } from "@/components/ui/layout";
+import { Flex } from "@/components/ui/layout";
 import { cn } from "@/lib/utils";
 
 import { AsideDeleteDatabase } from "./aside-delete-database";
@@ -118,14 +118,14 @@ export const AsideList = () => {
                                     )}
                                  </AccordionTrigger>
 
-                                 <FlexDiv className="items-center gap-2">
+                                 <Flex className="items-center gap-2">
                                     <p className="shrink-0 grow truncate text-sm font-medium text-zinc-700 dark:text-zinc-200">
                                        {db.name}
                                     </p>
                                     <p className="truncate text-xs text-zinc-400 empty:w-0 dark:text-zinc-500">
                                        {db.url}
                                     </p>
-                                 </FlexDiv>
+                                 </Flex>
                               </div>
                            </ContextMenuTrigger>
                            <AccordionContent forceMount>

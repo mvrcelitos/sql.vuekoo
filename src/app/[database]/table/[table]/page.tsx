@@ -4,7 +4,7 @@ import { Check, X } from "lucide-react";
 import * as pg from "pg";
 
 import { TableColumnHeader } from "@/components/table-column-header";
-import { FlexDiv } from "@/components/ui/layout";
+import { Flex } from "@/components/ui/layout";
 import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 
 import { Toolbar } from "./_components/toolbar";
@@ -56,7 +56,7 @@ export default async function Page({ params, searchParams }: { params: paramsPro
    const table = await getTable(params.database, params.table, searchParams);
 
    return (
-      <FlexDiv orientation="vertical">
+      <Flex orientation="vertical">
          <TableWrapper>
             <Table className="h-fit w-full overflow-auto text-sm">
                <THead className="sticky left-0 top-0 h-9 border-b border-b-zinc-200 bg-zinc-100 text-zinc-700 dark:border-b-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
@@ -117,6 +117,6 @@ export default async function Page({ params, searchParams }: { params: paramsPro
             </Table>
          </TableWrapper>
          <Toolbar rows={table?.rowCount ?? undefined} />
-      </FlexDiv>
+      </Flex>
    );
 }
