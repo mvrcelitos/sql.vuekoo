@@ -15,7 +15,7 @@ export const Table = React.forwardRef<HTMLTableElement, React.ComponentPropsWith
          <table
             ref={ref}
             className={cn(
-               "w-full border-separate border-spacing-0 overflow-x-auto text-zinc-800 dark:text-zinc-200",
+               "w-full border-separate border-spacing-0 overflow-x-auto text-sm text-zinc-800 dark:text-zinc-200",
                className,
             )}
             {...props}
