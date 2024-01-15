@@ -3,6 +3,7 @@
 // import { appWindow } from "@tauri-apps/api/window";
 import * as React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ScrollText } from "lucide-react";
 
 import { useDatabaseStore } from "@/components/aside/use-database-store";
@@ -15,10 +16,8 @@ import {
    DialogTitle,
    DialogTrigger,
 } from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
 
 export const ScriptButton = () => {
    const pathname = usePathname()?.split("?")?.[0];
