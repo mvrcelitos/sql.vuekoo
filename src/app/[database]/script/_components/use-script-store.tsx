@@ -63,16 +63,26 @@ export const useScriptStore = create<ScriptStore>((set, get) => ({
       try {
          set(() => ({ submitStatus: "loading" }));
          const res = await axios.post(`/api/v1/databases/${get().database}`, script);
-         console.log(res.data);
+         if (process.env.NODE_ENV == "development") console.log(res.data);
          set(() => ({ result: res.data, submitStatus: "idle" }));
          return true;
       } catch (err) {
          console.error(err);
          set(() => ({ result: null, submitStatus: "idle" }));
-         toast.error("Ooopss!", {
-            icon: <AlertCircle className="h-5 w-5 shrink-0 text-zinc-50" height={20} width={20} />,
-            description: "An error occurred while executing the script.",
-         });
+         if (err instanceof axios.AxiosError && err.response?.data) {
+            console.log("axios error");
+            console.log(err);
+            toast.error("Be careful with SQL!", {
+               icon: <AlertCircle className="h-5 w-5 shrink-0 text-zinc-50" height={20} width={20} />,
+               description: err?.response?.data ?? "An error occurred while executing the script.",
+            });
+         } else {
+            console.log("not an axios error");
+            toast.error("Ooopss!", {
+               icon: <AlertCircle className="h-5 w-5 shrink-0 text-zinc-50" height={20} width={20} />,
+               description: "An error occurred while executing the script.",
+            });
+         }
          return false;
       }
    },
