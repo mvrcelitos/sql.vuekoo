@@ -6,9 +6,27 @@ import { TableWrapper } from "@/components/ui/table";
 import { useScriptStore } from "./use-script-store";
 import { DataTable } from "@/components/data-table";
 import { DataTableToolbar } from "@/components/data-table-toolbar";
+import { usePathname } from "next/navigation";
+import React from "react";
 
 export const ScriptResult = () => {
-   const { result } = useScriptStore();
+   const hasPageRendered = React.useRef(false);
+   const lastPathname = React.useRef("");
+   const pathname = usePathname()?.split("?")?.[0];
+
+   const { result, clearResult } = useScriptStore();
+
+   React.useEffect(() => {
+      if (!!hasPageRendered.current && lastPathname.current !== pathname) {
+         clearResult();
+         lastPathname.current = pathname;
+      }
+
+      if (!hasPageRendered.current) {
+         hasPageRendered.current = true;
+         lastPathname.current = pathname;
+      }
+   }, [pathname]);
 
    if (!result) return null;
 
