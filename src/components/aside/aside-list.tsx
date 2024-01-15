@@ -160,16 +160,14 @@ export const AsideList = () => {
                                        {db?.tables?.map((table, index: number) => (
                                           <li key={index}>
                                              <Link
-                                                href={`/${db.uuid}/table/${table}`}
-                                                aria-selected={pathname == `/${db.uuid}/table/${table}`}
-                                                data-state={
-                                                   pathname == `/${db.uuid}/table/${table}` ? "selected" : "idle"
-                                                }
+                                                href={`/${db.uuid}/t/${table}`}
+                                                aria-selected={pathname == `/${db.uuid}/t/${table}`}
+                                                data-state={pathname == `/${db.uuid}/t/${table}` ? "selected" : "idle"}
                                                 className="flex items-center gap-2 overflow-hidden rounded-md p-1 text-zinc-600 aria-selected:font-medium aria-selected:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:aria-selected:text-zinc-50">
                                                 <Table2
                                                    className={cn(
                                                       "size-4 shrink-0",
-                                                      pathname == `/${db.uuid}/table/${table}`
+                                                      pathname == `/${db.uuid}/t/${table}`
                                                          ? "text-primary"
                                                          : "opacity-70",
                                                    )}
@@ -216,16 +214,14 @@ export const AsideList = () => {
                                        {db?.views?.map((view, index: number) => (
                                           <li key={index}>
                                              <Link
-                                                href={`/${db.uuid}/table/${view}`}
-                                                aria-selected={pathname == `/${db.uuid}/table/${view}`}
-                                                data-state={
-                                                   pathname == `/${db.uuid}/table/${view}` ? "selected" : "idle"
-                                                }
+                                                href={`/${db.uuid}/t/${view}`}
+                                                aria-selected={pathname == `/${db.uuid}/t/${view}`}
+                                                data-state={pathname == `/${db.uuid}/t/${view}` ? "selected" : "idle"}
                                                 className="flex items-center gap-2 overflow-hidden rounded-md p-1 text-zinc-600 hover:bg-zinc-200 aria-selected:font-medium aria-selected:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:aria-selected:text-zinc-50">
                                                 <View
                                                    className={cn(
                                                       "size-4 shrink-0",
-                                                      pathname == `/${db.uuid}/table/${view}`
+                                                      pathname == `/${db.uuid}/t/${view}`
                                                          ? "text-primary"
                                                          : "opacity-70",
                                                    )}
