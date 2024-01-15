@@ -7,8 +7,8 @@ export const separatorVariants = cva({
    base: "bg-zinc-200 dark:bg-zinc-800 border-0",
    variants: {
       orientation: {
-         horizontal: "h-px w-full grow",
-         vertical: "w-px h-full grow",
+         horizontal: "h-px max-h-px w-full grow",
+         vertical: "w-px max-w-px h-full grow",
       },
    },
    defaultVariants: {
