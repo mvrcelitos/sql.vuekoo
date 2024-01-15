@@ -61,7 +61,7 @@ export const Th = React.forwardRef<HTMLTableHeaderCellElement, React.ComponentPr
          <th
             ref={ref}
             className={cn(
-               "border-b border-r border-zinc-200 bg-zinc-100 px-3 font-medium last:border-r-0 dark:border-zinc-800 dark:bg-zinc-900",
+               "border-b border-r border-zinc-200 bg-zinc-100 px-3 text-left font-medium last:border-r-0 dark:border-zinc-800 dark:bg-zinc-900",
                className,
             )}
             {...props}
