@@ -15,9 +15,9 @@ export const ScriptTextArea = () => {
 
    React.useEffect(() => {
       const database = pathname.split("?")?.[0].split("/")?.[1];
-      const script = typeof window !== "undefined" && window?.localStorage?.getItem(`script-${database}`);
+      const script = (typeof window !== "undefined" && window?.localStorage?.getItem(`script-${database}`)) || "";
       database && setDatabase(database);
-      script && set(script);
+      set(script);
    }, [pathname]);
 
    return (
