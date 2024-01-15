@@ -52,7 +52,7 @@ export const AsideList = () => {
 
    if (Object.values(databases).length == 0)
       return (
-         <div className="mx-auto flex h-full flex-col items-center justify-center gap-2 py-4 pb-3">
+         <div className="mx-auto flex h-full flex-col items-center justify-center gap-2 px-3 py-3">
             <p className="text-sm text-zinc-700 dark:text-zinc-200">No databases found</p>
             <Button
                size="xs"
@@ -72,7 +72,7 @@ export const AsideList = () => {
       );
 
    return (
-      <ul className="flex w-full flex-col pb-3">
+      <ul className="flex w-full flex-col px-3 pb-3">
          {Object.values(databases)?.map((db: DatabaseType, index: number) => (
             <Dialog
                key={db.uuid}
@@ -80,7 +80,7 @@ export const AsideList = () => {
                onOpenChange={(x) => setIndexModal(x ? db.uuid : null)}>
                <Accordion>
                   <ContextMenu>
-                     <li aria-orientation="vertical" className="flex flex-col gap-1 rounded-lg pr-4">
+                     <li aria-orientation="vertical" className="flex flex-col gap-1 rounded-lg">
                         <AccordionItem value={db.uuid}>
                            <ContextMenuTrigger asChild>
                               <div className="flex items-center gap-2 overflow-hidden rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800">
