@@ -16,7 +16,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
    title: {
       default: "vuekoo/sql",
-      template: "%s | vuekoo/sql",
+      template: "%s · vuekoo/sql",
    },
    description: "Database managers for the modern web.",
 };
