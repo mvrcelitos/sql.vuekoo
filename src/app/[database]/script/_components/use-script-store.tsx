@@ -17,7 +17,10 @@ export interface ScriptStore {
    set: (script: string) => void;
    undo: () => void;
    redo: () => void;
-   clear: () => void;
+
+   clearScript: () => void;
+   clearResult: () => void;
+   clearAll: () => void;
 
    submitStatus: "idle" | "loading";
    submit: (script?: string) => Promise<boolean>;
@@ -37,8 +40,9 @@ export const useScriptStore = create<ScriptStore>((set, get) => ({
    setDatabase: (database) => {
       set(() => ({ database }));
    },
-
-   clear: () => {
+   clearScript: () => set(() => ({ script: "" })),
+   clearResult: () => set(() => ({ result: null })),
+   clearAll: () => {
       if (!get().database) return;
       set((state) => ({ script: "", history: [], result: null }));
       typeof window !== "undefined" && window?.localStorage?.removeItem(`script-${get().database}`);
