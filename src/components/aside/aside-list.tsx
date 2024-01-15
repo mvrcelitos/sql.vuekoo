@@ -44,7 +44,7 @@ export const AsideList = () => {
    const [openModal, setOpenModal] = React.useState<string | null>(null);
    const [indexModal, setIndexModal] = React.useState<string | null>(null);
 
-   const { databases, get, connect, close, refresh, delete: deleteDb, rename } = useDatabaseStore();
+   const { databases, get, connect, disconnect, refresh, delete: deleteDb, rename } = useDatabaseStore();
 
    React.useEffect(() => {
       get();
@@ -249,10 +249,10 @@ export const AsideList = () => {
                         <ContextMenuItem
                            disabled={db.status !== "connected"}
                            onSelect={() => {
-                              close(db.uuid);
+                              disconnect(db.uuid);
                            }}>
                            <Unplug className="mr-2 size-4 shrink-0" height={16} width={16} />
-                           Close
+                           Disconnect
                         </ContextMenuItem>
                         <ContextMenuItem disabled={db.status !== "connected"} onSelect={() => refresh(db.uuid)}>
                            <RefreshCw className="mr-2 size-4 shrink-0" height={16} width={16} />

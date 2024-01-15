@@ -24,8 +24,8 @@ export interface DatabaseStore {
    get: () => Promise<void>;
    add: ({ name, url }: { name: string; url: string }) => Promise<void>;
    connect: (uuid: string) => Promise<boolean>;
+   disconnect: (uuid: string) => void;
    refresh: (uuid: string) => Promise<boolean>;
-   close: (uuid: string) => void;
    delete: (uuid: string) => Promise<void>;
    rename: (uuid: string, name: string) => Promise<void>;
 }
@@ -144,7 +144,7 @@ export const useDatabaseStore = create<DatabaseStore>((set) => ({
       return true;
    },
 
-   close: (uuid: string) => {
+   disconnect: (uuid: string) => {
       set((state) => ({
          databases: { ...state.databases, [uuid]: { ...state.databases[uuid], status: "disconnected", tables: [] } },
       }));
