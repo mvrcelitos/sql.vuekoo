@@ -1,14 +1,12 @@
 import React from "react";
 import { cookies } from "next/headers";
+import type { Metadata } from "next";
 import * as pg from "pg";
 
 import { DataTable } from "@/components/data-table";
 import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { Flex } from "@/components/ui/layout";
 import { TableWrapper } from "@/components/ui/table";
-
-
-// export const revalidate = 60;
 
 interface paramsProps {
    database: string;
@@ -19,6 +17,10 @@ interface searchParamsProps {
    sortType?: string;
    hide?: string;
 }
+
+export const generateMetadata = async ({ params }: { params: paramsProps }): Promise<Metadata> => {
+   return { title: `${params?.table}` };
+};
 
 const getTable = async (uuid: string, table: string, params: searchParamsProps) => {
    let client;
