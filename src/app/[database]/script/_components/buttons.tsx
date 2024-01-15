@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { ChevronRight, Loader2, RefreshCw, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 import { useScriptStore } from "./use-script-store";
-import { useRouter } from "next/navigation";
 
 export interface ClearButtonProps extends React.ComponentPropsWithoutRef<typeof Button> {
    textarea?: React.MutableRefObject<HTMLTextAreaElement>;

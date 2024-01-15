@@ -1,8 +1,7 @@
 import { Check, X } from "lucide-react";
 
-import { TBody, THead, TRow, Table, Td, Th } from "@/components/ui/table";
 import { TableColumnHeader } from "@/components/table-column-header";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Table, TBody, Td, Th,THead, TRow } from "@/components/ui/table";
 
 export interface GenericFieldProps {
    columnID: number;

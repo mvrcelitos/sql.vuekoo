@@ -1,3 +1,6 @@
+import { Menu } from "lucide-react";
+
+import { ScriptButton } from "@/components/header-buttons";
 import { HeaderThemeContent } from "@/components/header-theme-content";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -10,10 +13,8 @@ import {
    DropdownMenuSubTrigger,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
-import { Menu } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { ScriptButton } from "@/components/header-buttons";
+import { cn } from "@/lib/utils";
 
 export const Header = () => {
    return (

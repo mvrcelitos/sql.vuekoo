@@ -12,7 +12,6 @@ import {
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-
 import { SearchParamsManager } from "@/lib/search-params";
 
 export const RefreshButton = ({ ...props }: React.ComponentPropsWithoutRef<typeof Button>) => {

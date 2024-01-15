@@ -1,13 +1,14 @@
 "use client";
 
+import React from "react";
+import { usePathname } from "next/navigation";
+
+import { DataTable } from "@/components/data-table";
+import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { Flex } from "@/components/ui/layout";
 import { TableWrapper } from "@/components/ui/table";
 
 import { useScriptStore } from "./use-script-store";
-import { DataTable } from "@/components/data-table";
-import { DataTableToolbar } from "@/components/data-table-toolbar";
-import { usePathname } from "next/navigation";
-import React from "react";
 
 export const ScriptResult = () => {
    const hasPageRendered = React.useRef(false);

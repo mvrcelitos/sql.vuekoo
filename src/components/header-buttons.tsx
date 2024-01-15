@@ -2,8 +2,10 @@
 
 // import { appWindow } from "@tauri-apps/api/window";
 import * as React from "react";
+import Link from "next/link";
 import { ScrollText } from "lucide-react";
 
+import { useDatabaseStore } from "@/components/aside/use-database-store";
 import { buttonVariants } from "@/components/ui/button";
 import {
    Dialog,
@@ -13,11 +15,9 @@ import {
    DialogTitle,
    DialogTrigger,
 } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
-import { useDatabaseStore } from "@/components/aside/use-database-store";
 
 export const ScriptButton = () => {
    const { databases } = useDatabaseStore();

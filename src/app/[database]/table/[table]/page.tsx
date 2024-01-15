@@ -1,15 +1,12 @@
 import React from "react";
 import { cookies } from "next/headers";
-import { Check, X } from "lucide-react";
 import * as pg from "pg";
 
-import { TableColumnHeader } from "@/components/table-column-header";
-import { Flex } from "@/components/ui/layout";
-import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
-
-import { Toolbar } from "./_components/toolbar";
 import { DataTable } from "@/components/data-table";
 import { DataTableToolbar } from "@/components/data-table-toolbar";
+import { Flex } from "@/components/ui/layout";
+import { TableWrapper } from "@/components/ui/table";
+
 
 // export const revalidate = 60;
 
