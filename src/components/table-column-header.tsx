@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowDownNarrowWide, ArrowUpNarrowWide, ChevronDown, EyeOff, X } from "lucide-react";
+import { ArrowUpWideNarrow, ArrowDownWideNarrow, ChevronDown, EyeOff, X } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -30,7 +30,13 @@ export const TableColumnHeader = ({ children, id, ...props }: TableColumnHeaderP
             <DropdownMenu>
                <DropdownMenuTrigger
                   className={buttonVariants({ intent: "ghost", size: "icon-custom", className: "-mr-2 size-7" })}>
-                  <ChevronDown className="size-4 shrink-0" />
+                  {searchParams.get("sort") !== id && <ChevronDown className="size-4 shrink-0" />}
+                  {searchParams.get("sort") === id &&
+                     (searchParams.get("sortType") === "desc" ? (
+                        <ArrowDownWideNarrow className="size-4 shrink-0" />
+                     ) : (
+                        <ArrowUpWideNarrow className="size-4 shrink-0" />
+                     ))}
                </DropdownMenuTrigger>
                <DropdownMenuContent>
                   <DropdownMenuItem
@@ -46,13 +52,10 @@ export const TableColumnHeader = ({ children, id, ...props }: TableColumnHeaderP
                            searchParams?.get("sortType")?.toLowerCase() !== "desc"
                         )
                      }>
-                     <ArrowDownNarrowWide className="mr-2 size-4 shrink-0" />
+                     <ArrowUpWideNarrow className="mr-2 size-4 shrink-0" />
                      Ascending
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                     onKeyDown={() => {
-                        console.log("teste");
-                     }}
                      onSelect={() => {
                         const searchParamsManager = new SearchParamsManager();
                         searchParamsManager.set("sort", id);
@@ -65,7 +68,7 @@ export const TableColumnHeader = ({ children, id, ...props }: TableColumnHeaderP
                            searchParams?.get("sortType")?.toLowerCase() === "desc"
                         )
                      }>
-                     <ArrowUpNarrowWide className="mr-2 size-4 shrink-0" />
+                     <ArrowDownWideNarrow className="mr-2 size-4 shrink-0" />
                      Descending
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -75,7 +78,7 @@ export const TableColumnHeader = ({ children, id, ...props }: TableColumnHeaderP
                         searchParamsManager.delete("sortType");
                         router.push(`?${searchParamsManager.toString()}`);
                      }}
-                     disabled={searchParams.size === 0}>
+                     disabled={searchParams.get("sort") !== id}>
                      <X className="mr-2 size-4 shrink-0" />
                      Clear ordering
                   </DropdownMenuItem>
