@@ -64,7 +64,13 @@ export const POST = async (request: Request, context: { params: { uuid: string }
          data: { oid: res.oid, fields: res.fields, rows: res?.rows },
       });
    } catch (err) {
-      console.error(err);
+      if (err instanceof Error) {
+         return new Response(
+            err.message.replace(/./, (x) => x.toUpperCase()),
+            { status: 400 },
+         );
+         // console.error(err.message)
+      }
       return new Response("Internal server error", { status: 500 });
    } finally {
       await client?.end();
