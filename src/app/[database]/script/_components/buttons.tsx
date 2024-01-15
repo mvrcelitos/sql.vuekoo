@@ -7,13 +7,14 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 import { useScriptStore } from "./use-script-store";
+import { useRouter } from "next/navigation";
 
 export interface ClearButtonProps extends React.ComponentPropsWithoutRef<typeof Button> {
    textarea?: React.MutableRefObject<HTMLTextAreaElement>;
 }
 
 export const ClearButton = React.forwardRef<HTMLButtonElement, ClearButtonProps>(({ textarea, ...props }, ref) => {
-   const { clear } = useScriptStore();
+   const { clearAll: clear } = useScriptStore();
 
    return (
       <Button ref={ref} {...props} intent="outline" size="icon-sm" onClick={() => clear()}>
@@ -56,9 +57,18 @@ SubmitButton.displayName = "SubmitButton";
 
 export const RefreshPageButton = React.forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<typeof Button>>(
    ({ ...props }, ref) => {
+      const router = useRouter();
       const { lastScript, submit } = useScriptStore();
       return (
-         <Button ref={ref} {...props} size="xs" intent="ghost" className="gap-2" onClick={() => submit(lastScript)}>
+         <Button
+            ref={ref}
+            {...props}
+            size="xs"
+            intent="ghost"
+            className="gap-2"
+            onClick={() => {
+               console.log("refreshing");
+            }}>
             <RefreshCw className="size-4 shrink-0" />
             <p className="sm:inline">Refresh</p>
          </Button>
