@@ -35,7 +35,7 @@ export const ScriptButton = () => {
                   <ScrollText className="size-4 shrink-0" />
                </DialogTrigger>
             </TooltipTrigger>
-            <TooltipContent>New script1</TooltipContent>
+            <TooltipContent>New script</TooltipContent>
          </Tooltip>
          <DialogContent>
             <DialogHeader>
