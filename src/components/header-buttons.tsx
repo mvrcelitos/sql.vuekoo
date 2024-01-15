@@ -2,56 +2,72 @@
 
 // import { appWindow } from "@tauri-apps/api/window";
 import * as React from "react";
-import { Minus, Square, X } from "lucide-react";
+import { ScrollText } from "lucide-react";
 
-import { Button, ButtonProps } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import {
+   Dialog,
+   DialogContent,
+   DialogDescription,
+   DialogHeader,
+   DialogTitle,
+   DialogTrigger,
+} from "@/components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
+import { useDatabaseStore } from "@/components/aside/use-database-store";
 
-const MinimizeButton = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+export const ScriptButton = () => {
+   const { databases } = useDatabaseStore();
+   const [open, setOpen] = React.useState<boolean>(false);
+
    return (
-      <Button
-         intent="ghost"
-         size="alt"
-         className="aspect-square h-full rounded-none"
-         onClick={() => {
-            // appWindow.minimize();
-         }}
-         ref={ref}>
-         <Minus className="aspect-square h-4 w-4 shrink-0" height={16} width={16} />
-      </Button>
+      <Dialog open={open} onOpenChange={setOpen}>
+         <Tooltip>
+            <TooltipTrigger asChild>
+               <DialogTrigger
+                  onClick={() => {
+                     setOpen(true);
+                  }}
+                  className={cn(buttonVariants({ intent: "ghost", size: "icon-sm" }), "rounded-none")}>
+                  <ScrollText className="size-4 shrink-0" />
+               </DialogTrigger>
+            </TooltipTrigger>
+            <TooltipContent>New script1</TooltipContent>
+         </Tooltip>
+         <DialogContent>
+            <DialogHeader>
+               <DialogTitle>Access database script</DialogTitle>
+               <DialogDescription>Select an database or the current one</DialogDescription>
+            </DialogHeader>
+            <ul aria-orientation="vertical" className="list- flex flex-col gap-2 overflow-hidden">
+               {/* <li>
+                  <Link href={"#"}>
+                     <h1 className="text-base font-semibold">
+                        <span className="text-primary">{"(Current)"}</span>
+                     </h1>
+                  </Link>
+               </li> */}
+               <Separator orientation="horizontal" className="first:hidden" />
+               {Object.values(databases)?.map((database) => (
+                  <li
+                     key={database.uuid}
+                     className="relative rounded-md px-2 py-1.5 after:absolute after:inset-x-1 after:top-[calc(100%+0.25rem)] after:border-b after:border-b-zinc-300 after:last:border-0 hover:bg-zinc-200 dark:after:border-b-zinc-700 dark:hover:bg-zinc-800">
+                     <Link
+                        href={`/${database.uuid}/script`}
+                        className="text-foreground"
+                        onClick={() => {
+                           setOpen(false);
+                        }}>
+                        <h1 className="text-sm font-semibold">{database?.name}</h1>
+                        <p className="truncate text-xs opacity-70">{database?.url}</p>
+                     </Link>
+                  </li>
+               ))}
+            </ul>
+         </DialogContent>
+      </Dialog>
    );
-});
-MinimizeButton.displayName = "MinimizeButton";
-
-const MaximizeButton = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-   return (
-      <Button
-         intent="ghost"
-         size="alt"
-         className="aspect-square h-full rounded-none"
-         onClick={() => {
-            // appWindow.toggleMaximize();
-         }}
-         ref={ref}>
-         <Square className="aspect-square h-4 w-4 shrink-0" height={16} width={16} />
-      </Button>
-   );
-});
-MaximizeButton.displayName = "MaximizeButton";
-
-const CloseButton = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-   return (
-      <Button
-         intent="ghost"
-         size="alt"
-         className="aspect-square h-full rounded-none hover:bg-red-200 hover:text-rose-600 focus-visible:bg-red-200 focus-visible:text-rose-600 dark:hover:bg-red-700 dark:hover:text-rose-100 dark:focus-visible:bg-red-700 dark:focus-visible:text-rose-100"
-         onClick={() => {
-            // appWindow.close();
-         }}
-         ref={ref}>
-         <X className="aspect-square h-4 w-4 shrink-0" height={16} width={16} />
-      </Button>
-   );
-});
-CloseButton.displayName = "CloseButton";
-
-export { CloseButton,MaximizeButton, MinimizeButton };
+};
