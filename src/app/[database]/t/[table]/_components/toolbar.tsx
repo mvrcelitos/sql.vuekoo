@@ -1,34 +1,41 @@
-import { Separator } from "@/components/ui/separator";
+"use client";
 
-import { ExportTableButton, RefreshPageButton, ScriptPageButton, VisibilityColumnsButton } from "./buttons";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { useParams, usePathname } from "next/navigation";
 
-export interface ToolbarProps {
-   rows?: number;
-}
+export const Toolbar = () => {
+   const params = useParams();
+   const pathname = usePathname()?.split("?")?.[0];
 
-export const Toolbar = ({ rows }: ToolbarProps) => {
    return (
-      <div className="flex w-full items-center justify-between gap-2 bg-transparent px-2 py-1">
-         <ul aria-orientation="horizontal" className="space-x-1">
-            <li className="inline-block align-middle">
-               <RefreshPageButton />
-            </li>
-            <Separator orientation="vertical" className="inline-block h-6 align-middle" />
-            <li className="inline-block align-middle">
-               <ScriptPageButton />
-            </li>
-            <li className="inline-block align-middle">
-               <VisibilityColumnsButton />
-            </li>
-            <li className="inline-block align-middle">
-               <ExportTableButton />
-            </li>
-         </ul>
-         {!!rows && (
-            <p className="pr-2 text-xs text-zinc-700 dark:text-zinc-300">
-               {rows} {rows != 1 ? "rows" : "row"}
-            </p>
-         )}
+      <div className="flex h-10 w-full flex-[1_0_auto] items-center p-1">
+         <Link
+            aria-selected={pathname === `/${params.database}/t/${params.table}/properties`}
+            href={`/${params.database}/t/${params.table}/properties`}
+            className={cn(
+               buttonVariants({ intent: "ghost", size: "xs" }),
+               pathname === `/${params.database}/t/${params.table}/properties`
+                  ? "bg-zinc-200 text-foreground dark:bg-zinc-800 dark:text-foreground"
+                  : "",
+            )}>
+            Properties
+         </Link>
+         <Link
+            aria-selected={pathname === `/${params.database}/t/${params.table}`}
+            href={`/${params.database}/t/${params.table}`}
+            className={cn(
+               buttonVariants({ intent: "ghost", size: "xs" }),
+               pathname === `/${params.database}/t/${params.table}`
+                  ? "bg-zinc-200 text-foreground dark:bg-zinc-800 dark:text-foreground"
+                  : "",
+            )}>
+            Data
+         </Link>
+         <p className="ml-auto pr-1 text-sm font-semibold dark:text-zinc-300 dark:hover:text-foreground">
+            {params.table}
+         </p>
       </div>
    );
 };
