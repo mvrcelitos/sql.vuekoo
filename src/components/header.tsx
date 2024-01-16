@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Menu } from "lucide-react";
 
 import { ScriptButton } from "@/components/header-buttons";
@@ -15,7 +16,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 
 export const Header = () => {
    return (
