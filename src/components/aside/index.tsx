@@ -11,7 +11,7 @@ import { AsideList } from "./aside-list";
 export const Aside = () => {
    return (
       <aside className="modern-scroll rounded-scroll relative flex flex-col overflow-y-auto overflow-x-hidden border-r border-r-zinc-200 bg-zinc-100 pb-0 dark:border-r-zinc-800 dark:bg-zinc-900 md:min-h-[50svh] md:w-80 md:min-w-80 2xl:w-[336px] 2xl:min-w-[336px]">
-         <Flex orientation="vertical" className="w-full overflow-y-auto">
+         <Flex orientation="vertical" className="modern-scroll w-full overflow-y-auto">
             <Flex
                orientation="vertical"
                className="sticky top-0 z-10 h-auto shrink-0 gap-2 bg-zinc-100 px-3 py-3 dark:bg-zinc-900">
