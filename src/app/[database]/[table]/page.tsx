@@ -4,7 +4,11 @@ import * as pg from "pg";
 
 import { DataTable } from "@/components/data-table";
 import { Flex } from "@/components/ui/layout";
-import { TableWrapper } from "@/components/ui/table";
+import { TableColumnHeader } from "@/components/table-column-header";
+import { TableWrapper, Table, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
+import { TableCellFormatter } from "@/lib/table-cell-formatter";
+import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface paramsProps {
    database: string;
@@ -35,9 +39,31 @@ const getTable = async (uuid: string, table: string, params: searchParamsProps) 
          connectionString: database?.[uuid]?.url,
       });
 
+      //       select
+      //     c.table_schema,
+      //     c.table_name,
+      //     c.column_name,
+      //     pgd.description
+      // from pg_catalog.pg_statio_all_tables as st
+      // inner join pg_catalog.pg_description pgd on (
+      //     pgd.objoid = st.relid
+      // )
+      // right join information_schema.columns c on (
+      //     pgd.objsubid   = c.ordinal_position and
+      //     c.table_schema = st.schemaname and
+      //     c.table_name   = st.relname
+      // )
+      // where c.table_schema = 'public'
+
       await client.connect();
       const res = await client.query(
-         `SELECT t.column_name as "Column", t.ordinal_position as "Position", t.udt_name as "Type", t.is_nullable as "Not null", t.column_default as "Default" FROM information_schema.columns as t WHERE t.table_name = $1 ORDER BY t.ordinal_position`,
+         `SELECT c.column_name as "Column", c.ordinal_position as "Position", c.udt_name as "Type", c.is_nullable as "Null?", c.column_default as "Default", replace(pgd.description,'
+','\n') as "Comment"
+         FROM pg_catalog.pg_statio_all_tables as st
+         INNER JOIN pg_catalog.pg_description pgd on pgd.objoid = st.relid
+         RIGHT JOIN information_schema.columns c on pgd.objsubid = c.ordinal_position and c.table_schema = st.schemaname and c.table_name = st.relname
+         WHERE c.table_schema = 'public' and c.table_name = $1
+         ORDER BY c.ordinal_position`,
          [table],
       );
 
@@ -57,7 +83,64 @@ export default async function Page({ params, searchParams }: { params: paramsPro
    return (
       <Flex child="main" orientation="vertical" className="grow">
          <TableWrapper className="border-t border-t-zinc-200 dark:border-t-zinc-800">
-            <DataTable fields={table?.fields as any} rows={table?.rows} />
+            {/* <DataTable fields={table?.fields as any} rows={table?.rows} /> */}
+            <Table>
+               <THead>
+                  <TRow>
+                     {!!table?.fields?.length && (
+                        <Th className="sticky left-0 top-0 z-20 w-0 border-zinc-300 bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800">
+                           #
+                        </Th>
+                     )}
+                     {table?.fields?.map((field) => (
+                        <TableColumnHeader
+                           key={field.columnID}
+                           id={field?.name}
+                           className={cn(field.name === "Comment" && "w-[35%]")}>
+                           {field.name}
+                        </TableColumnHeader>
+                     ))}
+                  </TRow>
+               </THead>
+               <TBody>
+                  {table?.rows?.map((row, index) => (
+                     <TRow
+                        className="h-7 border-b-zinc-200 hover:bg-zinc-100 hover:text-zinc-950 dark:border-b-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
+                        key={index}>
+                        {table?.fields?.length && (
+                           <Td className="sticky left-0 z-10 w-0 bg-zinc-100 text-end dark:bg-zinc-900">{index + 1}</Td>
+                        )}
+                        {table?.fields?.map((field, index) => {
+                           const cell = row[field.name];
+                           const config = TableCellFormatter(row[field.name]);
+
+                           return (
+                              <Td
+                                 key={index}
+                                 className={cn(config.className, field?.name === "Comment" && "relative w-[35%]")}>
+                                 {field?.name !== "Comment" || cell == null ? (
+                                    config?.format?.(cell) ?? cell
+                                 ) : (
+                                    <Tooltip>
+                                       <TooltipTrigger asChild>
+                                          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 px-2">
+                                             <p className="w-fit truncate">
+                                                {config?.format?.(cell)?.replace("\n", "1") ?? cell}
+                                             </p>
+                                          </div>
+                                       </TooltipTrigger>
+                                       <TooltipContent className="whitespace-pre-line">
+                                          {config?.format?.(cell) ?? cell}
+                                       </TooltipContent>
+                                    </Tooltip>
+                                 )}
+                              </Td>
+                           );
+                        })}
+                     </TRow>
+                  ))}
+               </TBody>
+            </Table>
          </TableWrapper>
          {/* <DataTableToolbar rows={table?.rowCount} /> */}
          {/* <Toolbar rows={table?.rowCount ?? undefined} /> */}
