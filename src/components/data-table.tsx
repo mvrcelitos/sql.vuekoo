@@ -19,7 +19,7 @@ export interface DataTableProps {
 }
 
 const formatter = (cell: any) => {
-   if (cell === null) return { className: "text-center opacity-50", format: () => "[NULL]" };
+   if (cell === null) return { className: "text-center dark:text-zinc-500 text-zinc-400", format: () => "[NULL]" };
    const types = {
       Date: { className: "text-right", format: (cell: Date) => cell.toLocaleString() },
       Number: { className: "text-right" },
@@ -35,7 +35,6 @@ const formatter = (cell: any) => {
    };
 
    if (cell?.constructor?.name in types) return (types as any)[cell?.constructor?.name];
-   if (cell === null) return { className: "text-center opacity-50", format: () => "[NULL]" };
    return { className: "text-red-500", format: (cell: any) => JSON.stringify(cell) };
 };
 
