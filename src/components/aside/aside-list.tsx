@@ -95,7 +95,6 @@ export const AsideList = () => {
                                        "size-6 hover:bg-zinc-300 focus-visible:bg-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700",
                                     )}
                                     onSelect={async (ev) => {
-                                       const target = ev.target;
                                        if (db.status == "disconnected") {
                                           const res = await connect(db.uuid);
                                           if (!res) ev.preventDefault();
@@ -242,7 +241,9 @@ export const AsideList = () => {
                         </AccordionItem>
                      </li>
                      <ContextMenuContent>
-                        <ContextMenuItem disabled={db.status !== "disconnected"} onSelect={() => connect(db.uuid)}>
+                        <ContextMenuItem
+                           disabled={db.status !== "disconnected"}
+                           onSelect={async () => await connect(db.uuid)}>
                            <Plug className="mr-2 size-4 shrink-0" height={16} width={16} />
                            Connect
                         </ContextMenuItem>
@@ -254,7 +255,9 @@ export const AsideList = () => {
                            <Unplug className="mr-2 size-4 shrink-0" height={16} width={16} />
                            Disconnect
                         </ContextMenuItem>
-                        <ContextMenuItem disabled={db.status !== "connected"} onSelect={() => refresh(db.uuid)}>
+                        <ContextMenuItem
+                           disabled={db.status !== "connected"}
+                           onSelect={async () => await refresh(db.uuid)}>
                            <RefreshCw className="mr-2 size-4 shrink-0" height={16} width={16} />
                            Refresh
                         </ContextMenuItem>
