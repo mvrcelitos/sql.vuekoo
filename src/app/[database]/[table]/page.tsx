@@ -59,7 +59,7 @@ export default async function Page({ params, searchParams }: { params: paramsPro
          <TableWrapper className="border-t border-t-zinc-200 dark:border-t-zinc-800">
             <DataTable fields={table?.fields as any} rows={table?.rows} />
          </TableWrapper>
-         <DataTableToolbar rows={table?.rowCount} />
+         {/* <DataTableToolbar rows={table?.rowCount} /> */}
          {/* <Toolbar rows={table?.rowCount ?? undefined} /> */}
       </Flex>
    );
