@@ -37,7 +37,7 @@ const getTable = async (uuid: string, table: string, params: searchParamsProps) 
 
       await client.connect();
       const res = await client.query(
-         `SELECT t.column_name as "Column", t.is_nullable as "Not null", t.udt_name as "Type" FROM information_schema.columns as t WHERE t.table_name = $1 ORDER BY t.ordinal_position`,
+         `SELECT t.column_name as "Column", t.ordinal_position as "Position", t.udt_name as "Type", t.is_nullable as "Not null", t.column_default as "Default" FROM information_schema.columns as t WHERE t.table_name = $1 ORDER BY t.ordinal_position`,
          [table],
       );
 
