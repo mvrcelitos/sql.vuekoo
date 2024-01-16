@@ -123,7 +123,7 @@ export default async function Page({ params, searchParams }: { params: paramsPro
                                     <Tooltip>
                                        <TooltipTrigger asChild>
                                           <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 px-2">
-                                             <p className="w-fit truncate">
+                                             <p className="w-full truncate">
                                                 {config?.format?.(cell)?.replace("\n", "1") ?? cell}
                                              </p>
                                           </div>
