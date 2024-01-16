@@ -35,6 +35,16 @@ export const ScriptTextArea = () => {
             const start = ev.currentTarget.selectionStart;
             const end = ev.currentTarget.selectionEnd;
 
+            if (ev.key === "Tab") {
+               ev.preventDefault();
+               const text = ev.currentTarget.value;
+               const before = text.slice(0, start);
+               const after = text.slice(end);
+               ev.currentTarget.value = `${before}\t${after}`;
+               ev.currentTarget.selectionStart = ev.currentTarget.selectionEnd = start + 1;
+               return;
+            }
+
             if (ev.key === "ArrowUp" && ev.altKey) {
                ev.preventDefault();
                const text = ev.currentTarget.value;
