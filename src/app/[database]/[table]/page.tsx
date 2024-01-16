@@ -1,12 +1,10 @@
-import React from "react";
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import * as pg from "pg";
-
-import { DataTable } from "@/components/data-table";
-import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { Flex } from "@/components/ui/layout";
 import { TableWrapper } from "@/components/ui/table";
+import { DataTable } from "@/components/data-table";
+import { DataTableToolbar } from "@/components/data-table-toolbar";
 
 interface paramsProps {
    database: string;
@@ -38,9 +36,9 @@ const getTable = async (uuid: string, table: string, params: searchParamsProps) 
       });
 
       await client.connect();
-      const ordenation = params.sortType?.toLowerCase() === "desc" ? "DESC" : "ASC";
       const res = await client.query(
-         `SELECT * FROM ${table} as t ORDER BY ${params?.sort ? `t."${params?.sort}"` : 1} ${ordenation}`,
+         `SELECT t.column_name as "Column", t.is_nullable as "Not null", t.udt_name as "Type" FROM information_schema.columns as t WHERE t.table_name = $1 ORDER BY t.ordinal_position`,
+         [table],
       );
 
       const hiddenColumns = params?.hide?.split(",") ?? [];
@@ -57,8 +55,8 @@ export default async function Page({ params, searchParams }: { params: paramsPro
    const table = await getTable(params.database, params.table, searchParams);
 
    return (
-      <Flex child="main" orientation="vertical">
-         <TableWrapper>
+      <Flex child="main" orientation="vertical" className="grow">
+         <TableWrapper className="border-t border-t-zinc-200 dark:border-t-zinc-800">
             <DataTable fields={table?.fields as any} rows={table?.rows} />
          </TableWrapper>
          <DataTableToolbar rows={table?.rowCount} />

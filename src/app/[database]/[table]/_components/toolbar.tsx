@@ -10,24 +10,24 @@ export const Toolbar = () => {
    const pathname = usePathname()?.split("?")?.[0];
 
    return (
-      <div className="flex h-10 w-full flex-[1_0_auto] items-center p-1">
+      <div className="flex h-9 w-full flex-[1_0_auto] items-center gap-1 p-1">
          <Link
-            aria-selected={pathname === `/${params.database}/t/${params.table}/properties`}
-            href={`/${params.database}/t/${params.table}/properties`}
+            aria-selected={pathname === `/${params.database}/${params.table}`}
+            href={`/${params.database}/${params.table}`}
             className={cn(
-               buttonVariants({ intent: "ghost", size: "xs" }),
-               pathname === `/${params.database}/t/${params.table}/properties`
+               buttonVariants({ intent: "ghost", size: "xxs" }),
+               pathname === `/${params.database}/${params.table}`
                   ? "bg-zinc-200 text-foreground dark:bg-zinc-800 dark:text-foreground"
                   : "",
             )}>
             Properties
          </Link>
          <Link
-            aria-selected={pathname === `/${params.database}/t/${params.table}`}
-            href={`/${params.database}/t/${params.table}`}
+            aria-selected={pathname === `/${params.database}/${params.table}/data`}
+            href={`/${params.database}/${params.table}/data`}
             className={cn(
-               buttonVariants({ intent: "ghost", size: "xs" }),
-               pathname === `/${params.database}/t/${params.table}`
+               buttonVariants({ intent: "ghost", size: "xxs" }),
+               pathname === `/${params.database}/${params.table}/data`
                   ? "bg-zinc-200 text-foreground dark:bg-zinc-800 dark:text-foreground"
                   : "",
             )}>
