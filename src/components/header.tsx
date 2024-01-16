@@ -46,7 +46,9 @@ export const Header = () => {
                   </DropdownMenuSubContent>
                </DropdownMenuSub>
                <DropdownMenuItem className="text-[13px]" asChild>
-                  <Link href="https://github.com/mvrcelitos/sql.vuekoo">Source code</Link>
+                  <Link href="https://github.com/mvrcelitos/sql.vuekoo" target="_blank">
+                     Source code
+                  </Link>
                </DropdownMenuItem>
             </DropdownMenuContent>
          </DropdownMenu>
