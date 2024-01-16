@@ -30,6 +30,7 @@ export const ScriptResult = () => {
    }, [pathname]);
 
    if (!result) return null;
+   if (!result?.data?.fields?.length && !result?.data?.rows?.length) return null;
 
    return (
       <Flex orientation="vertical" className="w-full">
