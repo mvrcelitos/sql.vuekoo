@@ -2,6 +2,7 @@ import { Check, X } from "lucide-react";
 
 import { TableColumnHeader } from "@/components/table-column-header";
 import { Table, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
+import { TableCellFormatter } from "@/lib/table-cell-formatter";
 
 export interface GenericFieldProps {
    columnID: number;
@@ -17,26 +18,6 @@ export interface DataTableProps {
    rows?: Record<string, any>[];
    defaultHeader?: boolean;
 }
-
-const formatter = (cell: any) => {
-   if (cell === null) return { className: "text-center dark:text-zinc-500 text-zinc-400", format: () => "[NULL]" };
-   const types = {
-      Date: { className: "text-right", format: (cell: Date) => cell.toLocaleString() },
-      Number: { className: "text-right" },
-      String: {},
-      Boolean: {
-         format: (cell: boolean) => {
-            const Icon = cell ? Check : X;
-            return <Icon className={"mx-auto size-5 shrink-0"} size={20} />;
-         },
-      },
-      Array: { format: (cell: Array<any>) => JSON.stringify(cell) },
-      Object: { format: (cell: Object) => JSON.stringify(cell) },
-   };
-
-   if (cell?.constructor?.name in types) return (types as any)[cell?.constructor?.name];
-   return { className: "text-red-500", format: (cell: any) => JSON.stringify(cell) };
-};
 
 export const DataTable = ({ fields, rows, defaultHeader }: DataTableProps) => {
    return (
@@ -70,7 +51,7 @@ export const DataTable = ({ fields, rows, defaultHeader }: DataTableProps) => {
                   )}
                   {fields?.map((field, index) => {
                      const cell = row[field.name];
-                     const config = formatter(row[field.name]);
+                     const config = TableCellFormatter(row[field.name]);
 
                      return (
                         <Td key={index} className={config.className}>
