@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 export const TableWrapper = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>(
    ({ className, ...props }, ref) => {
-      return <div ref={ref} {...props} className={cn("modern-scroll w-full grow overflow-x-auto")}></div>;
+      return <div ref={ref} {...props} className={cn("modern-scroll w-full grow overflow-x-auto", className)} />;
    },
 );
 TableWrapper.displayName = "TableWrapper";
