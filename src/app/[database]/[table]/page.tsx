@@ -1,10 +1,10 @@
-import { cookies } from "next/headers";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import * as pg from "pg";
+
+import { DataTable } from "@/components/data-table";
 import { Flex } from "@/components/ui/layout";
 import { TableWrapper } from "@/components/ui/table";
-import { DataTable } from "@/components/data-table";
-import { DataTableToolbar } from "@/components/data-table-toolbar";
 
 interface paramsProps {
    database: string;

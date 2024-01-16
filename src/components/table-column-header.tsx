@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowUpWideNarrow, ArrowDownWideNarrow, ChevronDown, EyeOff, X } from "lucide-react";
+import { ArrowDownWideNarrow, ArrowUpWideNarrow, ChevronDown, EyeOff, X } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
 import {
