@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export const Header = () => {
    return (
@@ -44,6 +45,9 @@ export const Header = () => {
                      </DropdownMenuSub>
                   </DropdownMenuSubContent>
                </DropdownMenuSub>
+               <DropdownMenuItem className="text-[13px]" asChild>
+                  <Link href="https://github.com/mvrcelitos/sql.vuekoo">Source code</Link>
+               </DropdownMenuItem>
             </DropdownMenuContent>
          </DropdownMenu>
          {/* <Separator orientation="vertical" className="h-4 w-px bg-zinc-300 dark:bg-zinc-700" /> */}
