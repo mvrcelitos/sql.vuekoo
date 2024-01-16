@@ -1,4 +1,3 @@
-import { Check, X } from "lucide-react";
 
 import { TableColumnHeader } from "@/components/table-column-header";
 import { Table, TBody, Td, Th, THead, TRow } from "@/components/ui/table";

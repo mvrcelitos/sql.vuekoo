@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import * as pg from "pg";
 
-import { DataTable } from "@/components/data-table";
-import { Flex } from "@/components/ui/layout";
 import { TableColumnHeader } from "@/components/table-column-header";
-import { TableWrapper, Table, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
+import { Flex } from "@/components/ui/layout";
+import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { TableCellFormatter } from "@/lib/table-cell-formatter";
 import { cn } from "@/lib/utils";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface paramsProps {
    database: string;
