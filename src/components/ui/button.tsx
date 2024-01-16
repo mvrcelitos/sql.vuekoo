@@ -57,7 +57,7 @@ export const buttonVariants = cva({
       },
       size: {
          "alt": "h-6 px-2",
-         "xxs": "h-7 px-2",
+         "xxs": "h-7 px-1.5",
          "xs": "h-8 px-2",
          "sm": "h-9 px-3",
          "md": "h-10 px-4",
