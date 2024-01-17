@@ -56,7 +56,7 @@ const getTable = async (uuid: string, table: string, params: searchParamsProps) 
 
       await client.connect();
       const res = await client.query(
-         `SELECT c.column_name as "Column", c.ordinal_position as "Position", c.udt_name as "Type", c.is_nullable as "Null?", c.column_default as "Default", replace(pgd.description,'
+         `SELECT c.column_name as "Column", c.ordinal_position as "Position", case when c.character_maximum_length > 0 then concat(c.udt_name,'(',c.character_maximum_length,')') else c.udt_name end as "Type", c.is_nullable as "Null?", c.column_default as "Default", replace(pgd.description,'
 ','\n') as "Comment"
          FROM pg_catalog.pg_statio_all_tables as st
          INNER JOIN pg_catalog.pg_description pgd on pgd.objoid = st.relid
