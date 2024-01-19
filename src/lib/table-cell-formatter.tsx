@@ -3,8 +3,8 @@ import { Check, X } from "lucide-react";
 export const TableCellFormatter = (cell: any) => {
    if (cell === null) return { className: "text-center dark:text-zinc-500 text-zinc-400", format: () => "[NULL]" };
    const types = {
-      Date: { className: "text-right", format: (cell: Date) => cell.toLocaleString() },
-      Number: { className: "text-right" },
+      Date: { className: "text-end", format: (cell: Date) => cell.toLocaleString() },
+      Number: { className: "text-end" },
       String: {},
       Boolean: {
          format: (cell: boolean) => {
