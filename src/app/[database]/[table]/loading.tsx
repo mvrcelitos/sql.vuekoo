@@ -1,6 +1,6 @@
+
 import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
 
 export default function Loading() {
    const fields = ["Column", "Position", "Data type", "Null?", "Default", "Comment"];
