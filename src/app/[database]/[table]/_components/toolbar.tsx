@@ -24,7 +24,7 @@ export const Toolbar = () => {
    const [isOver, setIsOver] = React.useState<null | any>(null);
 
    return (
-      <div className="flex h-11 w-full flex-[1_0_auto] items-center justify-between px-2">
+      <div className="flex h-11 w-full flex-[0_0_auto] items-center justify-between px-2">
          <div className="group relative flex items-center gap-0.5">
             {routes.map(({ label, href }) => (
                <Link
