@@ -243,7 +243,12 @@ export const AsideList = () => {
                      <ContextMenuContent>
                         <ContextMenuItem
                            disabled={db.status !== "disconnected"}
-                           onSelect={async () => await connect(db.uuid)}>
+                           onSelect={async (ev) => {
+                              if (db.status == "disconnected") {
+                                 const res = await connect(db.uuid);
+                                 if (!res) ev.preventDefault();
+                              }
+                           }}>
                            <Plug className="mr-2 size-4 shrink-0" height={16} width={16} />
                            Connect
                         </ContextMenuItem>
@@ -257,7 +262,12 @@ export const AsideList = () => {
                         </ContextMenuItem>
                         <ContextMenuItem
                            disabled={db.status !== "connected"}
-                           onSelect={async () => await refresh(db.uuid)}>
+                           onSelect={async (ev) => {
+                              if (db.status == "connected") {
+                                 const res = await refresh(db.uuid);
+                                 if (!res) ev.preventDefault();
+                              }
+                           }}>
                            <RefreshCw className="mr-2 size-4 shrink-0" height={16} width={16} />
                            Refresh
                         </ContextMenuItem>
