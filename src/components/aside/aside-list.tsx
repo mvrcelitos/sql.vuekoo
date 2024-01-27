@@ -81,7 +81,9 @@ export const AsideList = () => {
                <Accordion>
                   <ContextMenu>
                      <li aria-orientation="vertical" className="flex flex-col gap-1 rounded-lg">
-                        <AccordionItem value={db.uuid}>
+                        <AccordionItem
+                           value={db.uuid}
+                           open={["connected", "refreshing"].includes(db.status) ? undefined : false}>
                            <ContextMenuTrigger asChild>
                               <div className="flex items-center gap-2 overflow-hidden rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800">
                                  <AccordionTrigger

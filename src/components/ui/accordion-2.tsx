@@ -22,7 +22,18 @@ export interface AccordionItemProps {
 const AccordionItemContext = React.createContext({} as AccordionItemProps);
 const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps & React.ComponentPropsWithoutRef<"div">>(
    ({ orientation, value, open: defOpen, onOpenChange, ...props }, ref) => {
+      const isAlreadyStarted = React.useRef<boolean>(false);
       const [open, setOpen] = React.useState<boolean>(defOpen ?? false);
+
+      React.useEffect(() => {
+         if (!isAlreadyStarted.current) {
+            isAlreadyStarted.current = true;
+            return;
+         }
+         if (typeof defOpen !== "boolean") return;
+         setOpen(defOpen);
+      }, [defOpen]);
+
       return (
          <AccordionItemContext.Provider
             value={{
