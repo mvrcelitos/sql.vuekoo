@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { ChevronRight, Loader2, Play, RefreshCw, X } from "lucide-react";
+import { ChevronRight, Loader2, RefreshCw, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
