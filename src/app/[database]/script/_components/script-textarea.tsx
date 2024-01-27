@@ -22,8 +22,8 @@ export const ScriptTextArea = () => {
 
    return (
       <TextArea
-         className={cn("w-full", result ? "h-[118px] min-h-[118px] md:h-[178px] md:min-h-[178px]" : "h-full grow")}
-         intent="primary"
+         className={cn("modern-scroll h-full min-h-[118px] w-full grow resize-none rounded-none md:min-h-[178px]")}
+         intent="none"
          value={script}
          autoCorrect="off"
          autoCapitalize="off"

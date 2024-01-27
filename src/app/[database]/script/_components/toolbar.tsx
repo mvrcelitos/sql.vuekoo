@@ -5,7 +5,7 @@ import { ClearButton, SubmitButton } from "./buttons";
 
 export const Toolbar = () => {
    return (
-      <Flex orientation="vertical" className="shrink-0 gap-2">
+      <Flex orientation="vertical" className="shrink-0 gap-2 border-r border-zinc-200 p-2 dark:border-zinc-800">
          <Tooltip>
             <TooltipTrigger asChild>
                <SubmitButton />

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { ChevronRight, Loader2, RefreshCw, X } from "lucide-react";
+import { ChevronRight, Loader2, Play, RefreshCw, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -17,7 +17,7 @@ export const ClearButton = React.forwardRef<HTMLButtonElement, ClearButtonProps>
    const { clearAll: clear } = useScriptStore();
 
    return (
-      <Button ref={ref} {...props} intent="outline" size="icon-sm" onClick={() => clear()}>
+      <Button ref={ref} {...props} intent="outline" size="icon-xs" onClick={() => clear()}>
          <X className="size-4 shrink-0" height={16} width={16} />
       </Button>
    );
@@ -34,7 +34,7 @@ export const SubmitButton = React.forwardRef<HTMLButtonElement, SubmitButtonProp
          {...props}
          className={cn("group/button ml-auto", className)}
          intent="outline"
-         size="icon-sm"
+         size="icon-xs"
          disabled={submitStatus === "loading"}
          onClick={async () => {
             await submit();

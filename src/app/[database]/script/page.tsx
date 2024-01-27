@@ -6,11 +6,11 @@ import { Toolbar } from "./_components/toolbar";
 
 export default function Page() {
    return (
-      <Flex child="main" orientation="vertical" className="grow gap-2 md:gap-4">
-         <Flex className="shrink-0 grow gap-2 px-4 pt-4 last:pb-4 md:gap-4">
-            <ScriptTextArea />
+      <Flex child="main" orientation="vertical" className="grow">
+         <div className="flex w-full shrink-0 grow overflow-hidden">
             <Toolbar />
-         </Flex>
+            <ScriptTextArea />
+         </div>
 
          <ScriptResult />
       </Flex>
