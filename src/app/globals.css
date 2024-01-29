@@ -24,7 +24,7 @@
    }
    .modern-scroll {
       --scrollbar-background: #4a5568 #2d3748 scrollbar-width: 8px;
-      scrollbar-color: red blue;
+      /* scrollbar-color: red blue; */
    }
 
    .modern-scroll::-webkit-scrollbar {
