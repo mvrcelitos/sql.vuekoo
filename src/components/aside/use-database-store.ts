@@ -28,9 +28,11 @@ export interface DatabaseStore {
    refresh: (uuid: string) => Promise<boolean>;
    delete: (uuid: string) => Promise<void>;
    rename: (uuid: string, name: string) => Promise<void>;
+
+   swap: (from: number, to: number) => void;
 }
 
-export const useDatabaseStore = create<DatabaseStore>((set) => ({
+export const useDatabaseStore = create<DatabaseStore>((set, get) => ({
    databases: {},
    get: async () => {
       try {
@@ -142,6 +144,13 @@ export const useDatabaseStore = create<DatabaseStore>((set) => ({
          return false;
       }
       return true;
+   },
+   swap: (from: number, to: number) => {
+      const entries = Object.entries(get().databases);
+      const temp = entries[from];
+      entries[from] = entries[to];
+      entries[to] = temp;
+      set((state) => ({ databases: Object.fromEntries(entries) }));
    },
 
    disconnect: (uuid: string) => {

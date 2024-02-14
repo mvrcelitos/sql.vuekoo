@@ -4,6 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+   ArrowDown,
+   ArrowUp,
    ChevronRight,
    Copy,
    Info,
@@ -44,7 +46,7 @@ export const AsideList = () => {
    const [openModal, setOpenModal] = React.useState<string | null>(null);
    const [indexModal, setIndexModal] = React.useState<string | null>(null);
 
-   const { databases, get, connect, disconnect, refresh, delete: deleteDb, rename } = useDatabaseStore();
+   const { databases, get, connect, disconnect, refresh, delete: deleteDb, rename, swap } = useDatabaseStore();
 
    React.useEffect(() => {
       get();
@@ -286,6 +288,24 @@ export const AsideList = () => {
                            }}>
                            <RefreshCw className="mr-2 size-4 shrink-0" height={16} width={16} />
                            Refresh
+                        </ContextMenuItem>
+
+                        <ContextMenuSeparator />
+                        <ContextMenuItem
+                           disabled={index == 0}
+                           onSelect={() => {
+                              swap(index, index - 1);
+                           }}>
+                           <ArrowUp className="mr-2 size-4 shrink-0" height={16} width={16} />
+                           Move up
+                        </ContextMenuItem>
+                        <ContextMenuItem
+                           disabled={index == Object.values(databases).length - 1}
+                           onSelect={() => {
+                              swap(index, index + 1);
+                           }}>
+                           <ArrowDown className="mr-2 size-4 shrink-0" height={16} width={16} />
+                           Move down
                         </ContextMenuItem>
                         <ContextMenuSeparator />
 
