@@ -14,10 +14,12 @@ export const PUT = async (request: Request) => {
       if (!c.has("databases")) return new Response("Not found", { status: 404 });
       const databases: DatabasesType = JSON.parse(c.get("databases")?.value || "{}");
 
+      const { from, to } = safeBody.data;
+
       const entries = Object.entries(databases);
-      const temp = entries[safeBody.data.from];
-      entries[safeBody.data.from] = entries[safeBody.data.to];
-      entries[safeBody.data.to] = temp;
+      const temp = entries[from];
+      entries[from] = entries[to];
+      entries[to] = temp;
 
       c.set("databases", JSON.stringify(Object.fromEntries(entries)));
 
