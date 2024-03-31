@@ -145,12 +145,23 @@ export const useDatabaseStore = create<DatabaseStore>((set, get) => ({
       }
       return true;
    },
-   swap: (from: number, to: number) => {
+   swap: async (from: number, to: number) => {
       const entries = Object.entries(get().databases);
       const temp = entries[from];
-      entries[from] = entries[to];
-      entries[to] = temp;
-      set((state) => ({ databases: Object.fromEntries(entries) }));
+      try {
+         const res = await fetch(`/api/v1/databases/swap`, {
+            method: "PUT",
+            body: JSON.stringify({ from, to }),
+         });
+         if (!res.ok) {
+            return console.error("Error trying to swap positions");
+         }
+         entries[from] = entries[to];
+         entries[to] = temp;
+         set(() => ({ databases: Object.fromEntries(entries) }));
+      } catch (err) {
+         console.error(err);
+      }
    },
 
    disconnect: (uuid: string) => {
