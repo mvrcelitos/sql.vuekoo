@@ -1,5 +1,7 @@
-import { DatabasesType } from "@/interfaces/cookies/databases";
 import { cookies } from "next/headers";
+
+import { DatabasesType } from "@/interfaces/cookies/databases";
+
 import { swapSchema } from "./schema";
 
 export const PUT = async (request: Request) => {
