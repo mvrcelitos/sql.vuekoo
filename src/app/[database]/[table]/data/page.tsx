@@ -7,6 +7,7 @@ import { DataTable } from "@/components/data-table";
 import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { Flex } from "@/components/ui/layout";
 import { TableWrapper } from "@/components/ui/table";
+import { DefaultQueryParams } from "@/constants/default-query-params";
 
 interface paramsProps {
    database: string;
@@ -40,7 +41,7 @@ const getTable = async (uuid: string, table: string, params: searchParamsProps) 
 
       await client.connect();
       const ordenation = params.sortType?.toLowerCase() === "desc" ? "DESC" : "ASC";
-      const limit = params.limit?.replace(/\D/g, "") || 200;
+      const limit = params.limit?.replace(/\D/g, "") || DefaultQueryParams.limit;
       const res = await client.query(
          `SELECT * FROM ${table} as t ORDER BY ${
             params?.sort ? `t."${params?.sort}"` : 1
