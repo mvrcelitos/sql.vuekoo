@@ -4,7 +4,7 @@ import { cva, VariantProps } from "cva";
 import { cn } from "@/lib/utils";
 
 export const inputVariants = cva({
-   base: "appearance-none [-webkit-appearance:none] flex items-center max-w-full px-3 rounded-md text-sm bg-transparent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 file:bg-transparent transition-colors",
+   base: "appearance-none [-webkit-appearance:none] flex items-center max-w-full rounded-md text-sm bg-transparent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 file:bg-transparent transition-colors",
    variants: {
       intent: {
          none: "",
@@ -19,6 +19,7 @@ export const inputVariants = cva({
          ],
       },
       size: {
+         none: "",
          xs: "h-8 px-2",
          sm: "h-9 px-3",
          default: "h-10 py-2 px-3",
