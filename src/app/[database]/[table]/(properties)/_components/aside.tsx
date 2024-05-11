@@ -1,14 +1,13 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
-import { FolderCog, FolderKanbanIcon, FolderKey, FolderTree } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { usePathname } from "next/navigation";
-import { AsideRoutes } from "@/app/[database]/[table]/(properties)/_components/aside-routes";
-import { motion } from "framer-motion";
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
+
+import { AsideRoutes } from "@/app/[database]/[table]/(properties)/_components/aside-routes";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export const Aside = () => {
    const pathname = usePathname()?.split("?")?.[0];

@@ -1,5 +1,6 @@
-import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { Loader2 } from "lucide-react";
+
+import { DataTableToolbar } from "@/components/data-table-toolbar";
 
 export default function Loading() {
    return (

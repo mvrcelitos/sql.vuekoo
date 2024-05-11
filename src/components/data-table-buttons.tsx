@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpFromLine, Check, Eye, Loader2, RefreshCw, ScanEye } from "lucide-react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -12,14 +13,12 @@ import {
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { SearchParamsManager } from "@/lib/search-params";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-
 import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { DefaultQueryParams } from "@/constants/default-query-params";
-import { AnimatePresence, motion } from "framer-motion";
+import { SearchParamsManager } from "@/lib/search-params";
 
 export const RefreshButton = ({ ...props }: React.ComponentPropsWithoutRef<typeof Button>) => {
    const router = useRouter();

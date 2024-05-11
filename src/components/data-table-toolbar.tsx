@@ -1,8 +1,6 @@
 import { ExportTableButton, RefreshButton, RowsTableButton, VisibilityButton } from "@/components/data-table-buttons";
-import { Input } from "@/components/ui/input";
 import { Flex } from "@/components/ui/layout";
 import { Separator } from "@/components/ui/separator";
-import { ScanEye } from "lucide-react";
 
 export const DataTableToolbar = ({ rows }: { rows?: number | undefined | null }) => {
    return (
