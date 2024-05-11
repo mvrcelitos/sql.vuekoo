@@ -44,7 +44,7 @@ const getTable = async (uuid: string, table: string, params: searchParamsProps) 
       const limit = params.limit?.replace(/\D/g, "") || DefaultQueryParams.limit;
       const res = await client.query(
          `SELECT * FROM ${table} as t ORDER BY ${
-            params?.sort ? `t."${params?.sort}"` : 1
+            params?.sort ? `t."${params?.sort}"` : DefaultQueryParams.orderBy
          } ${ordenation} LIMIT ${limit}`,
       );
 
