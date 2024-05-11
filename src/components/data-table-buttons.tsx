@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowUpFromLine, Check, Eye, Loader2, RefreshCw, ScanEye } from "lucide-react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -15,13 +15,10 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { SearchParamsManager } from "@/lib/search-params";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Portal } from "@radix-ui/react-portal";
 
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { DefaultQueryParams } from "@/constants/default-query-params";
-import { PopoverClose } from "@radix-ui/react-popover";
-import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 
 export const RefreshButton = ({ ...props }: React.ComponentPropsWithoutRef<typeof Button>) => {
