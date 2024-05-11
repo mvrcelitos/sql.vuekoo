@@ -1,6 +1,8 @@
-import { ExportTableButton, RefreshButton,VisibilityButton } from "@/components/data-table-buttons";
+import { ExportTableButton, RefreshButton, RowsTableButton, VisibilityButton } from "@/components/data-table-buttons";
+import { Input } from "@/components/ui/input";
 import { Flex } from "@/components/ui/layout";
 import { Separator } from "@/components/ui/separator";
+import { ScanEye } from "lucide-react";
 
 export const DataTableToolbar = ({ rows }: { rows?: number | undefined | null }) => {
    return (
@@ -15,6 +17,9 @@ export const DataTableToolbar = ({ rows }: { rows?: number | undefined | null })
             </li>
             <li className="inline-block align-middle">
                <ExportTableButton />
+            </li>
+            <li className="inline-block align-middle">
+               <RowsTableButton />
             </li>
          </ul>
          <span className="pr-1 text-xs text-zinc-700 dark:text-zinc-300">
