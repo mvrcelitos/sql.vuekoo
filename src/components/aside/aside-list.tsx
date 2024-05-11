@@ -341,7 +341,7 @@ export const AsideList = () => {
                            Rename
                         </ContextMenuItem>
                         <ContextMenuItem
-                           className="text-red-500 focus:bg-red-200 focus:text-rose-600 dark:text-red-400 dark:focus:bg-red-700 dark:focus:text-rose-100"
+                           className="text-red-500 focus:bg-red-100 focus:text-rose-600 dark:text-red-400 dark:focus:bg-red-900 dark:focus:text-rose-100"
                            onSelect={() => {
                               setIndexModal(db.uuid);
                               setOpenModal("delete");
