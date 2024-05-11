@@ -104,12 +104,9 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
    const router = useRouter();
    const searchParams = useSearchParams();
 
-   const limit =
-      searchParams.get("limit") === null
-         ? +(searchParams.get("limit")?.replace(/\D/g, "") ?? DefaultQueryParams.limit)
-         : DefaultQueryParams.limit;
-
-   const [input, setInput] = useState<string>(`${limit}`);
+   const [input, setInput] = useState<string>(
+      searchParams?.get("limit")?.replace(/\D/g, "") ?? `${DefaultQueryParams.limit}`,
+   );
    const [popoverOpen, setPopoverOpen] = useState(false);
    const [tooltipOpen, setTooltipOpen] = useState(false);
 
@@ -167,11 +164,16 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
                      </Button>
                   </PopoverTrigger>
                </TooltipTrigger>
-               <TooltipContent>Limit of rows fetched</TooltipContent>
+               <TooltipContent>
+                  Limit of rows fetched
+                  <span className="bg-primary/20 ml-1 rounded-full px-2 py-0.5 font-medium text-primary">
+                     {searchParams.get("limit") ?? DefaultQueryParams.limit}
+                  </span>
+               </TooltipContent>
             </Tooltip>
             <PopoverContent sideOffset={7}>
                <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">Limit of rows fetched</p>
-               <Separator className="mb-2 mt-1 h-px" />
+               <Separator className="my-1 h-px" />
                <div className="flex items-center gap-2">
                   <div className="flex w-full items-center gap-2">
                      <span className="pointer-events-none select-none px-0.5">Rows:</span>
