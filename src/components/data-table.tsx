@@ -1,4 +1,3 @@
-
 import { TableColumnHeader } from "@/components/table-column-header";
 import { Table, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 import { TableCellFormatter } from "@/lib/table-cell-formatter";
@@ -43,10 +42,12 @@ export const DataTable = ({ fields, rows, defaultHeader }: DataTableProps) => {
          <TBody>
             {rows?.map((row, index) => (
                <TRow
-                  className="h-7 border-b-zinc-200 hover:bg-zinc-100 hover:text-zinc-950 dark:border-b-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
+                  className="group/tr h-7 border-b-zinc-200 hover:bg-zinc-100 hover:text-zinc-950 dark:border-b-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
                   key={index}>
                   {fields?.length && (
-                     <Td className="sticky left-0 z-10 w-0 bg-zinc-100 text-end dark:bg-zinc-900">{index + 1}</Td>
+                     <Td className="sticky left-0 z-10 w-0 bg-zinc-100 text-end group-hover/tr:bg-zinc-200 dark:bg-zinc-900 dark:group-hover/tr:bg-zinc-800">
+                        {index + 1}
+                     </Td>
                   )}
                   {fields?.map((field, index) => {
                      const cell = row[field.name];
