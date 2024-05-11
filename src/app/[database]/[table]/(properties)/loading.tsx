@@ -23,11 +23,11 @@ export default function Loading() {
                <TBody>
                   {new Array(6).fill(null).map((_, index) => (
                      <TRow
-                     className="group/tr h-7 border-b-zinc-200 hover:bg-zinc-100 hover:text-zinc-950 dark:border-b-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
-                     key={index}>
-                     {fields?.length && (
-                        <Td className="sticky left-0 z-10 w-0 bg-zinc-100 group-hover/tr:bg-zinc-200 dark:group-hover/tr:bg-zinc-800 text-end dark:bg-zinc-900">{index + 1}</Td>
-                     )}
+                        className="group/tr h-7 border-b-zinc-200 hover:bg-zinc-100 hover:text-zinc-950 dark:border-b-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
+                        key={index}>
+                        {fields?.length && (
+                           <Td className="sticky left-0 z-10 w-0 bg-zinc-100 group-hover/tr:bg-zinc-200 dark:group-hover/tr:bg-zinc-800 text-end dark:bg-zinc-900">{index + 1}</Td>
+                        )}
                         {fields?.map((field, index) => {
                            return (
                               <Td key={index} className={cn(field === "Comment" && "relative w-[35%]")}>
