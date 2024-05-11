@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -14,55 +15,55 @@ export const Toolbar = () => {
       {
          label: "Properties",
          href: `/${params.database}/${params.table}`,
+         matchRoutes: [
+            `/${params.database}/${params.table}`,
+            `/${params.database}/${params.table}/properties/foreign-keys`,
+         ] as string[],
       },
       {
          label: "Data",
          href: `/${params.database}/${params.table}/data`,
+         matchRoutes: [`/${params.database}/${params.table}/data`] as string[],
       },
    ] as const;
 
-   const [isOver, setIsOver] = React.useState<null | any>(null);
+   const [tabHover, setTabHover] = React.useState<number | null>(null);
 
    return (
       <div className="flex h-11 w-full flex-[0_0_auto] items-center justify-between px-2">
-         <div className="group relative flex items-center gap-0.5">
-            {routes.map(({ label, href }) => (
+         <div className="group relative flex items-center gap-0.5" onMouseLeave={() => setTabHover(null)}>
+            {routes.map(({ label, href, matchRoutes }, index) => (
                <Link
                   key={href}
-                  aria-selected={pathname === href}
-                  href={href}
-                  onMouseOver={(ev) => {
-                     const parent = ev.currentTarget.parentElement?.getBoundingClientRect();
-                     const current = ev.currentTarget.getBoundingClientRect();
-                     setIsOver({
-                        x: current.x - (parent?.left || 0),
-                        width: current.width,
-                     });
-                  }}
+                  aria-selected={matchRoutes.includes(pathname)}
+                  href={matchRoutes.includes(pathname) ? pathname : href}
+                  onMouseEnter={() => setTabHover(index)}
                   className={cn(
                      buttonVariants({ intent: "ghost", size: "xs" }),
-                     "relative z-10 rounded px-2.5 font-normal hover:bg-transparent aria-selected:text-foreground dark:hover:bg-transparent dark:aria-selected:text-foreground",
-                     "aria-selected:after:absolute aria-selected:after:-bottom-1.5 aria-selected:after:mx-2 aria-selected:after:h-0.5 aria-selected:after:w-[calc(100%-12px)] aria-selected:after:bg-primary dark:aria-selected:after:bg-primary",
+                     "relative px-2.5 hover:bg-transparent aria-selected:text-foreground dark:hover:bg-transparent dark:aria-selected:text-foreground",
                   )}>
-                  {/* {pathname === href && (
-                     <div className="pointer-events-none absolute inset-x-1 -bottom-1.5 h-0.5 bg-primary" />
-                  )} */}
-                  {label}
+                  {matchRoutes.includes(pathname) ? (
+                     <motion.div
+                        layoutId="layout-toolbar-indicator-active-tab"
+                        transition={{ type: "spring", duration: 0.3, bounce: 0.1 }}
+                        className="absolute inset-x-0 -bottom-[7px] h-0.5 bg-primary"></motion.div>
+                  ) : null}
+                  <AnimatePresence initial={false}>
+                     {tabHover === index ? (
+                        <motion.div
+                           initial={{ opacity: 0 }}
+                           animate={{ opacity: 1 }}
+                           exit={{ opacity: 0 }}
+                           transition={{ type: "spring", duration: 0.3, bounce: 0.1 }}
+                           layoutId="layout-toolbar-background-hover-tab"
+                           className="absolute inset-0 -z-[1] rounded-[inherit] bg-zinc-200 dark:bg-zinc-800"
+                        />
+                     ) : null}
+                  </AnimatePresence>
+                  <span className="relative z-50 font-normal">{label}</span>
                </Link>
             ))}
-            {
-               <div
-                  className="pointer-events-none absolute h-8 rounded-md bg-zinc-200 opacity-0 [transition:opacity_350ms] hover:opacity-100 group-hover:opacity-100 group-hover:[transition:all_200ms,opacity_350ms] dark:bg-zinc-800"
-                  style={{
-                     left: isOver?.x,
-                     width: isOver?.width,
-                  }}
-               />
-            }
          </div>
-         {/* <p className="ml-auto pr-1 text-sm font-semibold dark:text-zinc-300 dark:hover:text-foreground">
-            {params.table}
-         </p> */}
       </div>
    );
 };
