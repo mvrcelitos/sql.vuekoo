@@ -1,13 +1,10 @@
-
 import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 
 export default function Loading() {
    const fields = ["Column", "Position", "Data type", "Null?", "Default", "Comment"];
-   const rows = [null, null, null];
    return (
-      <main className="flex h-full flex-auto flex-col overflow-hidden">
-         {/* <Loader2 className="shirnk-0 h-5 w-5 animate-spin" /> */}
+      <main className="flex shrink-0 grow overflow-hidden">
          <TableWrapper className="border-t border-t-zinc-200 dark:border-t-zinc-800">
             {/* <DataTable fields={table?.fields as any} rows={table?.rows} /> */}
             <Table>
