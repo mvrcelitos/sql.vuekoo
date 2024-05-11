@@ -7,13 +7,13 @@
       --background: #fafafa;
       --foreground: #09090b;
       /* --primary: #e11d48; */
-      --primary: #db2777;
+      --primary: 219 39 119;
    }
    .dark {
       --background: #09090b;
       --foreground: #fafafa;
       /* --primary: #818cf8; */
-      --primary: #db2777;
+      --primary: 219 39 119;
    }
 }
 

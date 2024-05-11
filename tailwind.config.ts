@@ -20,7 +20,7 @@ const config: Config = {
             content: "calc(100dvh - 37px)",
          },
          colors: {
-            primary: "var(--primary)",
+            primary: "rgb(var(--primary) / <alpha-value>)",
             background: "var(--background)",
             foreground: "var(--foreground)",
          },
