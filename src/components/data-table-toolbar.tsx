@@ -30,13 +30,13 @@ export const DataTableToolbar = ({ rows, ...props }: DataTableToolbarProps) => {
             {buttons.map((btn, index) => {
                if (btn.name === "Export" && props.exportActions) {
                   return (
-                     <li className="inline-block align-middle">
+                     <li key={index} className="inline-block align-middle">
                         <btn.component key={index} actions={props.exportActions} />
                      </li>
                   );
                }
                return (
-                  <li className="inline-block align-middle">
+                  <li key={index} className="inline-block align-middle">
                      <btn.component key={index} />
                   </li>
                );
