@@ -150,7 +150,7 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
                         size="xs"
                         intent="ghost"
                         {...props}
-                        onMouseEnter={() => setTooltipOpen(tooltipOpen ? false : true)}
+                        onMouseEnter={() => setTooltipOpen(popoverOpen ? false : true)}
                         onMouseLeave={() => setTooltipOpen(false)}
                         onClick={() => {
                            setTooltipOpen(false);
