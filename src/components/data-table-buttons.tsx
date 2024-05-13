@@ -11,6 +11,9 @@ import {
    DropdownMenuContent,
    DropdownMenuItem,
    DropdownMenuSeparator,
+   DropdownMenuSub,
+   DropdownMenuSubContent,
+   DropdownMenuSubTrigger,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -82,17 +85,55 @@ export const VisibilityButton = ({ ...props }: React.ComponentPropsWithoutRef<ty
    );
 };
 
-export const ExportTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typeof Button>) => {
-   const router = useRouter();
+export interface ExportTableButtonProps extends React.ComponentPropsWithoutRef<typeof Button> {
+   actions?: {
+      interface?: {
+         typescript?: () => void;
+         zod?: () => void;
+      };
+   };
+}
+export const ExportTableButton = ({ ...props }: ExportTableButtonProps) => {
+   const [dropdownOpen, setDropdownOpen] = useState(false);
+   const [tooltipOpen, setTooltipOpen] = useState(false);
+
    return (
-      <Tooltip>
-         <TooltipTrigger disabled asChild>
-            <Button size="xs" intent="ghost" {...props} onClick={() => router.refresh()}>
-               <ArrowUpFromLine className="size-4 shrink-0" />
-            </Button>
-         </TooltipTrigger>
-         <TooltipContent>Exports the table</TooltipContent>
-      </Tooltip>
+      <>
+         <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+            <Tooltip open={tooltipOpen}>
+               <TooltipTrigger asChild>
+                  <DropdownMenuTrigger asChild>
+                     <Button
+                        size="xs"
+                        intent="ghost"
+                        {...props}
+                        onMouseEnter={() => setTooltipOpen(dropdownOpen ? false : true)}
+                        onMouseLeave={() => setTooltipOpen(false)}
+                        onClick={() => {
+                           setTooltipOpen(false);
+                           setDropdownOpen(true);
+                        }}>
+                        <ArrowUpFromLine className="size-4 shrink-0" />
+                     </Button>
+                  </DropdownMenuTrigger>
+               </TooltipTrigger>
+               <TooltipContent>Exports the table</TooltipContent>
+            </Tooltip>
+            <DropdownMenuContent>
+               <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Interface</DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                     <DropdownMenuItem onSelect={() => props?.actions?.interface?.typescript?.()}>
+                        Typescript
+                     </DropdownMenuItem>
+                     <DropdownMenuItem onSelect={() => props?.actions?.interface?.zod?.()}>Zod</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+               </DropdownMenuSub>
+               <DropdownMenuSeparator />
+               <DropdownMenuItem>Data</DropdownMenuItem>
+            </DropdownMenuContent>
+         </DropdownMenu>
+      </>
    );
 };
 

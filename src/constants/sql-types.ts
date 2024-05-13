@@ -1,0 +1,97 @@
+export const availableSQLTypes = [
+   "int2",
+   "int4",
+   "varchar",
+   "text",
+   "bool",
+   "timestamp",
+   "timestamptz",
+   "json",
+   "jsonb",
+   "uuid",
+   "date",
+   "time",
+   "timetz",
+   "interval",
+   "numeric",
+   "float4",
+   "float8",
+   "int8",
+   "bpchar",
+   "char",
+   "bit",
+] as const;
+
+export const availableTypescriptTypes = [
+   "any",
+   "number",
+   "string",
+   "boolean",
+   "Date",
+   `Record<string, any>`,
+   `Record<string, number>`,
+   `Record<string, string>`,
+] as const;
+
+export const availableZodTypes = [
+   "z.any()",
+   "z.number()",
+   "z.string()",
+   "z.boolean()",
+   "z.date()",
+   "z.record(z.string(), z.any())",
+   "z.record(z.string(), z.number())",
+   "z.record(z.string(), z.string())",
+] as const;
+
+export type AvailableSQLTypes = (typeof availableSQLTypes)[number];
+export type AvailableTypescriptTypes = (typeof availableTypescriptTypes)[number];
+export type AvailableZodTypes = (typeof availableZodTypes)[number];
+
+export const sqlToTypescript: Record<AvailableSQLTypes, AvailableTypescriptTypes> = {
+   int2: "number",
+   int4: "number",
+   varchar: "string",
+   text: "string",
+   bool: "boolean",
+   timestamp: "Date",
+   timestamptz: "Date",
+   json: "Record<string, any>",
+   jsonb: "Record<string, any>",
+   uuid: "string",
+   date: "Date",
+   time: "string",
+   timetz: "string",
+   interval: "string",
+   numeric: "number",
+   float4: "number",
+   float8: "number",
+   int8: "number",
+   bpchar: "string",
+   char: "string",
+   bit: "string",
+};
+
+export const sqlToZod: Record<AvailableSQLTypes, AvailableZodTypes> = {
+   int2: "z.number()",
+   int4: "z.number()",
+   varchar: "z.string()",
+   text: "z.string()",
+   bool: "z.boolean()",
+   timestamp: "z.date()",
+   timestamptz: "z.date()",
+   json: "z.record(z.string(), z.any())",
+   jsonb: "z.record(z.string(), z.any())",
+   uuid: "z.string()",
+   date: "z.date()",
+   time: "z.string()",
+   timetz: "z.string()",
+   interval: "z.string()",
+   numeric: "z.number()",
+   float4: "z.number()",
+   float8: "z.number()",
+   int8: "z.number()",
+   bpchar: "z.string()",
+   char: "z.string()",
+   bit: "z.string()",
+};

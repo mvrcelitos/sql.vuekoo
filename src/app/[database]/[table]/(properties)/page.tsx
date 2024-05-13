@@ -8,6 +8,7 @@ import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { TableCellFormatter } from "@/lib/table-cell-formatter";
 import { cn } from "@/lib/utils";
+import { PropertiesDataTableToolbar } from "@/app/[database]/[table]/(properties)/toolbar";
 
 interface paramsProps {
    database: string;
@@ -21,6 +22,27 @@ interface searchParamsProps {
 
 export const generateMetadata = async ({ params }: { params: paramsProps }): Promise<Metadata> => {
    return { title: `${params?.table}` };
+};
+
+export interface GetTableQueryReturn {
+   "Column": string;
+   "Position": number;
+   "Type": string;
+   "Null?": boolean;
+   "Default": string | number;
+   "Comment": string;
+}
+export type GetTableReturn = Omit<pg.QueryResult<any>, "fields" | "rows"> & {
+   fields: {
+      columnID: number;
+      dataTypeID: number;
+      dataTypeModifier: number;
+      dataTypeSize: number;
+      format: string;
+      name: keyof GetTableQueryReturn;
+      tableID: number;
+   }[];
+   rows: Record<keyof GetTableQueryReturn, any>[];
 };
 
 const getTable = async (uuid: string, table: string, params: searchParamsProps) => {
@@ -40,7 +62,7 @@ const getTable = async (uuid: string, table: string, params: searchParamsProps) 
 
       await client.connect();
       const res = await client.query(
-         `SELECT c.column_name as "Column", c.ordinal_position as "Position", case when c.character_maximum_length > 0 then concat(c.udt_name,'(',c.character_maximum_length,')') else c.udt_name end as "Data type", c.is_nullable as "Null?", c.column_default as "Default", replace(pgd.description,'
+         `SELECT c.column_name as "Column", c.ordinal_position as "Position", case when c.character_maximum_length > 0 then concat(c.udt_name,'(',c.character_maximum_length,')') else c.udt_name end as "Type", c.is_nullable as "Null?", c.column_default as "Default", replace(pgd.description,'
 ','\n') as "Comment"
          FROM pg_catalog.pg_statio_all_tables as st
          INNER JOIN pg_catalog.pg_description pgd on pgd.objoid = st.relid
@@ -53,7 +75,7 @@ const getTable = async (uuid: string, table: string, params: searchParamsProps) 
       const hiddenColumns = params?.hide?.split(",") ?? [];
       res.fields = res.fields.filter((field: any) => !hiddenColumns.includes(field.name));
 
-      return res;
+      return res as unknown as GetTableReturn;
    } catch (err) {
       console.error(err);
    } finally {
@@ -65,7 +87,7 @@ export default async function Page({ params, searchParams }: { params: paramsPro
    const table = await getTable(params.database, params.table, searchParams);
 
    return (
-      <main className="flex shrink-0 grow flex-col overflow-hidden">
+      <main className="flex h-full flex-initial grow flex-col overflow-hidden">
          {/* <Flex child="div" orientation="vertical" className="grow"> */}
          <TableWrapper className="border-t border-t-zinc-200 dark:border-t-zinc-800">
             <Table>
@@ -128,7 +150,7 @@ export default async function Page({ params, searchParams }: { params: paramsPro
                </TBody>
             </Table>
          </TableWrapper>
-         <DataTableToolbar rows={table?.rowCount} />
+         <PropertiesDataTableToolbar rows={table?.rows!} />
          {/* </Flex> */}
       </main>
    );
