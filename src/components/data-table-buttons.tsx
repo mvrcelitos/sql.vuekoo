@@ -150,7 +150,7 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
                         size="xs"
                         intent="ghost"
                         {...props}
-                        onMouseEnter={() => setTooltipOpen(true)}
+                        onMouseEnter={() => setTooltipOpen(tooltipOpen ? false : true)}
                         onMouseLeave={() => setTooltipOpen(false)}
                         onClick={() => {
                            setTooltipOpen(false);
@@ -162,7 +162,7 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
                </TooltipTrigger>
                <TooltipContent>
                   Limit of rows fetched
-                  <span className="bg-primary/20 ml-1 rounded-full px-2 py-0.5 font-medium text-primary">
+                  <span className="ml-1 rounded-full bg-primary/20 px-2 py-0.5 font-medium text-primary">
                      {searchParams.get("limit") ?? DefaultQueryParams.limit}
                   </span>
                </TooltipContent>
