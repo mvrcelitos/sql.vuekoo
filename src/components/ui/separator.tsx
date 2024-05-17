@@ -1,12 +1,13 @@
-import React from "react";
-import { cva, VariantProps } from "cva";
+import { VariantProps, cva } from "cva";
 
+import React from "react";
 import { cn } from "@/lib/utils";
 
 export const separatorVariants = cva({
    base: "bg-zinc-200 dark:bg-zinc-800 border-0",
    variants: {
       orientation: {
+         none: "",
          horizontal: "h-px max-h-px w-full grow",
          vertical: "w-px max-w-px h-full grow",
       },
