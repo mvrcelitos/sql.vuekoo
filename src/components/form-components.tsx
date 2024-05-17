@@ -308,6 +308,7 @@ const FormTextarea = ({ className, name, ...props }: React.ComponentPropsWithout
          intent="primary"
          {...props}
          {...register(name ?? fieldName)}
+         className={cn(className, error && "border-red-500 dark:border-red-600")}
       />
    );
 };
