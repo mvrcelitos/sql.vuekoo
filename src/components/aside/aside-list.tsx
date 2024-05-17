@@ -94,7 +94,7 @@ export const AsideList = () => {
                                        " [&[data-state=open]>svg]:rotate-90",
                                        buttonVariants({
                                           intent: "ghost",
-                                          size: "icon-custom",
+                                          size: "none",
                                        }),
                                        "size-6 hover:bg-zinc-300 focus-visible:bg-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700",
                                     )}
@@ -137,7 +137,7 @@ export const AsideList = () => {
                                           " [&[data-state=open]>svg]:rotate-90",
                                           buttonVariants({
                                              intent: "ghost",
-                                             size: "icon-custom",
+                                             size: "none",
                                           }),
                                           "size-6 hover:bg-zinc-300 focus-visible:bg-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700",
                                        )}>
@@ -200,7 +200,7 @@ export const AsideList = () => {
                                           " [&[data-state=open]>svg]:rotate-90",
                                           buttonVariants({
                                              intent: "ghost",
-                                             size: "icon-custom",
+                                             size: "none",
                                           }),
                                           "size-6 hover:bg-zinc-300 focus-visible:bg-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700",
                                        )}>

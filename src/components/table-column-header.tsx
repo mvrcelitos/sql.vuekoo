@@ -29,7 +29,7 @@ export const TableColumnHeader = ({ children, id, ...props }: TableColumnHeaderP
             <span>{children}</span>
             <DropdownMenu>
                <DropdownMenuTrigger
-                  className={buttonVariants({ intent: "ghost", size: "icon-custom", className: "group -mr-2 size-7" })}>
+                  className={buttonVariants({ intent: "ghost", size: "none", className: "group -mr-2 size-7" })}>
                   {searchParams.get("sort") !== id && (
                      <ChevronDown className="size-4 shrink-0 motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-aria-expanded:rotate-180" />
                   )}
