@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
-import { cva, VariantProps } from "cva";
 
+import { VariantProps, cva } from "cva";
+
+import { Slot } from "@radix-ui/react-slot";
 import { cn } from "@/lib/utils";
 
 export const buttonVariants = cva({
@@ -9,8 +10,9 @@ export const buttonVariants = cva({
    variants: {
       intent: {
          none: "",
+         main: "bg-primary text-zinc-50 ring-0 ring-offset-0 hocus:bg-primaryActive ring-offset-background focus-visible:ring-offset-2 ring-primary/30 focus-visible:ring-2 ",
          primary: [
-            "bg-primary hover:bg-primary-active active:bg-primary-active text-zinc-100 hover:text-zinc-50 active:text-zinc-50",
+            "bg-primary hover:bg-primaryActive active:bg-primaryActive text-zinc-100 hover:text-zinc-50 active:text-zinc-50",
             "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-primary/70",
          ],
          secondary: [
@@ -51,18 +53,28 @@ export const buttonVariants = cva({
             "text-zinc-600 hover:text-zinc-800 active:text-zinc-800 dark:text-zinc-300 dark:hover:text-zinc-50 dark:active:text-zinc-50",
             "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-800",
          ],
+         outline2: [
+            "border-2 border-zinc-300 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400",
+            "hocus:bg-zinc-300 dark:hocus:bg-zinc-700 hocus:text-zinc-950 dark:hocus:text-zinc-50",
+            "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-800",
+         ],
+         outline3: [
+            "border-2 border-zinc-300 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400",
+            "hocus:bg-foreground hocus:!text-background hocus:!border-foreground",
+            "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-800",
+         ],
          link: [
-            "bg-transparent focus-visible:underline focus-visible:text-zinc-800 dark:focus-visible:text-zinc-200 hover:underline text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200",
+            "bg-transparent text-primary hocus:underline focus-visible:text-zinc-800 dark:focus-visible:text-zinc-200 underline-offset-4",
          ],
       },
       size: {
+         "none": "",
          "alt": "h-6 px-2",
          "xxs": "h-7 px-1.5",
          "xs": "h-8 px-2",
          "sm": "h-9 px-3",
          "md": "h-10 px-4",
          "lg": "h-11 px-6",
-         "icon-custom": "px-0 shrink-0",
          "icon-xxs": "size-7 px-0 shrink-0",
          "icon-xs": "size-8 px-0 shrink-0",
          "icon-sm": "size-9 px-0 shrink-0",
