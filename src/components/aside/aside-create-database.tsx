@@ -1,16 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { AlertCircle, Check, ChevronRight, Loader2, Plug, Plus } from "lucide-react";
-import { toast } from "sonner";
 import * as z from "zod";
 
-import { useDatabaseStore } from "@/components/aside/use-database-store";
-import { Form, FormField, FormInput, FormLabel, FormMessage } from "@/components/form-components";
-import { Button } from "@/components/ui/button";
+import { AlertCircle, Check, ChevronRight, Loader2, Plug, Plus } from "lucide-react";
 import {
    Dialog,
    DialogContent,
@@ -19,6 +12,14 @@ import {
    DialogTitle,
    DialogTrigger,
 } from "@/components/ui/dialog";
+import { Form, FormField, FormInput, FormLabel, FormMessage } from "@/components/form-components";
+
+import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { toast } from "sonner";
+import { useDatabaseStore } from "@/components/aside/use-database-store";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const asideDatabaseCreateSchema = z.object({
    name: z
@@ -46,6 +47,7 @@ export const AsideCreateDatabaseForm = () => {
    const { add } = useDatabaseStore();
 
    const [isPending, startTransition] = React.useTransition();
+   const urlIsValid = (form?.watch?.("url")?.length || 0) >= 8 && !form?.watch?.("url").includes(" ");
 
    return (
       <Dialog open={open} onOpenChange={setOpen}>
@@ -69,13 +71,13 @@ export const AsideCreateDatabaseForm = () => {
                })}>
                <FormField name="name">
                   <FormLabel>Name</FormLabel>
-                  <FormInput size="sm" />
+                  <FormInput intent="primary2" size="sm" />
                   <FormMessage />
                </FormField>
                {/* <Separator /> */}
                <FormField name="url">
                   <FormLabel>Database URL</FormLabel>
-                  <FormInput size="sm" />
+                  <FormInput intent="primary2" size="sm" />
                   <FormMessage />
                </FormField>
                <div className="flex justify-between gap-2 md:gap-4">
@@ -83,11 +85,11 @@ export const AsideCreateDatabaseForm = () => {
                      type="button"
                      intent="outline"
                      className="gap-2"
-                     disabled={(form?.watch?.("url")?.length || 0) < 8 || isPending}
+                     disabled={!urlIsValid || isPending}
                      onClick={() => {
                         startTransition(async () => {
                            try {
-                              axios.post("/api/v1/databases/test", { url: form.watch("url") });
+                              await axios.post("/api/v1/databases/test", { url: form.watch("url") });
                               toast.custom(
                                  (t) => (
                                     <div className="flex items-center gap-2 rounded-lg bg-emerald-400 p-4 dark:bg-emerald-500">

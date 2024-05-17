@@ -1,8 +1,7 @@
 "use client";
 
-import * as React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion-2";
+import { AnimatePresence, motion } from "framer-motion";
 import {
    ArrowDown,
    ArrowUp,
@@ -20,10 +19,6 @@ import {
    View,
    X,
 } from "lucide-react";
-
-import { AsideSeeDatabase } from "@/components/aside/aside-see-database";
-import { useDatabaseStore } from "@/components/aside/use-database-store";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion-2";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
    ContextMenu,
@@ -33,48 +28,81 @@ import {
    ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Flex } from "@/components/ui/layout";
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 import { AsideDeleteDatabase } from "./aside-delete-database";
 import { AsideRenameDatabase } from "./aside-rename-database";
+import { AsideSeeDatabase } from "@/components/aside/aside-see-database";
+import { Flex } from "@/components/ui/layout";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { useDatabaseStore } from "@/components/aside/use-database-store";
+import { usePathname } from "next/navigation";
 
-export const AsideList = () => {
+export const AsideList = ({ databases: serverDatabases }: { databases?: string[] }) => {
    const pathname = usePathname()?.split("?")?.[0];
 
    // aside context menus
-   const [openModal, setOpenModal] = React.useState<string | null>(null);
-   const [indexModal, setIndexModal] = React.useState<string | null>(null);
+   const [openModal, setOpenModal] = useState<string | null>(null);
+   const [indexModal, setIndexModal] = useState<string | null>(null);
+
+   const [hover, setHover] = useState<number | null>(null);
 
    const { databases, get, connect, disconnect, refresh, delete: deleteDb, rename, swap } = useDatabaseStore();
 
-   React.useEffect(() => {
+   useEffect(() => {
       get();
    }, []);
 
-   if (Object.values(databases).length == 0)
+   if (Object.values(databases).length == 0) {
+      if (!serverDatabases || serverDatabases?.length === 0) {
+         return (
+            <div className="mx-auto flex h-full flex-col items-center justify-center gap-2 px-3 py-3">
+               <p className="text-sm text-zinc-700 dark:text-zinc-200">No databases found</p>
+               <Button
+                  size="xs"
+                  intent="opaque"
+                  className="group/button h-7 px-2.5"
+                  onClick={async (ev) => {
+                     console.log("teste");
+                     const target = ev.currentTarget;
+                     target.disabled = true;
+                     await get();
+                     target.disabled = false;
+                  }}>
+                  <RefreshCw className="mr-1 size-4 shrink-0 duration-200 group-hover/button:rotate-90" size={16} />
+                  Refresh
+               </Button>
+            </div>
+         );
+      }
       return (
-         <div className="mx-auto flex h-full flex-col items-center justify-center gap-2 px-3 py-3">
-            <p className="text-sm text-zinc-700 dark:text-zinc-200">No databases found</p>
-            <Button
-               size="xs"
-               intent="opaque"
-               className="group/button h-7 px-2.5"
-               onClick={async (ev) => {
-                  console.log("teste");
-                  const target = ev.currentTarget;
-                  target.disabled = true;
-                  await get();
-                  target.disabled = false;
-               }}>
-               <RefreshCw className="mr-1 size-4 shrink-0 duration-200 group-hover/button:rotate-90" size={16} />
-               Refresh
-            </Button>
-         </div>
+         <ul className="flex w-full flex-col gap-1 pb-3" onMouseLeave={() => setHover(null)}>
+            {serverDatabases.map((databaseName, index) => (
+               <li
+                  key={index}
+                  className="relative flex items-center gap-2 overflow-hidden px-2 py-1"
+                  onMouseEnter={() => setHover(index)}>
+                  <Button
+                     disabled
+                     intent="ghost"
+                     size="none"
+                     className="relative z-10 size-6 hocus:bg-zinc-300 dark:hocus:bg-zinc-700 [&[data-state=open]>svg]:rotate-90">
+                     <Loader2 className="size-4 shrink-0 animate-spin" height={16} width={16} />
+                  </Button>
+                  <Flex className="pointer-events-none relative z-10 items-center gap-2">
+                     <p className="shrink-0 grow truncate text-sm font-medium text-zinc-800 dark:text-zinc-200">
+                        {databaseName}
+                     </p>
+                  </Flex>
+               </li>
+            ))}
+         </ul>
       );
+   }
 
    return (
-      <ul className="flex w-full flex-col px-3 pb-3">
+      <ul className="flex w-full flex-col gap-1 pb-3" onMouseLeave={() => setHover(null)}>
          {Object.values(databases)?.map((db: DatabaseType, index: number) => (
             <Dialog
                key={db.uuid}
@@ -82,28 +110,42 @@ export const AsideList = () => {
                onOpenChange={(x) => setIndexModal(x ? db.uuid : null)}>
                <Accordion>
                   <ContextMenu>
-                     <li aria-orientation="vertical" className="flex flex-col gap-1 rounded-lg">
+                     <li aria-orientation="vertical" className="flex flex-col gap-1">
                         <AccordionItem
                            value={db.uuid}
+                           onMouseEnter={() => setHover(index)}
                            open={["connected", "refreshing"].includes(db.status) ? undefined : false}>
                            <ContextMenuTrigger asChild>
-                              <div className="flex items-center gap-2 overflow-hidden rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800">
+                              <motion.div layout className="relative flex items-center gap-2 overflow-hidden px-2 py-1">
+                                 <AnimatePresence>
+                                    {hover === index && (
+                                       <motion.div
+                                          key={index}
+                                          initial={{ opacity: 0, x: "-100%" }}
+                                          animate={{ opacity: 1, x: 0 }}
+                                          exit={{ opacity: 0, x: "100%" }}
+                                          transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                                          layoutId="aside-list-accordion-trigger-hover"
+                                          className="absolute inset-0 bg-zinc-200 dark:bg-zinc-800"
+                                       />
+                                    )}
+                                 </AnimatePresence>
+                                 {/* <Link href={`/${db.uuid}`} className="absolute inset-0" /> */}
                                  <AccordionTrigger
                                     disabled={["connecting", "refreshing"].includes(db.status)}
-                                    className={cn(
-                                       " [&[data-state=open]>svg]:rotate-90",
-                                       buttonVariants({
-                                          intent: "ghost",
-                                          size: "icon-custom",
-                                       }),
-                                       "size-6 hover:bg-zinc-300 focus-visible:bg-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700",
-                                    )}
                                     onSelect={async (ev) => {
-                                       if (db.status == "disconnected") {
+                                       if (db.status == "disconnected" || db.status == "error") {
                                           const res = await connect(db.uuid);
-                                          if (!res) ev.preventDefault();
+                                          if (!res) {
+                                             ev.preventDefault();
+                                             console.log("res failed!");
+                                          }
                                        }
-                                    }}>
+                                    }}
+                                    className={cn(
+                                       buttonVariants({ intent: "ghost", size: "none" }),
+                                       "relative z-10 size-6 hocus:bg-zinc-300 dark:hocus:bg-zinc-700 [&[data-state=open]>svg]:rotate-90",
+                                    )}>
                                     {["connecting", "refreshing"].includes(db.status) && (
                                        <Loader2 className="size-4 shrink-0 animate-spin" height={16} width={16} />
                                     )}
@@ -119,25 +161,25 @@ export const AsideList = () => {
                                     )}
                                  </AccordionTrigger>
 
-                                 <Flex className="items-center gap-2">
-                                    <p className="shrink-0 grow truncate text-sm font-medium text-zinc-700 dark:text-zinc-200">
+                                 <Flex className="pointer-events-none relative z-10 items-center gap-2">
+                                    <p className="shrink-0 grow truncate text-sm font-medium text-zinc-800 dark:text-zinc-200">
                                        {db.name}
                                     </p>
-                                    <p className="truncate text-xs text-zinc-400 empty:w-0 dark:text-zinc-500">
+                                    {/* <p className="truncate text-xs text-zinc-400 empty:w-0 dark:text-zinc-500">
                                        {db.url}
-                                    </p>
+                                    </p> */}
                                  </Flex>
-                              </div>
+                              </motion.div>
                            </ContextMenuTrigger>
-                           <AccordionContent forceMount>
-                              <AccordionItem value="tables" className="pl-4">
-                                 <div className="flex items-center gap-2 overflow-hidden rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800">
+                           <AccordionContent forceMount className="bg-zinc-200 dark:bg-zinc-800">
+                              <AccordionItem value="tables">
+                                 <div className="flex items-center gap-2 overflow-hidden px-2 py-1">
                                     <AccordionTrigger
                                        className={cn(
                                           " [&[data-state=open]>svg]:rotate-90",
                                           buttonVariants({
                                              intent: "ghost",
-                                             size: "icon-custom",
+                                             size: "none",
                                           }),
                                           "size-6 hover:bg-zinc-300 focus-visible:bg-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700",
                                        )}>
@@ -148,15 +190,18 @@ export const AsideList = () => {
                                        />
                                     </AccordionTrigger>
                                     <p className="grow truncate text-sm font-medium text-zinc-700 dark:text-zinc-200">
-                                       Tables{" "}
-                                       <span className="text-xs font-normal opacity-70">{`(${db?.tables?.length})`}</span>
+                                       Tables
+                                       <span className="select-none text-xs font-normal opacity-70">
+                                          {" "}
+                                          {`(${db?.tables?.length})`}
+                                       </span>
                                     </p>
                                     {/* <Table2 className="ml-auto mr-1 size-4 shrink-0 opacity-50" size={16} /> */}
                                  </div>
                                  <AccordionContent>
-                                    <ul aria-orientation="vertical" className="grid grid-cols-1 gap-1 pl-4">
+                                    <ul aria-orientation="vertical" className="grid grid-cols-1 gap-1 px-2 py-1">
                                        {!db?.tables?.length && (
-                                          <li className="-mt-1 truncate rounded-md px-3 py-1 text-xs text-zinc-500 dark:text-zinc-400">
+                                          <li className="-mt-1 truncate rounded-md px-2 py-1 text-xs text-zinc-500 dark:text-zinc-400">
                                              No tables found
                                           </li>
                                        )}
@@ -174,7 +219,7 @@ export const AsideList = () => {
                                                       ? "selected"
                                                       : "idle"
                                                 }
-                                                className="flex items-center gap-2 overflow-hidden rounded-md p-1 text-zinc-600 aria-selected:font-medium aria-selected:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:aria-selected:text-zinc-50">
+                                                className="flex items-center gap-2 overflow-hidden rounded px-2 py-1 text-zinc-600 hover:bg-zinc-300 aria-selected:font-medium aria-selected:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:aria-selected:text-zinc-50">
                                                 <Table2
                                                    className={cn(
                                                       "size-4 shrink-0",
@@ -193,14 +238,14 @@ export const AsideList = () => {
                                     </ul>
                                  </AccordionContent>
                               </AccordionItem>
-                              <AccordionItem value="tables" className="flex flex-col gap-1 overflow-hidden pl-4">
-                                 <div className="flex items-center gap-2 overflow-hidden rounded-md p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800">
+                              <AccordionItem value="views" className="flex flex-col gap-1 overflow-hidden">
+                                 <div className="flex items-center gap-2 overflow-hidden rounded-md px-2 py-1">
                                     <AccordionTrigger
                                        className={cn(
                                           " [&[data-state=open]>svg]:rotate-90",
                                           buttonVariants({
                                              intent: "ghost",
-                                             size: "icon-custom",
+                                             size: "none",
                                           }),
                                           "size-6 hover:bg-zinc-300 focus-visible:bg-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700",
                                        )}>
@@ -217,9 +262,9 @@ export const AsideList = () => {
                                     {/* <View className="ml-auto mr-1 size-4 shrink-0 opacity-50" size={16} /> */}
                                  </div>
                                  <AccordionContent>
-                                    <ul aria-orientation="vertical" className="grid grid-cols-1 gap-1 pl-4">
+                                    <ul aria-orientation="vertical" className="grid grid-cols-1 gap-1 px-2 py-1">
                                        {!db?.views?.length && (
-                                          <li className="-mt-1 truncate rounded-md px-3 py-1 text-xs text-zinc-500 dark:text-zinc-400">
+                                          <li className="-mt-1 truncate rounded-md px-2 py-1 text-xs text-zinc-500 dark:text-zinc-400">
                                              No views found
                                           </li>
                                        )}
@@ -237,7 +282,7 @@ export const AsideList = () => {
                                                       ? "selected"
                                                       : "idle"
                                                 }
-                                                className="flex items-center gap-2 overflow-hidden rounded-md p-1 text-zinc-600 hover:bg-zinc-200 aria-selected:font-medium aria-selected:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:aria-selected:text-zinc-50">
+                                                className="flex items-center gap-2 overflow-hidden rounded px-2 py-1 text-zinc-600 hover:bg-zinc-300 aria-selected:font-medium aria-selected:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:aria-selected:text-zinc-50">
                                                 <View
                                                    className={cn(
                                                       "size-4 shrink-0",
@@ -279,7 +324,7 @@ export const AsideList = () => {
                            Disconnect
                         </ContextMenuItem>
                         <ContextMenuItem
-                           disabled={db.status !== "connected"}
+                           disabled={db.status !== "connected" && db.status !== "refreshing" && db.status != "error"}
                            onSelect={async (ev) => {
                               if (db.status == "connected") {
                                  const res = await refresh(db.uuid);
