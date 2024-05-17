@@ -1,25 +1,29 @@
-import Link from "next/link";
-import { Menu } from "lucide-react";
+"use client";
 
-import { ScriptButton } from "@/components/header-buttons";
-import { HeaderThemeContent } from "@/components/header-theme-content";
-import { buttonVariants } from "@/components/ui/button";
 import {
    DropdownMenu,
    DropdownMenuContent,
    DropdownMenuItem,
    DropdownMenuSeparator,
    DropdownMenuSub,
-   DropdownMenuSubContent,
    DropdownMenuSubTrigger,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import { HeaderThemeContent } from "@/components/header-theme-content";
+import Link from "next/link";
+import { Menu } from "lucide-react";
+import { ScriptButton } from "@/components/header-buttons";
 import { Separator } from "@/components/ui/separator";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export const Header = () => {
    return (
-      <header className="sticky left-0 top-0 z-40 flex h-[37px] w-full shrink-0 border-b border-b-zinc-200 bg-background text-foreground dark:border-b-zinc-800">
+      <header
+         // @ts-expect-error
+         style={{ "--header-height": "37px" }}
+         className="sticky left-0 top-0 z-40 flex h-[--header-height] w-full shrink-0 border-b border-b-zinc-200 bg-background text-foreground dark:border-b-zinc-800">
          {/* <div data-tauri-drag-region={undefined} className="flex items-center justify-between"> */}
          {/* <div className="flex grow items-center gap-1"> */}
          <DropdownMenu>
@@ -37,13 +41,20 @@ export const Header = () => {
                </DropdownMenuItem>
                <DropdownMenuSeparator />
                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger className="text-[13px]">Preferences</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent>
+                  <DropdownMenuSubTrigger className="text-[13px]">Theme</DropdownMenuSubTrigger>
+
+                  <HeaderThemeContent />
+               </DropdownMenuSub>
+               <DropdownMenuSub>
+                  <DropdownMenuSubTrigger disabled className="text-[13px]">
+                     Preferences
+                  </DropdownMenuSubTrigger>
+                  {/* <DropdownMenuSubContent>
                      <DropdownMenuSub>
                         <DropdownMenuSubTrigger className="text-[13px]">Theme</DropdownMenuSubTrigger>
                         <HeaderThemeContent />
                      </DropdownMenuSub>
-                  </DropdownMenuSubContent>
+                  </DropdownMenuSubContent> */}
                </DropdownMenuSub>
                <DropdownMenuItem className="text-[13px]" asChild>
                   <Link href="https://github.com/mvrcelitos/sql.vuekoo" target="_blank">
