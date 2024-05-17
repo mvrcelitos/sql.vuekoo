@@ -81,6 +81,7 @@ export const InnerAside = ({ databases }: { databases?: string[] }) => {
                      intent="none"
                      size="xs"
                      value={input}
+                     placeholder="Search database"
                      onChange={(ev) => setInput(ev.currentTarget.value)}
                      className="w-full rounded-full bg-background pl-9"
                   />
