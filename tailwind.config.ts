@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
    darkMode: ["class"],
@@ -16,13 +17,22 @@ const config: Config = {
          },
       },
       extend: {
+         height: {
+            content: "calc(100dvh - var(--header-height))",
+         },
          maxHeight: {
-            content: "calc(100dvh - 37px)",
+            content: "calc(100lvh - var(--header-height)))",
          },
          colors: {
+            background: "rgb(var(--background) / <alpha-value>)",
+            foreground: "rgb(var(--foreground) / <alpha-value>)",
+
+            accent: "var(--accent)",
+            muted: "var(--muted)",
+            border: "var(--border)",
+
             primary: "rgb(var(--primary) / <alpha-value>)",
-            background: "var(--background)",
-            foreground: "var(--foreground)",
+            primaryActive: "rgb(var(--primaryActive) / <alpha-value>)",
          },
          keyframes: {
             "accordion-down": {
@@ -40,6 +50,12 @@ const config: Config = {
          },
       },
    },
-   plugins: [require("tailwindcss-animate")],
+   plugins: [
+      require("tailwindcss-animate"),
+      plugin(({ addVariant }) => {
+         addVariant("group-hocus", [".group:hover > &", ".group:focus-visible > &"]);
+         addVariant("hocus", ["&:hover", "&:focus-visible"]);
+      }),
+   ],
 };
 export default config;
