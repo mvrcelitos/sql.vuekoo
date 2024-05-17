@@ -14,7 +14,7 @@ const Label = React.forwardRef<HTMLLabelElement, LabelProps>(({ className, child
          {...props}
          ref={ref}>
          {children}
-         {required && <span className="text-red-500 dark:text-red-600">*</span>}
+         {required && <span className="select-none text-red-500 dark:text-red-600">*</span>}
       </label>
    );
 });
