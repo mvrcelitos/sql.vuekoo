@@ -1,9 +1,10 @@
 "use client";
 
-import * as React from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
-import { cva, VariantProps } from "cva";
+import * as React from "react";
+
 import { Check, ChevronRight, Circle } from "lucide-react";
+import { VariantProps, cva } from "cva";
 
 import { cn } from "@/lib/utils";
 
@@ -25,7 +26,7 @@ export const dropdownMenuItemsVariants = cva({
    variants: {
       intent: {
          default: "focus:bg-zinc-200 focus:text-zinc-900 dark:focus:bg-zinc-800 dark:focus:text-zinc-50",
-         primary: "focus:bg-primary focus:text-zinc-900 dark:focus:bg-primary dark:focus:text-zinc-50",
+         primary: "focus:bg-primary focus:text-zinc-50 dark:focus:bg-primary dark:focus:text-zinc-50",
          danger:
             "text-red-500 focus:bg-red-200 focus:text-rose-600 dark:text-red-400 dark:focus:bg-red-700 dark:focus:text-rose-100",
       },
