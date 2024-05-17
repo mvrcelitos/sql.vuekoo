@@ -1,9 +1,8 @@
 "use client";
 
-import { AvailableSQLTypes, sqlToTypescript, sqlToZod } from "@/constants/sql-types";
-
-import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { GetTableReturn } from "@/app/()/[database]/[table]/(properties)/page";
+import { DataTableToolbar } from "@/components/data-table-toolbar";
+import { AvailableSQLTypes, sqlToTypescript, sqlToZod } from "@/constants/sql-types";
 
 export const exportToTypescript = (rows: GetTableReturn["rows"]) => {
    const formatted = rows.reduce((acc: Record<string, string>, cur) => {

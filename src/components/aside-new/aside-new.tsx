@@ -1,12 +1,13 @@
 "use client";
 
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Plus, Search } from "lucide-react";
+
 import { CreateDatabaseForm } from "@/components/aside-new/_components/buttons/create-database/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
-import { Plus, Search, X } from "lucide-react";
-import { useState } from "react";
 
 export const InnerAside = ({ databases }: { databases?: string[] }) => {
    // Hooks

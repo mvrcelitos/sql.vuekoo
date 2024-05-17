@@ -1,11 +1,12 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 import {
    CreateDatabaseFormReturn,
    DatabasesSchema,
 } from "@/components/aside-new/_components/buttons/create-database/schema";
-import { DatabaseFactory, PSQLDatabase } from "@/lib/database";
-import { cookies } from "next/headers";
+import { DatabaseFactory } from "@/lib/database";
 
 const COOKIES_KEY = "databases";
 

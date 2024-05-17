@@ -7,7 +7,6 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { NavigationMenuItems } from "@/components/navigation-menu/data";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export const NavigationMenu = () => {

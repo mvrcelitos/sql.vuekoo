@@ -1,11 +1,13 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { createDatabase, testConnection } from "./actions";
-import { CreateDatabaseFormInput, createDatabaseFormSchema } from "./schema";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, Loader2, X, Zap } from "lucide-react";
+
 import {
    Form,
-   FormCheckbox,
    FormField,
    FormInput,
    FormLabel,
@@ -14,12 +16,9 @@ import {
    FormTextarea,
 } from "@/components/form-components";
 import { Button } from "@/components/ui/button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AnimatePresence, motion } from "framer-motion";
-import { Check, Loader2, X, Zap } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Separator } from "@/components/ui/separator";
+
+import { createDatabase, testConnection } from "./actions";
+import { CreateDatabaseFormInput, createDatabaseFormSchema } from "./schema";
 
 const TestConnectionStates = {
    idle: {

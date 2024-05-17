@@ -1,6 +1,5 @@
 import * as React from "react";
-
-import { VariantProps, cva } from "cva";
+import { cva,VariantProps } from "cva";
 
 import { cn } from "@/lib/utils";
 

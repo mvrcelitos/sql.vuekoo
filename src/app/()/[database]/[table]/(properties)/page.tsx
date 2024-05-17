@@ -1,14 +1,13 @@
+import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import * as pg from "pg";
 
-import { TBody, THead, TRow, Table, TableWrapper, Td, Th } from "@/components/ui/table";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-
-import type { Metadata } from "next";
 import { PropertiesDataTableToolbar } from "@/app/()/[database]/[table]/(properties)/toolbar";
-import { TableCellFormatter } from "@/lib/table-cell-formatter";
 import { TableColumnHeader } from "@/components/table-column-header";
+import { Table, TableWrapper, TBody, Td, Th,THead, TRow } from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { TableCellFormatter } from "@/lib/table-cell-formatter";
 import { cn } from "@/lib/utils";
-import { cookies } from "next/headers";
 
 interface paramsProps {
    database: string;

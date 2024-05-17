@@ -1,4 +1,3 @@
-import { Aside } from "@/components/aside";
 import { AsideNew } from "@/components/aside-new";
 import { NavigationMenu } from "@/components/navigation-menu/index";
 

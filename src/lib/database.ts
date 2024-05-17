@@ -1,6 +1,5 @@
 import mysql from "mysql2/promise";
 import pg from "pg";
-import { z } from "zod";
 
 interface DatabaseConfigProps {
    host: string;

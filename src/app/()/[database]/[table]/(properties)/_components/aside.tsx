@@ -1,12 +1,13 @@
 "use client";
 
-import { AsideRoutes } from "@/app/()/[database]/[table]/(properties)/_components/aside-routes";
+import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
+
+import { AsideRoutes } from "@/app/()/[database]/[table]/(properties)/_components/aside-routes";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 export const Aside = () => {
    const pathname = usePathname()?.split("?")?.[0];

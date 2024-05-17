@@ -1,5 +1,11 @@
 "use client";
 
+import Link from "next/link";
+import { Menu } from "lucide-react";
+
+import { ScriptButton } from "@/components/header-buttons";
+import { HeaderThemeContent } from "@/components/header-theme-content";
+import { buttonVariants } from "@/components/ui/button";
 import {
    DropdownMenu,
    DropdownMenuContent,
@@ -9,13 +15,7 @@ import {
    DropdownMenuSubTrigger,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { HeaderThemeContent } from "@/components/header-theme-content";
-import Link from "next/link";
-import { Menu } from "lucide-react";
-import { ScriptButton } from "@/components/header-buttons";
 import { Separator } from "@/components/ui/separator";
-import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export const Header = () => {

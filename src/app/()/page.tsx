@@ -1,11 +1,9 @@
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Separator, separatorVariants } from "@/components/ui/separator";
+import { cookies } from "next/headers";
+import Link from "next/link";
 
 import { HelpButton } from "@/app/()/_components/help-button";
-import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { cookies } from "next/headers";
-import { toast } from "sonner";
 
 const getCurrentUser = () => {
    const c = cookies();
@@ -37,8 +35,8 @@ export default function Page() {
                      You can create an account to save your databases, settings and then you access them from anywhere.
                   </p>
                   <p className="text-center text-sm opacity-80 md:text-base">
-                     But this isn't necessary, you can continue as guest if you want, but your data will be lost when
-                     you close the browser.
+                     But this isn{"'"}t necessary, you can continue as guest if you want, but your data will be lost
+                     when you close the browser.
                   </p>
                </div>
                <div className="flex items-center justify-center gap-0.5 md:gap-4 md:text-base">
