@@ -61,6 +61,11 @@ export class ExportToZod extends ExportClass implements exportFunction {
       }, {});
       return this;
    }
+
+   public override end() {
+      const string = super.end();
+      return string?.replace(/^\{/, "z.object({")?.replace(/\}$/, "})");
+   }
 }
 
 export const PropertiesDataTableToolbar = ({ rows }: { rows: GetTableReturn["rows"] }) => {
