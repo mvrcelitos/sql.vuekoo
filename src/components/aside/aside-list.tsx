@@ -1,6 +1,8 @@
 "use client";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion-2";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
    ArrowDown,
@@ -19,6 +21,10 @@ import {
    View,
    X,
 } from "lucide-react";
+
+import { AsideSeeDatabase } from "@/components/aside/aside-see-database";
+import { useDatabaseStore } from "@/components/aside/use-database-store";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion-2";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
    ContextMenu,
@@ -28,16 +34,11 @@ import {
    ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useEffect, useState } from "react";
+import { Flex } from "@/components/ui/layout";
+import { cn } from "@/lib/utils";
 
 import { AsideDeleteDatabase } from "./aside-delete-database";
 import { AsideRenameDatabase } from "./aside-rename-database";
-import { AsideSeeDatabase } from "@/components/aside/aside-see-database";
-import { Flex } from "@/components/ui/layout";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { useDatabaseStore } from "@/components/aside/use-database-store";
-import { usePathname } from "next/navigation";
 
 export const AsideList = ({ databases: serverDatabases }: { databases?: string[] }) => {
    const pathname = usePathname()?.split("?")?.[0];

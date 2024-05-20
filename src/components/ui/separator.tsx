@@ -1,6 +1,6 @@
-import { VariantProps, cva } from "cva";
-
 import React from "react";
+import { cva,VariantProps } from "cva";
+
 import { cn } from "@/lib/utils";
 
 export const separatorVariants = cva({
