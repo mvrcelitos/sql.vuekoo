@@ -37,7 +37,7 @@ export class ExportClass implements exportFunction {
 
    public end() {
       const json = JSON.stringify(this.formatted, null, this?.options?.spacement);
-      return json.replace(/": "(.*)",?$/gm, (_, replace) => `: ${replace};`);
+      return json.replace(/": "(.*)",?$/gm, (_, replace) => `": ${replace};`);
    }
 }
 
