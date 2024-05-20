@@ -1,6 +1,8 @@
 export const availableSQLTypes = [
    "int2",
+   "_int2",
    "int4",
+   "_int4",
    "varchar",
    "text",
    "bool",
@@ -28,9 +30,11 @@ export const availableTypescriptTypes = [
    "string",
    "boolean",
    "Date",
-   `Record<string, any>`,
-   `Record<string, number>`,
-   `Record<string, string>`,
+   "Array<number>",
+   "Array<string>",
+   "Record<string, any>",
+   "Record<string, number>",
+   "Record<string, string>",
 ] as const;
 
 export const availableZodTypes = [
@@ -39,6 +43,8 @@ export const availableZodTypes = [
    "z.string()",
    "z.boolean()",
    "z.date()",
+   "z.array(z.number())",
+   "z.array(z.string())",
    "z.record(z.string(), z.any())",
    "z.record(z.string(), z.number())",
    "z.record(z.string(), z.string())",
@@ -50,7 +56,9 @@ export type AvailableZodTypes = (typeof availableZodTypes)[number];
 
 export const sqlToTypescript: Record<AvailableSQLTypes, AvailableTypescriptTypes> = {
    int2: "number",
+   _int2: "Array<number>",
    int4: "number",
+   _int4: "Array<number>",
    varchar: "string",
    text: "string",
    bool: "boolean",
@@ -74,7 +82,9 @@ export const sqlToTypescript: Record<AvailableSQLTypes, AvailableTypescriptTypes
 
 export const sqlToZod: Record<AvailableSQLTypes, AvailableZodTypes> = {
    int2: "z.number()",
+   _int2: "z.array(z.number())",
    int4: "z.number()",
+   _int4: "z.array(z.number())",
    varchar: "z.string()",
    text: "z.string()",
    bool: "z.boolean()",
