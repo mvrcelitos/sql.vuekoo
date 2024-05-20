@@ -6,25 +6,29 @@ import { AvailableSQLTypes, sqlToTypescript, sqlToZod } from "@/constants/sql-ty
 
 interface exportFunctionsOptions {
    spacement?: number;
+   lineBreak?: string;
 }
 
 interface exportFunction {
    format: () => this;
+   between?: (fn: (data: Record<string, string>) => Record<string, string>) => this;
    end: () => string;
 }
 
 export class ExportClass implements exportFunction {
    protected declare rows: GetTableReturn["rows"];
    protected declare formatted: Record<string, string>;
-   protected declare options: exportFunctionsOptions;
 
-   constructor(rows: GetTableReturn["rows"], options: exportFunctionsOptions = { spacement: 2 }) {
+   protected spacement: number = 2;
+   protected separator: string = ",";
+   protected separatorInAllLines: boolean = true;
+
+   constructor(rows: GetTableReturn["rows"]) {
       this.rows = rows;
-      this.options = options;
    }
 
-   public static create(rows: GetTableReturn["rows"], options?: exportFunctionsOptions) {
-      return new this(rows, options);
+   public static create(rows: GetTableReturn["rows"]) {
+      return new this(rows);
    }
 
    public format() {
@@ -35,14 +39,25 @@ export class ExportClass implements exportFunction {
       return this;
    }
 
+   public between(fn: (data: Record<string, string>) => Record<string, string>) {
+      if (!fn) return this;
+      this.formatted = fn(this.formatted);
+      return this;
+   }
+
    public end() {
-      const json = JSON.stringify(this.formatted, null, this?.options?.spacement);
-      return json.replace(/": "(.*)",?$/gm, (_, replace) => `": ${replace};`);
+      const json = JSON.stringify(this.formatted, null, this?.spacement);
+      return json.replace(
+         /": "(.*)",?$/gm,
+         (_, a, b) => `": ${a}${this.separatorInAllLines ? this?.separator : b ? this.separator : ""}`,
+      );
    }
 }
 
 export class ExportToTypescript extends ExportClass implements exportFunction {
-   public format() {
+   protected override separator = ";";
+
+   public override format() {
       this.formatted = this?.rows.reduce((acc: Record<string, string>, cur) => {
          const type = sqlToTypescript?.[cur.Type?.replace(/\((.*)\)$/g, "") as AvailableSQLTypes] ?? "any";
          acc[cur.Column] = type + (cur["Null?"] === "YES" && type != "any" ? " | null" : "");
@@ -53,7 +68,9 @@ export class ExportToTypescript extends ExportClass implements exportFunction {
 }
 
 export class ExportToZod extends ExportClass implements exportFunction {
-   public format() {
+   protected override separatorInAllLines: boolean = false;
+
+   public override format() {
       this.formatted = this?.rows.reduce((acc: Record<string, string>, cur) => {
          const type = sqlToZod?.[cur.Type?.replace(/\((.*)\)$/g, "") as AvailableSQLTypes] ?? "any";
          acc[cur.Column] = type + (cur["Null?"] === "YES" && type != "z.any()" ? ".nullable()" : "");
