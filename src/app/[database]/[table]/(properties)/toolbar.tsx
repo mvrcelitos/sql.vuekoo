@@ -4,23 +4,64 @@ import { GetTableReturn } from "@/app/[database]/[table]/(properties)/page";
 import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { AvailableSQLTypes, sqlToTypescript, sqlToZod } from "@/constants/sql-types";
 
-export const exportToTypescript = (rows: GetTableReturn["rows"]) => {
-   const formatted = rows.reduce((acc: Record<string, string>, cur) => {
-      const type = sqlToTypescript?.[cur.Type as AvailableSQLTypes] ?? "any";
-      acc[cur.Column] = type + (cur["Null?"] === "YES" && type != "any" ? " | null" : "");
-      return acc;
-   }, {});
-   return JSON.stringify(formatted, null, 2);
-};
+interface exportFunctionsOptions {
+   spacement?: number;
+}
 
-export const exportToZod = (rows: GetTableReturn["rows"]) => {
-   const formatted = rows.reduce((acc: Record<string, string>, cur) => {
-      const type = sqlToZod?.[cur.Type as AvailableSQLTypes] ?? "any";
-      acc[cur.Column] = type + (cur["Null?"] === "YES" && type != "z.any()" ? ".nullable()" : "");
-      return acc;
-   }, {});
-   return JSON.stringify(formatted, null, 2)?.replace(/\"\:/g, '": ');
-};
+interface exportFunction {
+   format: () => this;
+   end: () => string;
+}
+
+export class ExportClass implements exportFunction {
+   protected declare rows: GetTableReturn["rows"];
+   protected declare formatted: Record<string, string>;
+   protected declare options: exportFunctionsOptions;
+
+   constructor(rows: GetTableReturn["rows"], options: exportFunctionsOptions = { spacement: 2 }) {
+      this.rows = rows;
+      this.options = options;
+   }
+
+   public static create(rows: GetTableReturn["rows"], options?: exportFunctionsOptions) {
+      return new this(rows, options);
+   }
+
+   public format() {
+      this.formatted = this?.rows.reduce((acc: Record<string, string>, cur) => {
+         acc[cur.Column] = cur.Type?.replace(/\((.*)\)$/g, "");
+         return acc;
+      }, {});
+      return this;
+   }
+
+   public end() {
+      const json = JSON.stringify(this.formatted, null, this?.options?.spacement);
+      return json.replace(/": "(.*)",?$/gm, (_, replace) => `: ${replace};`);
+   }
+}
+
+export class ExportToTypescript extends ExportClass implements exportFunction {
+   public format() {
+      this.formatted = this?.rows.reduce((acc: Record<string, string>, cur) => {
+         const type = sqlToTypescript?.[cur.Type?.replace(/\((.*)\)$/g, "") as AvailableSQLTypes] ?? "any";
+         acc[cur.Column] = type + (cur["Null?"] === "YES" && type != "any" ? " | null" : "");
+         return acc;
+      }, {});
+      return this;
+   }
+}
+
+export class ExportToZod extends ExportClass implements exportFunction {
+   public format() {
+      this.formatted = this?.rows.reduce((acc: Record<string, string>, cur) => {
+         const type = sqlToZod?.[cur.Type?.replace(/\((.*)\)$/g, "") as AvailableSQLTypes] ?? "any";
+         acc[cur.Column] = type + (cur["Null?"] === "YES" && type != "z.any()" ? ".nullable()" : "");
+         return acc;
+      }, {});
+      return this;
+   }
+}
 
 export const PropertiesDataTableToolbar = ({ rows }: { rows: GetTableReturn["rows"] }) => {
    return (
@@ -29,11 +70,11 @@ export const PropertiesDataTableToolbar = ({ rows }: { rows: GetTableReturn["row
          exportActions={{
             interface: {
                typescript: () => {
-                  const text = exportToTypescript(rows);
+                  const text = ExportToTypescript.create(rows).format().end();
                   navigator.clipboard.writeText(text);
                },
                zod: () => {
-                  const text = exportToZod(rows);
+                  const text = ExportToZod.create(rows).format().end();
                   navigator.clipboard.writeText(text);
                },
             },
