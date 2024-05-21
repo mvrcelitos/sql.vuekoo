@@ -11,7 +11,8 @@ import { cn } from "@/lib/utils";
 
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
+import { GeistSans } from "geist/font/sans";
 
 export const metadata: Metadata = {
    title: {
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
    return (
       <html lang="en">
-         <body className={cn("flex h-dvh max-h-lvh min-h-svh flex-col overflow-hidden", inter.className)}>
+         <body className={cn("flex h-dvh max-h-lvh min-h-svh flex-col overflow-hidden", GeistSans.className)}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                <Header />
                <Flex className="min-h-[calc(100svh-37px)] flex-wrap md:flex-nowrap">
