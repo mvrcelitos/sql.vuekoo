@@ -15,7 +15,7 @@ const inputPasswordVariants = cva({
          none: "",
          opaque: "",
          primary:
-            "dark:focus-within:border-primary-active focus-within:border-primary-active focus-within:ring-primary-active dark:focus-within:ring-primary-active",
+            "dark:focus-within:border-primary focus-within:border-primary focus-within:ring-primary dark:focus-within:ring-primary",
          primary2:
             "dark:focus-within:border-primary-active focus-within:border-primary-active focus-within:ring-primary-active dark:focus-within:ring-primary-active",
          default:
