@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cva,VariantProps } from "cva";
+import { cva, VariantProps } from "cva";
 
 import { cn } from "@/lib/utils";
 
@@ -9,11 +9,11 @@ export const inputVariants = cva({
       intent: {
          none: "",
          primary:
-            "border border-zinc-400 dark:border-zinc-600 dark:text-zinc-200 ring-0 focus:ring-1 focus:border-primary ring-primary dark:focus:border-primary dark:focus:ring-primary",
+            "border border-zinc-300 dark:border-zinc-700 dark:text-zinc-200 ring-0 focus:ring-1 focus:border-primary ring-primary dark:focus:border-primary dark:focus:ring-primary",
          primary2:
             "border-transparent text-zinc-800 dark:text-zinc-200 bg-zinc-200 dark:bg-zinc-800 focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary",
          default:
-            "border border-zinc-400 dark:border-zinc-600 dark:text-zinc-200 focus:ring-1 focus:border-zinc-700 focus:ring-zinc-700 dark:focus:ring-zinc-50 dark:focus:border-zinc-50",
+            "border border-zinc-300 dark:border-zinc-700 dark:text-zinc-200 focus:ring-1 focus:border-zinc-700 focus:ring-zinc-700 dark:focus:ring-zinc-50 dark:focus:border-zinc-50",
          opaque: [
             "bg-zinc-300 enabled:hover:bg-zinc-400 focus:bg-zinc-50",
             "dark:bg-zinc-500 enabled:dark:hover:bg-zinc-400 enabled:dark:focus:bg-zinc-200",
