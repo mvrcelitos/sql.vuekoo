@@ -9,7 +9,7 @@ import { Input, type InputProps } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 const inputPasswordVariants = cva({
-   base: "relative rounded-md focus-within:ring-1 border border-zinc-400 dark:border-zinc-600",
+   base: "relative rounded-md focus-within:ring-1 border border-zinc-300 dark:border-zinc-700",
    variants: {
       intent: {
          none: "",
