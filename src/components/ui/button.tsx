@@ -32,6 +32,7 @@ export const buttonVariants = cva({
          ghost: [
             "bg-transparent hover:bg-zinc-200 focus-visible:bg-zinc-200 text-zinc-600 hover:text-zinc-800",
             "dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-800/70 dark:focus-visible:bg-zinc-800/70",
+            "dark:hover:highlight-5 dark:focus-visible:highlight-5",
          ],
          success: [
             "bg-emerald-500 hover:bg-teal-600 active:bg-teal-600",
@@ -49,7 +50,7 @@ export const buttonVariants = cva({
          ],
          outline: [
             "border border-zinc-300 dark:border-zinc-700",
-            "hover:bg-zinc-300 active:bg-zinc-300 dark:hover:bg-zinc-700 dark:active:bg-zinc-700",
+            "hover:bg-muted active:bg-muted",
             "text-zinc-600 hover:text-zinc-800 active:text-zinc-800 dark:text-zinc-300 dark:hover:text-zinc-50 dark:active:text-zinc-50",
             "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-800",
          ],
