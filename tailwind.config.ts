@@ -17,6 +17,12 @@ const config: Config = {
          },
       },
       extend: {
+         boxShadow: {
+            // "vercel-sm": "0px 1px 1px rgb(0,0,0,.02)",
+            // "vercel-md": "0px 4px 8px -4px rgba(0,0,0,.04)",
+            // "vercel-lg": "0px 16px 24px -8px rgba(0,0,0,.06)",
+            vercel: "0px 1px 1px rgb(0,0,0,.02), 0px 4px 8px -4px rgba(0,0,0,.04), 0px 16px 24px -8px rgba(0,0,0,.06)",
+         },
          height: {
             content: "calc(100dvh - var(--header-height))",
          },
@@ -55,6 +61,12 @@ const config: Config = {
       plugin(({ addVariant }) => {
          addVariant("group-hocus", [".group:hover > &", ".group:focus-visible > &"]);
          addVariant("hocus", ["&:hover", "&:focus-visible"]);
+      }),
+      plugin(({ matchUtilities, theme }) => {
+         matchUtilities(
+            { highlight: (value) => ({ boxShadow: `inset 0 1px 0 0 rgb(255 255 255 / ${value})` }) },
+            { values: theme("opacity") },
+         );
       }),
    ],
 };
