@@ -9,7 +9,7 @@ import { Input, type InputProps } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 const inputPasswordVariants = cva({
-   base: "relative rounded-md focus-within:ring-1 border border-zinc-400 dark:border-zinc-600",
+   base: "bg-background relative rounded-md focus-within:ring-1 border border-zinc-300 dark:border-zinc-700",
    variants: {
       intent: {
          none: "",
@@ -17,7 +17,7 @@ const inputPasswordVariants = cva({
          primary:
             "dark:focus-within:border-primary focus-within:border-primary focus-within:ring-primary dark:focus-within:ring-primary",
          primary2:
-            "dark:focus-within:border-primary-active focus-within:border-primary-active focus-within:ring-primary-active dark:focus-within:ring-primary-active",
+            "border-transparent text-zinc-800 dark:text-zinc-200 bg-zinc-200 dark:bg-zinc-800 focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary",
          default:
             "focus-within:border-zinc-700 focus-within:ring-zinc-700 dark:focus-within:ring-zinc-50 dark:focus-within:border-zinc-50",
       },

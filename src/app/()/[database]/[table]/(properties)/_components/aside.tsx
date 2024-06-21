@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 
-import { AsideRoutes } from "@/app/[database]/[table]/(properties)/_components/aside-routes";
+import { AsideRoutes } from "@/app/()/[database]/[table]/(properties)/_components/aside-routes";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 

@@ -1,18 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import { GeistSans } from "geist/font/sans";
 
-import { Aside } from "@/components/aside";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Flex } from "@/components/ui/layout";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
 import "./globals.css";
-
-// const inter = Inter({ subsets: ["latin"] });
-import { GeistSans } from "geist/font/sans";
 
 export const metadata: Metadata = {
    title: {
@@ -28,13 +23,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
          <body className={cn("flex h-dvh max-h-lvh min-h-svh flex-col overflow-hidden", GeistSans.className)}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                <Header />
-               <Flex className="min-h-[calc(100svh-37px)] flex-wrap md:flex-nowrap">
-                  <Aside />
-                  {children}
-                  <Analytics />
-               </Flex>
+               <div className="flex min-h-[calc(100svh-37px)] flex-initial flex-wrap md:flex-nowrap">{children}</div>
                <Toaster />
             </ThemeProvider>
+            <Analytics />
          </body>
       </html>
    );

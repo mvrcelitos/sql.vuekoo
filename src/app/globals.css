@@ -3,17 +3,31 @@
 @tailwind utilities;
 
 @layer base {
-   :root {
-      --background: #fafafa;
-      --foreground: #09090b;
+   :root,
+   .light {
+      --background: 250 250 250;
+      --foreground: 9 9 11;
+
+      --accent: theme("colors.zinc.100");
+      --muted: theme("colors.zinc.200");
+
+      --border: theme("colors.zinc.400");
       /* --primary: #e11d48; */
-      --primary: 219 39 119;
+      --primary: 7 182 130;
+      --primaryActive: 15 206 145;
+      --primary: 0 64 197;
+      --primaryActive: 8 88 212;
    }
    .dark {
-      --background: #09090b;
-      --foreground: #fafafa;
-      /* --primary: #818cf8; */
+      --background: 9 9 11;
+      --foreground: 250 250 250;
+
+      --accent: theme("colors.zinc.900");
+      --muted: theme("colors.zinc.800");
+
+      --border: theme("colors.zinc.500");
       --primary: 219 39 119;
+      --primaryActive: 239 59 139;
    }
 }
 
@@ -28,8 +42,8 @@
    }
 
    .modern-scroll::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
    }
 
    .modern-scroll::-webkit-scrollbar-track {

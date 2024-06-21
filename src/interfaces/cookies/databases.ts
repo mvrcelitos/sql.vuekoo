@@ -1,9 +1,17 @@
+import type { AvailableDatabaseIds } from "@/constants/available-databases";
+
 export type DatabaseType = {
    uuid: string;
    name: string;
-   url: string;
+   readOnly: boolean;
    created_at: string;
    updated_at: string;
+   type: AvailableDatabaseIds;
+   host: string;
+   port: number;
+   database: string;
+   username: string;
+   password: string;
 };
 
-export type DatabasesType = Record<string, DatabaseType>;
+export type DatabasesType = DatabaseType[];

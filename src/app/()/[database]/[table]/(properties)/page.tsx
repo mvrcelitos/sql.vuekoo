@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import * as pg from "pg";
 
-import { PropertiesDataTableToolbar } from "@/app/[database]/[table]/(properties)/toolbar";
+import { PropertiesDataTableToolbar } from "@/app/()/[database]/[table]/(properties)/toolbar";
 import { TableColumnHeader } from "@/components/table-column-header";
 import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { getDatabase } from "@/lib/database.helpers";
 import { TableCellFormatter } from "@/lib/table-cell-formatter";
 import { cn } from "@/lib/utils";
 
@@ -47,16 +47,17 @@ export type GetTableReturn = Omit<pg.QueryResult<any>, "fields" | "rows"> & {
 const getTable = async (uuid: string, table: string, params: searchParamsProps) => {
    let client;
    try {
-      const c = cookies();
+      const database = getDatabase(uuid);
+      if (!database) return;
 
-      const databases = c.get("databases")?.value;
-      if (!databases) return;
-
-      const database = JSON.parse(databases);
       client = new pg.Client({
          application_name: "vuekoo/sql",
          connectionTimeoutMillis: 30000,
-         connectionString: database?.[uuid]?.url,
+         database: database.database,
+         host: database.host,
+         password: database.password,
+         port: database.port,
+         user: database.username,
       });
 
       await client.connect();

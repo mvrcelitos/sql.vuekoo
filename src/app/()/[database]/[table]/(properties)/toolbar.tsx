@@ -1,6 +1,6 @@
 "use client";
 
-import { GetTableReturn } from "@/app/[database]/[table]/(properties)/page";
+import { GetTableReturn } from "@/app/()/[database]/[table]/(properties)/page";
 import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { AvailableSQLTypes, sqlToTypescript, sqlToZod } from "@/constants/sql-types";
 

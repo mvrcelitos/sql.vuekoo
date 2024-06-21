@@ -167,15 +167,15 @@ const FormRadio = ({ name, ...props }: React.ComponentPropsWithoutRef<typeof Rad
 
    return (
       <Radio
+         type="radio"
          aria-invalid={!!error}
+         aria-disabled={props.disabled}
          {...props}
          {...registered}
+         value={props.value}
          onChange={(ev) => {
-            registered.onChange(ev);
+            registered.onChange?.(ev);
             props.onChange?.(ev);
-         }}
-         onClick={(ev) => {
-            // props?.onClick?.(ev);
          }}
       />
    );
@@ -225,7 +225,7 @@ interface FormInputMaskProps extends React.ComponentPropsWithoutRef<typeof Input
 }
 const FormInputMask = ({ className, name, mask, ...props }: FormInputMaskProps) => {
    const { control } = useFormContext();
-   const { name: fieldName } = useFormField();
+   const { error, name: fieldName } = useFormField();
 
    return (
       <Controller
@@ -234,6 +234,7 @@ const FormInputMask = ({ className, name, mask, ...props }: FormInputMaskProps) 
          render={({ field }) => (
             <Input
                {...props}
+               className={cn(className, error && "border-red-500 dark:border-red-600")}
                ref={field.ref}
                defaultValue={mask(field.value)}
                name={field.name}

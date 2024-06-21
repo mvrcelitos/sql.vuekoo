@@ -31,6 +31,7 @@ export const buttonVariants = cva({
          ghost: [
             "bg-transparent hover:bg-zinc-200 focus-visible:bg-zinc-200 text-zinc-600 hover:text-zinc-800",
             "dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-800/70 dark:focus-visible:bg-zinc-800/70",
+            "dark:hover:highlight-5 dark:focus-visible:highlight-5",
          ],
          success: [
             "bg-emerald-500 hover:bg-teal-600 active:bg-teal-600",
@@ -47,9 +48,20 @@ export const buttonVariants = cva({
             "text-zinc-700 hover:text-zinc-800 active:text-zinc-800 dark:text-zinc-300 dark:hover:text-zinc-200 dark:active:text-zinc-200",
          ],
          outline: [
-            "border border-zinc-300 dark:border-zinc-700",
-            "hover:bg-zinc-300 active:bg-zinc-300 dark:hover:bg-zinc-700 dark:active:bg-zinc-700",
+            "bg-background border border-zinc-300 dark:border-zinc-700",
+            "hover:bg-muted active:bg-muted",
             "text-zinc-600 hover:text-zinc-800 active:text-zinc-800 dark:text-zinc-300 dark:hover:text-zinc-50 dark:active:text-zinc-50",
+            "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-800",
+            "hover:shadow-[0px_1px_1px_rgb(0,0,0,.02),0px_4px_8px_-4px_rgba(0,0,0,.04),0px_16px_24px_-8px_rgba(0,0,0,.06)] focus-visible::shadow-[0px_1px_1px_rgb(0,0,0,.02),0px_4px_8px_-4px_rgba(0,0,0,.04),0px_16px_24px_-8px_rgba(0,0,0,.06)] transition-shadow",
+         ],
+         outline2: [
+            "bg-background border-2 border-zinc-300 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400",
+            "hocus:bg-zinc-300 dark:hocus:bg-zinc-700 hocus:text-zinc-950 dark:hocus:text-zinc-50",
+            "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-800",
+         ],
+         outline3: [
+            "bg-background border-2 border-zinc-300 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400",
+            "hocus:bg-foreground hocus:!text-background hocus:!border-foreground",
             "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-800",
          ],
          outline2: [
@@ -97,6 +109,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       const Comp: any = asChild ? Slot : "button";
       return (
          <Comp
+            type="button"
             aria-disabled={props?.disabled}
             className={cn(buttonVariants({ intent, size, className }))}
             ref={ref}
