@@ -14,7 +14,7 @@ const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
 
 const selectVariants = cva({
-   base: "appearance-none [-webkit-appearance:none] flex h-10 w-full items-center justify-between text-sm rounded-md border-300-400 dark:border-zinc-700 focus-visible:outline-none transition-colors",
+   base: "appearance-none [-webkit-appearance:none] flex h-10 w-full bg-background items-center justify-between text-sm rounded-md border-300-400 dark:border-zinc-700 focus-visible:outline-none transition-colors",
    variants: {
       intent: {
          none: "",
