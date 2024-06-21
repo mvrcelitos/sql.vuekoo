@@ -64,7 +64,7 @@ export const Toolbar = () => {
                         />
                      ) : null}
                   </AnimatePresence>
-                  <span className="relative z-50 font-normal">{label}</span>
+                  <span className="relative z-[1] font-normal">{label}</span>
                </Link>
             ))}
          </div>
