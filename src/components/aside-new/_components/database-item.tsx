@@ -50,7 +50,6 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
    const [data, setData] = useState<{ tables: string[]; views: string[] } | null>();
 
    const pathname = usePathname();
-   console.log({ pathname });
    const pathnameType: "properties" | "data" =
       pathname?.replace(/\/databases\/(.+?)\/(\w+?)\//, "") === "data" ? "data" : "properties";
 
@@ -256,6 +255,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
                <Separator className="-mt-1 mb-1 bg-zinc-300 dark:bg-zinc-700" />
                {data?.tables?.map((table) => (
                   <Link
+                     key={table}
                      href={`/databases/${database.uuid}/${table}/${pathnameType}`}
                      className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hocus:bg-zinc-300 hocus:text-foreground hocus:dark:bg-zinc-700 dark:hocus:highlight-5">
                      <Table2 className="size-4 shrink-0 text-zinc-400 dark:text-zinc-500" />
