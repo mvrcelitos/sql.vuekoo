@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpFromLine, Check, Eye, Loader2, RefreshCw, ScanEye } from "lucide-react";
+import { AlertCircle, ArrowUpFromLine, Check, Eye, Loader2, RefreshCw, ScanEye } from "lucide-react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -141,6 +141,9 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
    const router = useRouter();
    const searchParams = useSearchParams();
 
+   const currentLimitRef = useRef<number>(
+      +(searchParams?.get("limit")?.replace(/\D/g, "") || DefaultQueryParams.limit),
+   );
    const [input, setInput] = useState<string>(
       searchParams?.get("limit")?.replace(/\D/g, "") ?? `${DefaultQueryParams.limit}`,
    );
@@ -152,10 +155,11 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
    const [sucessfully, setSucessfully] = useState(false);
 
    const onChangeLimit = () => {
-      const currentLimit = searchParams.get("limit");
-      if (currentLimit == input) return;
+      const limit = searchParams.get("limit");
+      if (limit == input) return;
 
-      const newLimit = input == "" ? DefaultQueryParams : +input ?? DefaultQueryParams.limit;
+      const newLimit = ["", "0"].includes(input) ? DefaultQueryParams.limit : +input || DefaultQueryParams.limit;
+      currentLimitRef.current = +newLimit;
       const searchParamsManager = new SearchParamsManager();
       searchParamsManager.set("limit", newLimit.toString());
 
@@ -208,37 +212,51 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
                   </span>
                </TooltipContent>
             </Tooltip>
-            <PopoverContent sideOffset={7}>
+            <PopoverContent sideOffset={7} className="space-y-2">
                <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">Limit of rows fetched</p>
-               <Separator className="my-1 h-px" />
-               <div className="flex items-center gap-2">
-                  <div className="flex w-full items-center gap-2">
-                     <span className="pointer-events-none select-none px-0.5">Rows:</span>
-                     <Input
-                        disabled={pending}
-                        className="w-full px-2"
-                        size="xs"
-                        value={input}
-                        onChange={(ev) => setInput(ev.currentTarget.value?.replace(/\D/g, ""))}
-                        onKeyDown={(ev) => {
-                           if (ev.key === "Enter") {
-                              onChangeLimit();
-                           }
-                        }}
-                        onBlur={() => setInput((x) => (x === "" ? `${DefaultQueryParams.limit}` : x))}
-                     />
-                  </div>
-               </div>
-               <div className="mt-2 flex items-center justify-end gap-2">
-                  <Button
+               <Separator className="m h-px" />
+               <div className="relative flex w-full items-center">
+                  {/* <div className="pointer-events-none flex h-8 select-none items-center justify-center rounded-r-md border border-r-0 border-muted bg-accent px-2 text-zinc-500 dark:text-zinc-400">
+                     Rows:
+                  </div> */}
+                  <Input
+                     disabled={pending}
+                     className="w-full px-2 [&:not(:first-child)]:rounded-l-none"
                      size="xs"
-                     intent="ghost"
-                     onClick={() => {
-                        setPopoverOpen(false);
-                        setTooltipOpen(false);
-                     }}>
-                     Cancel
-                  </Button>
+                     value={input}
+                     onChange={(ev) => setInput(ev.currentTarget.value?.replace(/\D/g, ""))}
+                     onKeyDown={(ev) => {
+                        if (ev.key === "Escape") {
+                           ev.preventDefault();
+                           ev.currentTarget.blur();
+                           return;
+                        }
+                        if (ev.key === "Enter") {
+                           onChangeLimit();
+                           return;
+                        }
+                        if (ev.key.length === 1 && !ev.ctrlKey && !ev.altKey && !/\d/.test(ev.key)) {
+                           ev.preventDefault();
+                           return;
+                        }
+                     }}
+                     onBlur={() => setInput((x) => (x === "" ? `${DefaultQueryParams.limit}` : x))}
+                  />
+               </div>
+               <AnimatePresence>
+                  {+input >= 1000 && currentLimitRef.current + "" != input ? (
+                     <motion.div
+                        initial={{ height: 0, marginTop: 0 }}
+                        animate={{ height: 24, marginTop: 8 }}
+                        exit={{ height: 0, marginTop: 0 }}
+                        transition={{ duration: 0.1, bounce: 0 }}
+                        className="flex items-center gap-2 truncate rounded-full bg-amber-300 px-1.5 text-xs text-orange-800 dark:bg-amber-900 dark:text-amber-400">
+                        <AlertCircle className="size-4 shrink-0" />
+                        Beware, values too high can cause lag!
+                     </motion.div>
+                  ) : null}
+               </AnimatePresence>
+               <div className=" flex flex-row-reverse items-center justify-between gap-2">
                   <Button
                      disabled={pending || sucessfully}
                      size="xs"
@@ -260,6 +278,15 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
                            )}
                         </motion.span>
                      </AnimatePresence>
+                  </Button>
+                  <Button
+                     size="xs"
+                     intent="ghost"
+                     onClick={() => {
+                        setPopoverOpen(false);
+                        setTooltipOpen(false);
+                     }}>
+                     Cancel
                   </Button>
                </div>
             </PopoverContent>
