@@ -58,9 +58,7 @@ export const AsideClient = ({ databases = [] }: { databases: DatabasesReturn }) 
                            <h4 className="text-sm font-semibold">Connect new database</h4>
                         </div>
                      </div>
-                     <div className="flex grow p-3">
-                        <CreateDatabaseForm onClose={() => setCreate(false)} />
-                     </div>
+                     <div className="flex grow p-3">{memoizedCreateDatabaseForm}</div>
                   </motion.div>
                )}
             </AnimatePresence>
