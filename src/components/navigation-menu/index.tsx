@@ -15,7 +15,7 @@ export const NavigationMenu = () => {
    const [hover, setHover] = useState<number | null>(null);
 
    return (
-      <nav className="z-[2] flex h-full w-[52px] max-w-[52px] flex-col items-center justify-between gap-2 bg-background py-2 md:gap-4">
+      <nav className="z-[2] flex h-full w-[52px] max-w-[52px] flex-col items-center justify-between gap-2 border-r border-r-muted bg-background py-2 md:gap-4">
          <div className="flex flex-col items-center p-2" onMouseLeave={() => setHover(null)}>
             {NavigationMenuItems.map((props, index) => {
                const isActive = props.forcedActive === true ? true : props?.regex?.test(pathname) ?? false;
@@ -35,7 +35,7 @@ export const NavigationMenu = () => {
                                  exit={{ opacity: 0, rotate: 45 }}
                                  transition={{ type: "spring", duration: 0.3, bounce: 0 }}
                                  className={cn(
-                                    "pointer-events-none absolute inset-0 rounded-md",
+                                    "pointer-events-none absolute inset-0 overflow-hidden rounded-md",
                                     isActive ? "bg-primary/20" : "bg-zinc-200 dark:bg-zinc-800",
                                  )}
                               />
@@ -45,14 +45,17 @@ export const NavigationMenu = () => {
                            {isActive && (
                               <motion.div
                                  layoutId="navigation-menu-item-active"
-                                 initial={{ opacity: 0, rotate: -45 }}
+                                 initial={{ opacity: 0, scale: 0, rotate: -45 }}
                                  animate={{
                                     opacity: 1,
+                                    scale: 1,
                                     rotate: 0,
                                  }}
                                  exit={{ opacity: 0, rotate: 45 }}
                                  transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                                 className={cn("pointer-events-none absolute inset-0 rounded-md bg-primary/15")}
+                                 className={cn(
+                                    "dark:highlight-5 pointer-events-none absolute inset-0 rounded-md bg-primary/15 shadow-[0_1px_1px_rgba(0,0,0,.02)]",
+                                 )}
                               />
                            )}
                         </AnimatePresence>
