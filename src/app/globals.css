@@ -26,8 +26,8 @@
       --muted: theme("colors.zinc.800");
 
       --border: theme("colors.zinc.500");
-      /* --primary: #818cf8; */
-      /* --primary: 219 39 119; */
+      --primary: 219 39 119;
+      --primaryActive: 239 59 139;
    }
 }
 
@@ -42,8 +42,8 @@
    }
 
    .modern-scroll::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
    }
 
    .modern-scroll::-webkit-scrollbar-track {
