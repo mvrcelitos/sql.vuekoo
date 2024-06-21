@@ -1,16 +1,7 @@
 import { cookies } from "next/headers";
 
-import { InnerAside } from "@/components/aside-new/aside-new";
-
-interface Database {
-   [k: string]: {
-      uuid: string;
-      name: string;
-      url: string;
-      created_at: string;
-      updated_at: string;
-   };
-}
+import { AsideClient } from "@/components/aside-new/aside-client";
+import { DatabasesReturn } from "@/components/aside-new/_components/create-database/schema";
 
 const getDatabases = () => {
    const c = cookies();
@@ -18,8 +9,8 @@ const getDatabases = () => {
    try {
       const databases = c.get("databases")?.value;
       if (!databases) return [];
-      const parsed: Database = JSON.parse(databases);
-      return Object.values(parsed).map((database) => database.name);
+      const parsed: DatabasesReturn = JSON.parse(databases);
+      return parsed;
    } catch (err) {
       console.error(err);
       return [];
@@ -29,5 +20,5 @@ const getDatabases = () => {
 export const AsideNew = ({}) => {
    const databases = getDatabases();
 
-   return <InnerAside databases={databases} />;
+   return <AsideClient databases={databases} />;
 };
