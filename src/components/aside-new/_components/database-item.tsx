@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
    ChevronRight,
@@ -16,10 +18,8 @@ import {
    Zap,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { DatabaseReturn } from "@/components/aside-new/_components/create-database/schema";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 import {
    DropdownMenu,
    DropdownMenuContent,
@@ -27,11 +27,11 @@ import {
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
 import { availableDatabases } from "@/constants/available-databases";
+import { cn } from "@/lib/utils";
 
 import { getDatabaseData } from "./actions";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 interface DatabaseItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
    database: DatabaseReturn;
@@ -267,3 +267,4 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
       </div>
    );
 });
+DatabaseItem.displayName = "DatabaseItem";
