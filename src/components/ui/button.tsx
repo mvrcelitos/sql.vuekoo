@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
-import { cva,VariantProps } from "cva";
+import { cva, VariantProps } from "cva";
 
 import { cn } from "@/lib/utils";
 
@@ -61,16 +61,6 @@ export const buttonVariants = cva({
          ],
          outline3: [
             "bg-background border-2 border-zinc-300 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400",
-            "hocus:bg-foreground hocus:!text-background hocus:!border-foreground",
-            "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-800",
-         ],
-         outline2: [
-            "border-2 border-zinc-300 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400",
-            "hocus:bg-zinc-300 dark:hocus:bg-zinc-700 hocus:text-zinc-950 dark:hocus:text-zinc-50",
-            "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-800",
-         ],
-         outline3: [
-            "border-2 border-zinc-300 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400",
             "hocus:bg-foreground hocus:!text-background hocus:!border-foreground",
             "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-800",
          ],
