@@ -1,5 +1,24 @@
+import "server-only";
+
+import { DatabaseType } from "@/interfaces/cookies/databases";
 import mysql from "mysql2/promise";
 import pg from "pg";
+
+export interface DatabaseQueryReturn<T extends any = unknown, K extends any = unknown> {
+   rowsCount: number;
+   rows: Array<T>;
+   fields: Array<K>;
+}
+
+interface DatabasePSQLQueryFieldsReturn {
+   name: string;
+   tableID: number;
+   columnID: number;
+   dataTypeID: number;
+   dataTypeSize: number;
+   dataTypeModifier: number;
+   format: string;
+}
 
 interface DatabaseConfigProps {
    host: string;
@@ -9,15 +28,18 @@ interface DatabaseConfigProps {
    port: number;
 }
 
-abstract class Database {
+export abstract class Database {
    protected declare client: unknown;
    protected declare connectionMethod: "url" | "config";
 
-   public abstract connect(url: string): Promise<void>;
-   public abstract connect(credentials: DatabaseConfigProps): Promise<void>;
+   public abstract connect(credentials: DatabaseConfigProps): Promise<this>;
+   public abstract connectWithDatabase(database: DatabaseType): Promise<this>;
 
-   public abstract disconnect(): Promise<void>;
-   public abstract query(sql: string): Promise<{ rowsCount: number; rows: unknown[]; fields: unknown[] } | void>;
+   public abstract disconnect(): Promise<this>;
+   public abstract query<Row extends unknown = unknown, Field extends unknown = unknown>(
+      sql: string,
+      values?: string[],
+   ): Promise<DatabaseQueryReturn<Row, Field>>;
 }
 
 export class MySQLDatabase extends Database {
@@ -33,14 +55,7 @@ export class MySQLDatabase extends Database {
    //    return new this(props);
    // }
 
-   public async connect(props: string | DatabaseConfigProps) {
-      let credentials: DatabaseConfigProps;
-      if (typeof props == "string") {
-         const [username, password, host, port, database] = props?.replace("mysql://", "").split(/\:|\@|:\/|\?/g);
-         credentials = { user: username, password, host, port: +port, database };
-      } else {
-         credentials = props;
-      }
+   public async connect(credentials: DatabaseConfigProps) {
       try {
          this.client = await mysql.createConnection({
             ...credentials,
@@ -52,12 +67,24 @@ export class MySQLDatabase extends Database {
          console.warn("ERROR: Trying to connect to the database");
          throw error;
       }
+      return this;
+   }
+
+   public async connectWithDatabase(database: DatabaseType) {
+      this.connect({
+         host: database.host,
+         database: database.database,
+         user: database.username,
+         password: database.password,
+         port: database.port,
+      });
+      return this;
    }
 
    public async disconnect() {
       if (!this?.client) {
          console.warn("Database is already disconnected");
-         return;
+         return this;
       }
       try {
          await this.client?.end();
@@ -65,15 +92,20 @@ export class MySQLDatabase extends Database {
          console.warn("ERROR: Trying to disconnect from the database");
          throw error;
       }
+      return this;
    }
 
-   public async query(sql: string) {
+   public async query<Row extends unknown, Field extends unknown = unknown>(
+      sql: string,
+      values?: string[],
+   ): Promise<DatabaseQueryReturn<Row, Field>> {
       try {
          const [rows, fields] = await this.client.query<any[]>({
             sql,
+            values,
             rowsAsArray: true,
          });
-         // return { rows, fields, rowsCount: rows?.length || 0! };
+         return { rowsCount: rows?.length || 0, rows, fields: fields as Field[] };
       } catch (error) {
          console.warn("ERROR: Trying to query the database");
          throw error;
@@ -94,15 +126,7 @@ export class PSQLDatabase extends Database {
    //    return new this(props);
    // }
 
-   public async connect(props: string | DatabaseConfigProps) {
-      let credentials: DatabaseConfigProps;
-      if (typeof props == "string") {
-         const [username, password, host, port, database] = props?.replace("postgresql://", "").split(/\:|\@|\/|\?/g);
-         credentials = { user: username, password, host, port: +port, database };
-      } else {
-         credentials = props;
-      }
-      console.log(credentials);
+   public async connect(credentials: DatabaseConfigProps) {
       try {
          this.client = new pg.Client({
             ...credentials,
@@ -114,12 +138,24 @@ export class PSQLDatabase extends Database {
          console.warn("ERROR: Trying to connect to the database");
          throw error;
       }
+      return this;
+   }
+
+   public async connectWithDatabase(database: DatabaseType) {
+      this.connect({
+         host: database.host,
+         database: database.database,
+         user: database.username,
+         password: database.password,
+         port: database.port,
+      });
+      return this;
    }
 
    public async disconnect() {
       if (!this?.client) {
          console.warn("Database is already disconnected");
-         return;
+         return this;
       }
       try {
          await this.client?.end();
@@ -127,12 +163,16 @@ export class PSQLDatabase extends Database {
          console.warn("ERROR: Trying to disconnect from the database");
          throw error;
       }
+      return this;
    }
 
-   public async query(sql: string) {
+   public async query<Row extends unknown, Field extends unknown = DatabasePSQLQueryFieldsReturn>(
+      sql: string,
+      values?: string[],
+   ): Promise<DatabaseQueryReturn<Row, Field>> {
       try {
-         const res = await this.client.query(sql);
-         // return { rowsCount: res?.rowCount || 0, rows: res.rows, fields: res.fields };
+         const res = await this.client.query(sql, values);
+         return { rowsCount: res?.rowCount || 0, rows: res.rows, fields: res.fields as Field[] };
       } catch (error) {
          console.warn("ERROR: Trying to query the database");
          throw error;
