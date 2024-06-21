@@ -212,7 +212,7 @@ export const CreateDatabaseForm = ({ onClose }: { onClose?: () => void }) => {
                <Button type="button" intent="ghost" onClick={onClose} disabled={form?.formState.isSubmitting}>
                   Cancel
                </Button>
-               <Button intent="primary" disabled={form?.formState.isSubmitting}>
+               <Button type="submit" intent="primary" disabled={form?.formState.isSubmitting}>
                   Save database
                </Button>
             </div>
