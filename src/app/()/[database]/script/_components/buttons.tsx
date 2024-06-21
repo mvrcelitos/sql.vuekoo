@@ -57,18 +57,10 @@ SubmitButton.displayName = "SubmitButton";
 
 export const RefreshPageButton = React.forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<typeof Button>>(
    ({ ...props }, ref) => {
-      const router = useRouter();
-      const { lastScript, submit } = useScriptStore();
+      // const router = useRouter();
+      // const { lastScript, submit } = useScriptStore();
       return (
-         <Button
-            ref={ref}
-            {...props}
-            size="xs"
-            intent="ghost"
-            className="gap-2"
-            onClick={() => {
-               console.log("refreshing");
-            }}>
+         <Button ref={ref} {...props} size="xs" intent="ghost" className="gap-2" onClick={() => {}}>
             <RefreshCw className="size-4 shrink-0" />
             <p className="sm:inline">Refresh</p>
          </Button>
