@@ -1,5 +1,7 @@
-import { DatabaseType } from "@/interfaces/cookies/databases";
 import { cookies } from "next/headers";
+
+import { DatabaseType } from "@/interfaces/cookies/databases";
+
 import "server-only";
 
 type Errors = "not-found" | "parsing" | "no-databases";

@@ -1,8 +1,9 @@
-import "server-only";
-
-import { DatabaseType } from "@/interfaces/cookies/databases";
 import mysql from "mysql2/promise";
 import pg from "pg";
+
+import { DatabaseType } from "@/interfaces/cookies/databases";
+
+import "server-only";
 
 export interface DatabaseQueryReturn<T extends any = unknown, K extends any = unknown> {
    rowsCount: number;

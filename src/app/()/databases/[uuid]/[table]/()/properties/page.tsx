@@ -1,14 +1,13 @@
-import { getDatabase } from "@/lib/database.helpers";
-import { getProperties } from "./actions";
-
-import { paramsProps, searchParamsProps } from "./types";
-import { DatabaseFactory } from "@/lib/database";
-
-import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 import { TableColumnHeader } from "@/components/table-column-header";
+import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { DatabaseFactory } from "@/lib/database";
+import { getDatabase } from "@/lib/database.helpers";
 import { TableCellFormatter } from "@/lib/table-cell-formatter";
 import { cn } from "@/lib/utils";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+
+import { getProperties } from "./actions";
+import { paramsProps, searchParamsProps } from "./types";
 
 const getData = async (uuid: string, table: string) => {
    "use server";

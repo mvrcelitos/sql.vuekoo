@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-import { DatabaseItem } from "./database-item";
 import { DatabasesReturn } from "./create-database/schema";
+import { DatabaseItem } from "./database-item";
 
 export const DatabaseList = ({ databases }: { databases: DatabasesReturn }) => {
    // Animation useState

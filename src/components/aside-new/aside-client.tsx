@@ -8,8 +8,9 @@ import { CreateDatabaseForm } from "@/components/aside-new/_components/create-da
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { DatabaseList } from "./_components/database-list";
+
 import { DatabasesReturn } from "./_components/create-database/schema";
+import { DatabaseList } from "./_components/database-list";
 
 export const AsideClient = ({ databases = [] }: { databases: DatabasesReturn }) => {
    // Search database hooks

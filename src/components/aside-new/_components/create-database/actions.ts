@@ -5,9 +5,9 @@ import { cookies } from "next/headers";
 import {
    CreateDatabaseFormReturn,
    DatabaseConnectionParamsReturn,
+   databaseConnectionParamsSchema,
    databaseSchema,
    databasesSchema,
-   databaseConnectionParamsSchema,
 } from "@/components/aside-new/_components/create-database/schema";
 import { DatabaseFactory } from "@/lib/database";
 

@@ -1,7 +1,3 @@
-import { GetStartedButton } from "@/app/()/_components/get-started-button";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
 
 export default function Page({ params }: { params: { uuid: string } }) {
    return (

@@ -1,17 +1,11 @@
-import { getDatabase } from "@/lib/database.helpers";
-import { getData as serverGetData } from "./actions";
-
-import { paramsProps, searchParamsProps } from "./types";
-import { DatabaseFactory } from "@/lib/database";
-
-import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
-import { TableColumnHeader } from "@/components/table-column-header";
-import { TableCellFormatter } from "@/lib/table-cell-formatter";
-import { cn } from "@/lib/utils";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { DataTable } from "@/components/data-table";
 import { DataTableToolbar } from "@/components/data-table-toolbar";
+import { TableWrapper } from "@/components/ui/table";
 import { DefaultQueryParams } from "@/constants/default-query-params";
+import { DatabaseFactory } from "@/lib/database";
+import { getDatabase } from "@/lib/database.helpers";
+
+import { paramsProps, searchParamsProps } from "./types";
 
 interface FieldProps<T extends string = string> {
    name: T;

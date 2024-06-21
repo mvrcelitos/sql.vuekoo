@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Clipboard, Loader2, X, Zap } from "lucide-react";
 import { toast } from "sonner";
 
+import { pasteURL } from "@/components/aside-new/_components/create-database/utils";
 import {
    Form,
    FormField,
@@ -16,25 +17,19 @@ import {
    FormMessage,
    FormPassword,
    FormRadio,
-   FormTextarea,
 } from "@/components/form-components";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { availableDatabases } from "@/constants/available-databases";
+import { Entries } from "@/interfaces/entries";
 
 import { createDatabase, testConnection } from "./actions";
 import {
    CreateDatabaseFormInput,
    CreateDatabaseFormReturn,
-   DatabaseConnectionParamsInput,
-   DatabaseConnectionParamsReturn,
    createDatabaseFormSchema,
+   DatabaseConnectionParamsReturn,
 } from "./schema";
-import { cn } from "@/lib/utils";
-import { Separator } from "@/components/ui/separator";
-
-import useMeasure from "react-use-measure";
-import { availableDatabases } from "@/constants/available-databases";
-import { pasteURL } from "@/components/aside-new/_components/create-database/utils";
-import { Entries } from "@/interfaces/entries";
 
 const TestConnectionStates = {
    idle: {

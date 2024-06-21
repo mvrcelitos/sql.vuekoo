@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
 
-import { GetStartedButton } from "./_components/get-started-button";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+
+import { GetStartedButton } from "./_components/get-started-button";
 
 const getCurrentUser = () => {
    const c = cookies();

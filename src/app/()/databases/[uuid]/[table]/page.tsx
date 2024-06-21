@@ -1,6 +1,7 @@
-import { Button, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function Page({ params }: { params: { uuid: string; table: string } }) {
    return (

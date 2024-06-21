@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 
-import { AsideClient } from "@/components/aside-new/aside-client";
 import { DatabasesReturn } from "@/components/aside-new/_components/create-database/schema";
+import { AsideClient } from "@/components/aside-new/aside-client";
 
 const getDatabases = () => {
    const c = cookies();
