@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
 
-import { HelpButton } from "@/app/()/_components/help-button";
+import { GetStartedButton } from "./_components/get-started-button";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -10,7 +10,8 @@ const getCurrentUser = () => {
 
    if (!c.has("user")) return null;
 
-   const user = c.get("user");
+   const user = c.get("user")?.value;
+   return user;
 };
 
 export default function Page() {
@@ -43,7 +44,7 @@ export default function Page() {
                   <Link href={"#"} className={cn(buttonVariants({ intent: "ghost", size: "lg" }), "rounded-full")}>
                      I need help
                   </Link>
-                  <HelpButton />
+                  <GetStartedButton />
                </div>
                {/* <p className="mb-2 text-left text-sm opacity-70 last-of-type:mb-0 sm:text-base md:mb-4">
                   We are currently suggesting our users to create an account on our system.
