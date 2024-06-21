@@ -25,9 +25,15 @@ export const AsideClient = ({ databases = [] }: { databases: DatabasesReturn }) 
       [setCreate],
    );
    const memoizedInnerAsideList = useMemo(() => {
-      console.log({ databases });
-      const filteredDatabases = databases?.filter((x) => x?.name?.toLowerCase().includes(input?.trim()?.toLowerCase()));
-      return <DatabaseList databases={filteredDatabases} />;
+      try {
+         const filteredDatabases = databases?.filter(
+            (x) => x?.name?.toLowerCase().includes(input?.trim()?.toLowerCase()),
+         );
+         return <DatabaseList databases={filteredDatabases} />;
+      } catch (err) {
+         console.error(err);
+         return <DatabaseList databases={[]} />;
+      }
    }, [databases, input]);
 
    return (
