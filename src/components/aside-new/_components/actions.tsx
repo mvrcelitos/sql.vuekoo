@@ -37,10 +37,12 @@ export const getDatabaseData = async <T extends { tables: any[]; views: any[] }>
 
    try {
       const [tables, views] = await Promise.all([
-         connection.query(
+         connection.query<{ table_name: string }>(
             "SELECT table_name FROM information_schema.tables as ist WHERE ist.table_schema = 'public' AND ist.table_type = 'BASE TABLE' ORDER BY table_name",
          ),
-         connection.query("SELECT table_name FROM information_schema.views as isv where isv.table_schema = 'public'"),
+         connection.query<{ table_name: string }>(
+            "SELECT table_name FROM information_schema.views as isv where isv.table_schema = 'public'",
+         ),
       ]);
       return {
          ok: true,
