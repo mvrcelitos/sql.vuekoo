@@ -20,7 +20,10 @@ export const AsideClient = ({ databases = [] }: { databases: DatabasesReturn }) 
    const [create, setCreate] = useState<boolean>(false);
 
    // Memos
-   const memoizedCreateDatabaseForm = useMemo(() => <CreateDatabaseForm onClose={() => setCreate(false)} />, []);
+   const memoizedCreateDatabaseForm = useMemo(
+      () => <CreateDatabaseForm onClose={() => setCreate(false)} />,
+      [setCreate],
+   );
    const memoizedInnerAsideList = useMemo(() => {
       console.log({ databases });
       const filteredDatabases = databases?.filter((x) => x?.name?.toLowerCase().includes(input?.trim()?.toLowerCase()));
@@ -55,7 +58,9 @@ export const AsideClient = ({ databases = [] }: { databases: DatabasesReturn }) 
                            <h4 className="text-sm font-semibold">Connect new database</h4>
                         </div>
                      </div>
-                     <div className="flex grow p-3">{memoizedCreateDatabaseForm}</div>
+                     <div className="flex grow p-3">
+                        <CreateDatabaseForm onClose={() => setCreate(false)} />
+                     </div>
                   </motion.div>
                )}
             </AnimatePresence>
