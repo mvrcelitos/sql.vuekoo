@@ -105,7 +105,7 @@ export class MySQLDatabase extends Database {
             values,
             rowsAsArray: true,
          });
-         return { rowsCount: rows?.length || 0, rows, fields: fields as Field[] };
+         return { rowsCount: rows?.length || 0, rows: rows as Row[], fields: fields as Field[] };
       } catch (error) {
          console.warn("ERROR: Trying to query the database");
          throw error;
@@ -172,7 +172,7 @@ export class PSQLDatabase extends Database {
    ): Promise<DatabaseQueryReturn<Row, Field>> {
       try {
          const res = await this.client.query(sql, values);
-         return { rowsCount: res?.rowCount || 0, rows: res.rows, fields: res.fields as Field[] };
+         return { rowsCount: res?.rowCount || 0, rows: res.rows as Row[], fields: res.fields as Field[] };
       } catch (error) {
          console.warn("ERROR: Trying to query the database");
          throw error;
