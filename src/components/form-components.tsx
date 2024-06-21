@@ -167,11 +167,14 @@ const FormRadio = ({ name, ...props }: React.ComponentPropsWithoutRef<typeof Rad
 
    return (
       <Radio
+         type="radio"
          aria-invalid={!!error}
+         aria-disabled={props.disabled}
          {...props}
          {...registered}
+         value={props.value}
          onChange={(ev) => {
-            registered.onChange(ev);
+            registered.onChange?.(ev);
             props.onChange?.(ev);
          }}
       />
