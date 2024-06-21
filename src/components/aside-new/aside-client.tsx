@@ -76,7 +76,7 @@ export const AsideClient = ({ databases = [] }: { databases: DatabasesReturn }) 
             className={cn(
                "modern-scroll relative z-[31] flex min-h-[50svh] flex-col overflow-y-auto overflow-x-hidden border-r border-r-muted bg-accent",
             )}>
-            <div className="sticky top-0 z-[1] flex flex-col gap-2 border-b border-b-muted bg-accent p-3">
+            <div className="sticky top-0 z-[2] flex flex-col gap-2 border-b border-b-muted bg-accent p-3">
                <div className="flex items-center justify-between gap-2">
                   <h4 className="whitespace-nowrap text-sm font-semibold">Your databases</h4>
                   <Button
