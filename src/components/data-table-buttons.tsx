@@ -111,7 +111,7 @@ export const ExportTableButton = ({ ...props }: ExportTableButtonProps) => {
                         onMouseLeave={() => setTooltipOpen(false)}
                         onClick={() => {
                            setTooltipOpen(false);
-                           setDropdownOpen(true);
+                           setDropdownOpen((x) => x);
                         }}>
                         <ArrowUpFromLine className="size-4 shrink-0" />
                      </Button>
@@ -187,7 +187,7 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
 
    return (
       <>
-         <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+         <Popover open={popoverOpen} onOpenChange={setPopoverOpen} modal>
             <Tooltip open={tooltipOpen}>
                <TooltipTrigger asChild>
                   <PopoverTrigger asChild>
@@ -199,7 +199,7 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
                         onMouseLeave={() => setTooltipOpen(false)}
                         onClick={() => {
                            setTooltipOpen(false);
-                           setPopoverOpen(true);
+                           setPopoverOpen((x) => !x);
                         }}>
                         <ScanEye className="size-4 shrink-0" />
                      </Button>
