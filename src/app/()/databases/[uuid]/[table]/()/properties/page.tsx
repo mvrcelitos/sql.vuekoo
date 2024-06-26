@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 import { getProperties } from "./actions";
 import { paramsProps, searchParamsProps } from "./types";
+import { PropertiesDataTableToolbar } from "@/app/()/[database]/[table]/(properties)/toolbar";
 
 const getData = async (uuid: string, table: string) => {
    "use server";
@@ -40,7 +41,7 @@ export default async function Page({ params, searchParams }: { params: paramsPro
                         <TableColumnHeader
                            key={index}
                            id={field?.name}
-                           className={cn(field.name === "Comment" && "w-[35%]")}>
+                           className={cn(field.name === "Comment" && "max-w-[35vw]")}>
                            {field.name}
                         </TableColumnHeader>
                      ))}
@@ -63,13 +64,13 @@ export default async function Page({ params, searchParams }: { params: paramsPro
                            return (
                               <Td
                                  key={index}
-                                 className={cn(config.className, field?.name === "Comment" && "relative max-w-[10%]")}>
+                                 className={cn(config.className, field?.name === "Comment" && "relative max-w-[35vw]")}>
                                  {field?.name !== "Comment" || cell == null ? (
                                     config?.format?.(cell) ?? cell
                                  ) : (
                                     <Tooltip key={index}>
                                        <TooltipTrigger asChild>
-                                          <p className="max-w-[35%] truncate">
+                                          <p className="truncate">
                                              {config?.format?.(cell)?.replace("\n", "1") ?? cell}
                                           </p>
                                        </TooltipTrigger>
@@ -86,7 +87,7 @@ export default async function Page({ params, searchParams }: { params: paramsPro
                </TBody>
             </Table>
          </TableWrapper>
-         {/* <PropertiesDataTableToolbar rows={data?.rows!} /> */}
+         <PropertiesDataTableToolbar rows={data?.rows!} />
          {/* </Flex> */}
       </main>
    );
