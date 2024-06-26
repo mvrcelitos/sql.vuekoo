@@ -70,7 +70,11 @@ export const createDatabase = async (data: CreateDatabaseFormReturn) => {
          return { ok: true, message: "Database sucessfully added!" };
       }
 
-      c.set(COOKIES_KEY, JSON.stringify([...databasesSafe.data, dataSafe.data]));
+      c.set(COOKIES_KEY, JSON.stringify([...databasesSafe.data, dataSafe.data]), {
+         maxAge: 1000 * 60 * 60 * 24 * 7,
+         httpOnly: process.env.NODE_ENV === "production",
+         secure: process.env.NODE_ENV === "production",
+      });
       return { ok: true, message: "Database sucessfully added!" };
    } catch (error) {
       console.warn("ERROR: Trying to create a database");
