@@ -24,7 +24,7 @@ const getData = async (uuid: string, table: string) => {
    return properties;
 };
 
-export default async function Page({ params, searchParams }: { params: paramsProps; searchParams: searchParamsProps }) {
+export default async function Page({ params }: { params: paramsProps; searchParams: searchParamsProps }) {
    const data = await getData(params.uuid, params.table);
    return (
       <main className="flex h-full flex-initial grow flex-col overflow-hidden">
