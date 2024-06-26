@@ -10,6 +10,10 @@ import { getProperties } from "./actions";
 import { paramsProps, searchParamsProps } from "./types";
 import { PropertiesDataTableToolbar } from "@/app/()/[database]/[table]/(properties)/toolbar";
 
+export const generateMetadata = async ({ params }: { params: paramsProps }) => ({
+   title: params?.table,
+});
+
 const getData = async (uuid: string, table: string) => {
    "use server";
    const database = getDatabase(uuid);
