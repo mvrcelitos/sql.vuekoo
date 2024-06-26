@@ -144,9 +144,7 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
    const currentLimitRef = useRef<number>(
       +(searchParams?.get("limit")?.replace(/\D/g, "") || DefaultQueryParams.limit),
    );
-   const [input, setInput] = useState<string>(
-      searchParams?.get("limit")?.replace(/\D/g, "") ?? `${DefaultQueryParams.limit}`,
-   );
+   const [input, setInput] = useState<string>("");
    const [popoverOpen, setPopoverOpen] = useState(false);
    const [tooltipOpen, setTooltipOpen] = useState(false);
 
@@ -212,17 +210,17 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
                   </span>
                </TooltipContent>
             </Tooltip>
-            <PopoverContent sideOffset={7} className="space-y-2">
-               <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">Limit of rows fetched</p>
-               <Separator className="m h-px" />
+            <PopoverContent sideOffset={7} className="space-y-2 overflow-hidden">
+               <p className="dark:light dark text-sm text-muted">Limit of rows to fetch</p>
                <div className="relative flex w-full items-center">
-                  {/* <div className="pointer-events-none flex h-8 select-none items-center justify-center rounded-r-md border border-r-0 border-muted bg-accent px-2 text-zinc-500 dark:text-zinc-400">
+                  {/* <div className="pointer-events-none flex h-8 select-none items-center justify-center rounded-l-md border border-r-0 border-muted bg-accent px-2 text-zinc-500 dark:text-zinc-400">
                      Rows:
                   </div> */}
                   <Input
                      disabled={pending}
                      className="w-full px-2 [&:not(:first-child)]:rounded-l-none"
                      size="xs"
+                     placeholder={`${currentLimitRef?.current}`}
                      value={input}
                      onChange={(ev) => setInput(ev.currentTarget.value?.replace(/\D/g, ""))}
                      onKeyDown={(ev) => {
@@ -240,7 +238,6 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
                            return;
                         }
                      }}
-                     onBlur={() => setInput((x) => (x === "" ? `${DefaultQueryParams.limit}` : x))}
                   />
                </div>
                <AnimatePresence>
@@ -256,9 +253,10 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
                      </motion.div>
                   ) : null}
                </AnimatePresence>
-               <div className=" flex flex-row-reverse items-center justify-between gap-2">
+               <Separator className="-mx-2 h-px w-[calc(100%+1rem)]" />
+               <div className="-mx-2 !-mb-2 !mt-0 flex flex-row-reverse items-center justify-between gap-2 bg-accent p-2">
                   <Button
-                     disabled={pending || sucessfully}
+                     disabled={["", "0"].includes(input) || pending || sucessfully}
                      size="xs"
                      className="relative w-[72.2px] overflow-hidden px-3"
                      onClick={() => onChangeLimit()}>
@@ -281,6 +279,7 @@ export const RowsTableButton = ({ ...props }: React.ComponentPropsWithoutRef<typ
                   </Button>
                   <Button
                      size="xs"
+                     disabled={pending || sucessfully}
                      intent="ghost"
                      onClick={() => {
                         setPopoverOpen(false);
