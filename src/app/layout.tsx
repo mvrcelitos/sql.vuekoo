@@ -8,11 +8,12 @@ import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
 import "./globals.css";
+import { config } from "@/config/site";
 
 export const metadata: Metadata = {
    title: {
-      default: "vuekoo/sql",
-      template: "%s · vuekoo/sql",
+      default: config.title,
+      template: `%s · ${config.title}`,
    },
    description: "Database managers for the modern web.",
 };
