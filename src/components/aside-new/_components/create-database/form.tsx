@@ -30,6 +30,7 @@ import {
    createDatabaseFormSchema,
    DatabaseConnectionParamsReturn,
 } from "./schema";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const TestConnectionStates = {
    idle: {
@@ -72,9 +73,9 @@ export const CreateDatabaseForm = ({ onClose }: { onClose?: () => void }) => {
          className="relative -m-3 grid grow grid-cols-1 grid-rows-[minmax(0,1fr)_minmax(0,auto)] overflow-hidden p-3">
          <div className="flex flex-col gap-2 sm:gap-4">
             <FormField name="type">
-               <p className="text-sm">
-                  Database<span className="select-none text-red-500 dark:text-red-600">*</span>
-               </p>
+               <FormLabel className="mb-1.5" required>
+                  Database
+               </FormLabel>
                <div className="flex items-center gap-2 md:gap-4">
                   {availableDatabases.map((x) => (
                      <FormLabel key={x.id} className="flex items-center gap-2">
@@ -89,36 +90,34 @@ export const CreateDatabaseForm = ({ onClose }: { onClose?: () => void }) => {
                <FormInput />
                <FormMessage />
             </FormField>
-            <div className="relative">
-               <Separator className="my-2" />
-               <span className="absolute left-2 top-0 bg-background px-1 text-[13px] leading-4 text-zinc-400 dark:text-zinc-500">
-                  Database connection<span className="select-none text-red-500 dark:text-red-600">*</span>
-               </span>
+            <Separator className="-mx-3 w-auto" />
+            <div className="flex flex-wrap items-center justify-between sm:-my-2">
+               <div className="text-sm font-semibold text-foreground">Database connection</div>
+               <Tooltip>
+                  <TooltipTrigger>
+                     <Button
+                        type="button"
+                        intent="ghost"
+                        size="icon-xs"
+                        className="group gap-2 hover:shadow-vercel dark:highlight-5"
+                        onClick={async () => {
+                           const res = await pasteURL();
+                           if (!res.ok) {
+                              toast?.error?.(res.message);
+                              return;
+                           }
+                           const entries = Object.entries(res.data) as Entries<DatabaseConnectionParamsReturn>;
+                           for (const entry of entries) {
+                              form?.setValue(entry[0], entry[1]);
+                           }
+                           toast?.success?.(res.message);
+                        }}>
+                        <Clipboard className="size-4" />
+                     </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Paste the current database URL on your clipboard</TooltipContent>
+               </Tooltip>
             </div>
-            <Button
-               type="button"
-               intent="opaque"
-               size="xs"
-               className="group w-fit gap-2 hover:shadow-vercel dark:highlight-5"
-               onClick={async () => {
-                  const res = await pasteURL();
-                  if (!res.ok) {
-                     toast?.error?.(res.message);
-                     return;
-                  }
-                  const entries = Object.entries(res.data) as Entries<DatabaseConnectionParamsReturn>;
-                  for (const entry of entries) {
-                     form?.setValue(entry[0], entry[1]);
-                  }
-                  toast?.success?.(res.message);
-               }}>
-               <Clipboard className="size-4" />
-               <Separator
-                  orientation="vertical"
-                  className="bg-zinc-300 transition-colors group-hover:bg-zinc-400 dark:bg-zinc-700 dark:group-hover:bg-zinc-600"
-               />
-               <span>Paste URL</span>
-            </Button>
             <div className="grid grid-cols-1 gap-2 md:grid-cols-4 md:gap-0">
                <FormField name="host" className="md:col-span-3">
                   <FormLabel required>Host</FormLabel>
