@@ -30,15 +30,21 @@ const config: Config = {
             content: "calc(100lvh - var(--header-height)))",
          },
          colors: {
-            background: "rgb(var(--background) / <alpha-value>)",
-            foreground: "rgb(var(--foreground) / <alpha-value>)",
+            "background": "rgb(var(--background) / <alpha-value>)",
+            "foreground": "rgb(var(--foreground) / <alpha-value>)",
 
-            accent: "var(--accent)",
-            muted: "var(--muted)",
-            border: "var(--border)",
+            "accent": "var(--accent)",
+            "muted": "var(--muted)",
+            "300": "var(--300)",
+            "500": "var(--500)",
+            "700": "var(--700)",
+            "800": "var(--800)",
+            "900": "var(--900)",
+            "950": "var(--950)",
+            "border": "var(--border)",
 
-            primary: "rgb(var(--primary) / <alpha-value>)",
-            primaryActive: "rgb(var(--primaryActive) / <alpha-value>)",
+            "primary": "rgb(var(--primary) / <alpha-value>)",
+            "primaryActive": "rgb(var(--primaryActive) / <alpha-value>)",
          },
          keyframes: {
             "accordion-down": {
