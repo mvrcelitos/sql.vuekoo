@@ -189,18 +189,18 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
       );
    }, [state]);
 
-   const Icon = function () {
+   const Icon = useMemo(() => {
       switch (state) {
          case "idle":
-            return <Zap className="size-4" />;
+            return <Zap key={state} className="size-4" />;
          case "pending":
-            return <Loader2 className="size-4 animate-spin" />;
+            return <Loader2 key={state} className="size-4 animate-spin" />;
          case "connected":
-            return <ChevronRight className="size-4" />;
+            return <ChevronRight key={state} className="size-4" />;
          case "error":
-            return <X className="size-4" />;
+            return <X key={state} className="size-4" />;
       }
-   };
+   }, [state]);
 
    useEffect(() => {
       if (pathname?.startsWith(`/databases/${database.uuid}`)) {
@@ -241,27 +241,42 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
                      transition={{ type: "spring", duration: 0.3, bounce: 0 }}
                      key={state}
                      className={cn("size-4")}>
-                     <Icon />
+                     {Icon}
                   </motion.span>
                </AnimatePresence>
             </Button>
-            <span className="dark:light dark relative z-[1] cursor-pointer truncate text-sm text-muted">
+            <Link
+               href={`/databases/${database.uuid}`}
+               className="dark:light dark relative z-[1] cursor-pointer truncate text-sm text-muted underline-offset-2 hover:underline">
                {database.name}
-            </span>
+            </Link>
             {optionsButton}
          </div>
          {state === "connected" && open && (
-            <div className="flex flex-col bg-muted p-1">
+            <div className="flex flex-col bg-muted p-1 text-zinc-800 dark:text-zinc-200">
                <Separator className="-mt-1 mb-1 bg-zinc-300 dark:bg-zinc-700" />
-               {data?.tables?.map((table) => (
-                  <Link
-                     key={table}
-                     href={`/databases/${database.uuid}/${table}/${pathnameType}`}
-                     className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hocus:bg-zinc-300 hocus:text-foreground hocus:dark:bg-zinc-700 dark:hocus:highlight-5">
-                     <Table2 className="size-4 shrink-0 text-zinc-400 dark:text-zinc-500" />
-                     <span className="relative z-[1] text-sm">{table}</span>
-                  </Link>
-               ))}
+               {data?.tables?.map((table) => {
+                  const isSelected = !!pathname?.match(
+                     new RegExp(`^/databases/${database.uuid}/${table}/(\\w+)(/.*)?$`),
+                  );
+                  return (
+                     <Link
+                        aria-selected={isSelected || undefined}
+                        key={table}
+                        href={`/databases/${database.uuid}/${table}/${pathnameType}`}
+                        className={cn(
+                           "flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hocus:bg-zinc-300 hocus:text-foreground hocus:dark:bg-zinc-700",
+                        )}>
+                        <Table2
+                           className={cn(
+                              "size-4 shrink-0",
+                              isSelected ? "text-primary" : "text-zinc-400 dark:text-zinc-500",
+                           )}
+                        />
+                        <span className="relative z-[1] max-w-full truncate text-sm">{table}</span>
+                     </Link>
+                  );
+               })}
             </div>
          )}
       </div>
