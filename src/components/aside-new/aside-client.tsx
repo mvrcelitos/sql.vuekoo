@@ -61,7 +61,7 @@ export const AsideClient = ({ databases = [] }: { databases: DatabasesReturn }) 
                      className="absolute inset-y-0 right-0 z-30 flex grow flex-col border-r-muted bg-background md:right-[unset] md:w-96 md:border-r xl:w-[416px]">
                      <div className="flex flex-col gap-2 p-3">
                         <div className="flex items-center justify-between gap-2">
-                           <h4 className="text-sm font-semibold">Connect new database</h4>
+                           <h4 className="text-sm font-semibold text-foreground">Connect new database</h4>
                         </div>
                      </div>
                      <div className="flex grow p-3">{memoizedCreateDatabaseForm}</div>
