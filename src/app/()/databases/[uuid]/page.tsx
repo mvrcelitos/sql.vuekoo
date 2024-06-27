@@ -48,6 +48,9 @@ export default async function Page({ params }: { params: { uuid: string } }) {
                         <p className="text-sm ">{table}</p>
                      </Link>
                   ))}
+                  {data?.tables?.length === 0 && (
+                     <p className="animate-content-in px-2 text-sm text-800 [--stagger:4]">No tables found</p>
+                  )}
                </div>
             </div>
             <div className="flex flex-col gap-2">
@@ -63,6 +66,9 @@ export default async function Page({ params }: { params: { uuid: string } }) {
                         <p className="text-sm ">{view}</p>
                      </Link>
                   ))}
+                  {!data?.views?.length && (
+                     <p className="animate-content-in px-2 text-sm text-800 [--stagger:4]">No views found</p>
+                  )}
                </div>
             </div>
          </div>
