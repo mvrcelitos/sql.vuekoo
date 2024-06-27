@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export const GetStartedButton = () => {
+export const GetStartedButton = ({ className }: { className?: string }) => {
    return (
       <Link
          href="/help"
@@ -17,6 +17,7 @@ export const GetStartedButton = () => {
          className={cn(
             buttonVariants({ intent: "main", size: "lg" }),
             "rounded-full dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,.05)]",
+            className,
          )}>
          Get started
       </Link>
