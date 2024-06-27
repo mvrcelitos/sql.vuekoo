@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -45,6 +45,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
    // Animation useStates
    const [open, setOpen] = useState<boolean>(false);
    const [state, setState] = useState<AvailableStates>("idle");
+   const [optionsOpen, setOptionsOpen] = useState<boolean>(false);
 
    // Data useStates
    const [data, setData] = useState<{ tables: string[]; views: string[] } | null>();
@@ -141,12 +142,17 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
             break;
       }
       return (
-         <DropdownMenu>
+         <DropdownMenu onOpenChange={(open) => setOptionsOpen(open)}>
             <DropdownMenuTrigger asChild>
                <Button
                   intent="ghost"
                   size="none"
-                  className="absolute right-2 z-[1] size-6 shrink-0 opacity-0 transition-opacity group-hover:opacity-100 group-[:not(:hover)]:pointer-events-none aria-expanded:bg-zinc-300 aria-expanded:text-zinc-800 aria-expanded:opacity-100 hocus:bg-zinc-300 dark:aria-expanded:bg-zinc-700 dark:aria-expanded:text-zinc-200 dark:aria-expanded:highlight-5 dark:hocus:bg-zinc-700">
+                  className={cn(
+                     "absolute right-2 z-[1] size-6 shrink-0 opacity-0 transition-opacity group-hover:opacity-100 group-[:not(:hover)]:pointer-events-none aria-expanded:!text-foreground aria-expanded:opacity-100 dark:aria-expanded:highlight-5",
+                     open
+                        ? "aria-expanded:bg-muted hocus:bg-muted"
+                        : "aria-expanded:bg-zinc-300 hocus:bg-zinc-300 dark:aria-expanded:bg-zinc-700 dark:hocus:bg-zinc-700",
+                  )}>
                   <MoreVertical className="size-4" />
                </Button>
             </DropdownMenuTrigger>
@@ -187,7 +193,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
             </DropdownMenuContent>
          </DropdownMenu>
       );
-   }, [state]);
+   }, [state, open, optionsOpen]);
 
    const Icon = useMemo(() => {
       switch (state) {
@@ -212,7 +218,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
       <div {...props} className="relative text-sm text-zinc-800 dark:text-zinc-200" ref={ref}>
          <div className="group relative flex items-center justify-start gap-2 px-2 py-1.5">
             <AnimatePresence>
-               {hover && open == false && (
+               {(hover || optionsOpen === true) && open == false && (
                   <motion.div
                      layoutId="aside-hover-database"
                      initial={{ opacity: 0 }}
