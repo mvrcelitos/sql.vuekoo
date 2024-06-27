@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { config } from "@/config/site";
 
 export const Header = () => {
    return (
@@ -64,12 +65,14 @@ export const Header = () => {
             </DropdownMenuContent>
          </DropdownMenu>
          {/* <Separator orientation="vertical" className="h-4 w-px bg-zinc-300 dark:bg-zinc-700" /> */}
-         <div className="select-none self-center px-2 text-sm font-bold uppercase">
-            <span className="text-zinc-700 dark:text-zinc-300">VUEKOO</span>
+         <Link
+            href="/"
+            className="flex h-full select-none items-center self-center px-2 text-sm font-bold uppercase hocus:bg-accent">
+            <span className="uppercase text-700">{config.company}</span>
             <span className="text-base text-primary">/</span>
             <span className="text-zinc-900 dark:text-zinc-50">SQL</span>
-         </div>
-         <Separator orientation="vertical" className="mx-1 h-5 w-px self-center bg-zinc-200 dark:bg-zinc-800" />
+         </Link>
+         <Separator orientation="vertical" className=" h-5 w-px self-center bg-zinc-200 dark:bg-zinc-800" />
          <ScriptButton />
          {/* </div> */}
          {/* <div className="-my-1.5 -mr-4 flex h-9 justify-center gap-1">
