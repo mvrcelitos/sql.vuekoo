@@ -10,6 +10,12 @@
 
       --accent: theme("colors.zinc.100");
       --muted: theme("colors.zinc.200");
+      --300: theme("colors.zinc.300");
+      --500: theme("colors.zinc.500");
+      --700: theme("colors.zinc.700");
+      --800: theme("colors.zinc.800");
+      --900: theme("colors.zinc.900");
+      --950: theme("colors.zinc.950");
 
       --border: theme("colors.zinc.400");
       /* --primary: #e11d48; */
@@ -24,6 +30,12 @@
 
       --accent: theme("colors.zinc.900");
       --muted: theme("colors.zinc.800");
+      --300: theme("colors.zinc.700");
+      --500: theme("colors.zinc.400");
+      --700: theme("colors.zinc.300");
+      --800: theme("colors.zinc.200");
+      --900: theme("colors.zinc.100");
+      --950: theme("colors.zinc.50");
 
       --border: theme("colors.zinc.500");
       --primary: 219 39 119;
