@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: { uuid: string } }) {
                         href={`/databases/${database.uuid}/${table}/properties`}
                         className="animate-content-in flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-800 hocus:bg-muted hocus:text-foreground"
                         // @ts-ignore
-                        style={{ "--stagger": 4 + index }}>
+                        style={{ "--stagger": 4 + index / 2 }}>
                         <Table2 className="size-4 shrink-0" />
                         <p className="text-sm ">{table}</p>
                      </Link>
@@ -58,7 +58,7 @@ export default async function Page({ params }: { params: { uuid: string } }) {
                         href={`/databases/${database.uuid}/${view}/properties`}
                         className="animate-content-in flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-800 hocus:bg-muted hocus:text-foreground"
                         // @ts-ignore
-                        style={{ "--stagger": 4 + index }}>
+                        style={{ "--stagger": 4 + index / 2 }}>
                         <Table2 className="size-4 shrink-0" />
                         <p className="text-sm ">{view}</p>
                      </Link>
