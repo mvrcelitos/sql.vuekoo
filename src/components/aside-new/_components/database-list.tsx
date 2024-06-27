@@ -17,9 +17,7 @@ export const DatabaseList = ({ databases }: { databases: DatabasesReturn }) => {
                   database={database}
                   key={index}
                   hover={hover == index}
-                  onMouseEnter={() => {
-                     setHover(index);
-                  }}
+                  onMouseEnter={() => setHover(index)}
                />
             );
          })}
