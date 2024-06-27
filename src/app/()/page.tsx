@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 import { GetStartedButton } from "./_components/get-started-button";
+import { config } from "@/config/site";
 
 const getCurrentUser = () => {
    const c = cookies();
@@ -26,9 +26,9 @@ export default function Page() {
                <h1 className="animate-content-in text-center text-2xl font-bold duration-500 [--stagger:0] md:text-3xl">
                   👋 Hello
                </h1>
-               <p className="animate-content-in text-center text-sm opacity-80 duration-500 [--stagger:1] md:text-base">
-                  If you are lost, sql/vuekoo is a web application to help you to see and manage your databases, tables,
-                  and more.
+               <p className="animate-content-in text-center text-sm text-700 duration-500 [--stagger:1] md:text-base">
+                  If you are lost, {config.title} is a web application to help you to see and manage your databases,
+                  tables, and more.
                </p>
                <div className="animate-content-in flex items-center gap-2 duration-500 [--stagger:2] sm:my-2">
                   <span className={cn("block h-0.5 w-12 bg-zinc-200  dark:bg-zinc-800")} />
@@ -36,10 +36,10 @@ export default function Page() {
                   <span className={cn("block h-0.5 w-12 bg-zinc-200  dark:bg-zinc-800")} />
                </div>
                <div className="mb-2 flex flex-col gap-2 sm:mb-4 sm:gap-4">
-                  <p className="animate-content-in text-center text-sm opacity-80 duration-500 [--stagger:3] md:text-base">
+                  <p className="animate-content-in text-center text-sm text-700 duration-500 [--stagger:3] md:text-base">
                      You can create an account to save your databases, settings and then you access them from anywhere.
                   </p>
-                  <p className="animate-content-in text-center text-sm opacity-80 duration-500 [--stagger:4] md:text-base">
+                  <p className="animate-content-in text-center text-sm text-700 duration-500 [--stagger:4] md:text-base">
                      But this isn{"'"}t necessary, you can continue as guest if you want, but your data will be lost
                      when you close the browser.
                   </p>
