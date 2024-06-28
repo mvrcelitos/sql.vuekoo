@@ -8,6 +8,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { NavigationMenuItems } from "@/components/navigation-menu/data";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+   DropdownMenu,
+   DropdownMenuContent,
+   DropdownMenuItem,
+   DropdownMenuSub,
+   DropdownMenuSubTrigger,
+   DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Code, Palette, Settings } from "lucide-react";
+import { ThemeSubContent } from "@/components/navigation-menu/theme-sub-content";
 
 export const NavigationMenu = () => {
    const pathname = usePathname();
@@ -54,20 +65,37 @@ export const NavigationMenu = () => {
                                  exit={{ opacity: 0, rotate: 45 }}
                                  transition={{ type: "spring", duration: 0.3, bounce: 0 }}
                                  className={cn(
-                                    "dark:highlight-5 pointer-events-none absolute inset-0 rounded-md bg-primary/15 shadow-[0_1px_1px_rgba(0,0,0,.02)]",
+                                    "pointer-events-none absolute inset-0 rounded-md bg-primary/15 shadow-[0_1px_1px_rgba(0,0,0,.02)] dark:highlight-5",
                                  )}
                               />
                            )}
                         </AnimatePresence>
-                        <props.icon className="relative z-10 size-5 text-foreground/70 group-hover:text-foreground group-focus-visible:text-foreground group-aria-selected:text-primary" />
+                        <props.icon className="relative z-10 size-5 text-foreground/70 group-aria-selected:text-primary group-hocus:text-foreground" />
                      </NavigationMenuItem>
                   </div>
                );
             })}
          </div>
-         {/* <div className="flex flex-col items-center gap-2 p-2 md:gap-4" onMouseLeave={() => setHover(null)}>
-            <Button className="relative"></Button>
-         </div> */}
+         <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+               <Button intent="ghost" size="icon-sm">
+                  <Settings className="size-5 text-foreground/70 group-aria-selected:text-primary group-hocus:text-foreground" />
+               </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" side="right">
+               <DropdownMenuSub>
+                  <DropdownMenuSubTrigger intent="default">
+                     <Palette className="mr-2 size-4 shrink-0" />
+                     Theme
+                  </DropdownMenuSubTrigger>
+                  <ThemeSubContent />
+               </DropdownMenuSub>
+               <DropdownMenuItem intent="default">
+                  <Code className="mr-2 size-4 shrink-0" />
+                  Source Code
+               </DropdownMenuItem>
+            </DropdownMenuContent>
+         </DropdownMenu>
       </nav>
    );
 };
