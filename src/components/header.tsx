@@ -5,7 +5,7 @@ import { Menu } from "lucide-react";
 
 import { ScriptButton } from "@/components/header-buttons";
 import { HeaderThemeContent } from "@/components/header-theme-content";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
    DropdownMenu,
    DropdownMenuContent,
@@ -18,8 +18,11 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { config } from "@/config/site";
+import { useAsideStore } from "@/components/aside-new/aside-store";
 
 export const Header = () => {
+   const { sheet, setSheet } = useAsideStore();
+
    return (
       <header
          // @ts-expect-error
@@ -27,43 +30,16 @@ export const Header = () => {
          className="sticky left-0 top-0 z-40 flex h-[--header-height] w-full shrink-0 border-b border-b-zinc-200 bg-background text-foreground dark:border-b-zinc-800">
          {/* <div data-tauri-drag-region={undefined} className="flex items-center justify-between"> */}
          {/* <div className="flex grow items-center gap-1"> */}
-         <DropdownMenu>
-            <DropdownMenuTrigger
-               className={cn(
-                  buttonVariants({ intent: "ghost", size: "icon-sm" }),
-                  "rounded-none text-[13px] data-[state=open]:bg-zinc-200 data-[state=open]:text-zinc-800 dark:data-[state=open]:bg-zinc-800/70 dark:data-[state=open]:text-zinc-200",
-               )}>
-               <Menu className="size-4 shrink-0" height={16} width={16} />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" sideOffset={2}>
-               <DropdownMenuItem className="text-[13px]">New connection</DropdownMenuItem>
-               <DropdownMenuItem disabled className="text-[13px]">
-                  Share
-               </DropdownMenuItem>
-               <DropdownMenuSeparator />
-               <DropdownMenuSub>
-                  <DropdownMenuSubTrigger className="text-[13px]">Theme</DropdownMenuSubTrigger>
-
-                  <HeaderThemeContent />
-               </DropdownMenuSub>
-               <DropdownMenuSub>
-                  <DropdownMenuSubTrigger disabled className="text-[13px]">
-                     Preferences
-                  </DropdownMenuSubTrigger>
-                  {/* <DropdownMenuSubContent>
-                     <DropdownMenuSub>
-                        <DropdownMenuSubTrigger className="text-[13px]">Theme</DropdownMenuSubTrigger>
-                        <HeaderThemeContent />
-                     </DropdownMenuSub>
-                  </DropdownMenuSubContent> */}
-               </DropdownMenuSub>
-               <DropdownMenuItem className="text-[13px]" asChild>
-                  <Link href="https://github.com/mvrcelitos/sql.vuekoo" target="_blank">
-                     Source code
-                  </Link>
-               </DropdownMenuItem>
-            </DropdownMenuContent>
-         </DropdownMenu>
+         <div aria-label="space" className="w-[52px] border-r border-muted max-lg:hidden" />
+         <Button
+            intent="ghost"
+            size="icon-sm"
+            onClick={() => setSheet(!sheet)}
+            className={cn(
+               "rounded-none text-[13px] data-[state=open]:bg-zinc-200 data-[state=open]:text-zinc-800 dark:data-[state=open]:bg-zinc-800/70 dark:data-[state=open]:text-zinc-200 lg:hidden",
+            )}>
+            <Menu className="size-4 shrink-0" height={16} width={16} />
+         </Button>
          {/* <Separator orientation="vertical" className="h-4 w-px bg-zinc-300 dark:bg-zinc-700" /> */}
          <Link
             href="/"
