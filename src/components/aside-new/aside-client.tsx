@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus, Search } from "lucide-react";
 
@@ -11,103 +11,78 @@ import { cn } from "@/lib/utils";
 
 import { DatabasesReturn } from "./_components/create-database/schema";
 import { DatabaseList } from "./_components/database-list";
+import { AsideContent } from "@/components/aside-new/aside-content";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-export const AsideClient = ({ databases = [] }: { databases: DatabasesReturn }) => {
-   // Search database hooks
-   const [input, setInput] = useState<string>("");
+import { useControllableState } from "@radix-ui/react-use-controllable-state";
+import { useAsideStore } from "@/components/aside-new/aside-store";
+import { getBreakpoint, getWidth } from "@/lib/get-measures";
 
-   // Create database hooks
+interface AsideClientProps {
+   databases: DatabasesReturn;
+}
+
+export const AsideClient = ({ databases }: AsideClientProps) => {
+   // Use state hooks
    const [create, setCreate] = useState<boolean>(false);
+   const isTablet = getBreakpoint("lg");
 
-   // Memos
+   const { sheet, setSheet } = useAsideStore();
+
    const memoizedCreateDatabaseForm = useMemo(
       () => <CreateDatabaseForm onClose={() => setCreate(false)} />,
       [setCreate],
    );
-   const memoizedInnerAsideList = useMemo(() => {
-      try {
-         const filteredDatabases = databases?.filter(
-            (x) => x?.name?.toLowerCase().includes(input?.trim()?.toLowerCase()),
-         );
-         return <DatabaseList databases={filteredDatabases} />;
-      } catch (err) {
-         console.error(err);
-         return <DatabaseList databases={[]} />;
-      }
-   }, [databases, input]);
 
-   return (
-      <div className="max-h-content relative z-30 flex">
-         <>
-            <AnimatePresence>
-               {create && (
-                  <motion.div
-                     initial={{ opacity: 0 }}
-                     animate={{ opacity: 1 }}
-                     exit={{ opacity: 0 }}
-                     transition={{ type: "spring", duration: 1, bounce: 0 }}
-                     className="fixed inset-0 aspect-square bg-zinc-950/50"
-                     onClick={() => setCreate(false)}
-                  />
-               )}
-            </AnimatePresence>
-            <AnimatePresence>
-               {create && (
-                  <motion.div
-                     initial={{ left: 0, opacity: 0 }}
-                     animate={{ left: 256, opacity: 1 }}
-                     exit={{ left: 0, opacity: 0 }}
-                     transition={{ type: "spring", duration: 0.5, bounce: 0.15 }}
-                     className="absolute inset-y-0 right-0 z-30 flex grow flex-col border-r-muted bg-background md:right-[unset] md:w-96 md:border-r xl:w-[416px]">
-                     <div className="flex flex-col gap-2 p-3">
-                        <div className="flex items-center justify-between gap-2">
-                           <h4 className="text-sm font-semibold text-foreground">Connect new database</h4>
+   if (isTablet)
+      return (
+         <div className="max-h-content relative z-30 flex">
+            <>
+               <AnimatePresence>
+                  {create && (
+                     <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ type: "spring", duration: 1, bounce: 0 }}
+                        className="fixed inset-0 aspect-square bg-zinc-950/50"
+                        onClick={() => setCreate(false)}
+                     />
+                  )}
+               </AnimatePresence>
+               <AnimatePresence>
+                  {create && (
+                     <motion.div
+                        initial={{ left: 0, opacity: 0 }}
+                        animate={{ left: 256, opacity: 1 }}
+                        exit={{ left: 0, opacity: 0 }}
+                        transition={{ type: "spring", duration: 0.5, bounce: 0.15 }}
+                        className="absolute inset-y-0 right-0 z-30 flex grow flex-col border-r-muted bg-background md:right-[unset] md:w-96 md:border-r xl:w-[416px]">
+                        <div className="flex flex-col gap-2 p-3">
+                           <div className="flex items-center justify-between gap-2">
+                              <h4 className="text-sm font-semibold text-foreground">Connect new database</h4>
+                           </div>
                         </div>
-                     </div>
-                     <div className="flex grow p-3">{memoizedCreateDatabaseForm}</div>
-                  </motion.div>
-               )}
-            </AnimatePresence>
-         </>
-         <motion.aside
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ opacity: 1, width: create ? 256 : 304 }}
-            transition={{ type: "spring", duration: 0.5, bounce: 0.15 }}
-            className={cn(
-               "modern-scroll relative z-[31] flex min-h-[50svh] flex-col overflow-y-auto overflow-x-hidden border-r border-r-muted bg-accent",
-            )}>
-            <div className="sticky top-0 z-[2] flex flex-col gap-2 border-b border-b-muted bg-accent p-3">
-               <div className="flex items-center justify-between gap-2">
-                  <h4 className="whitespace-nowrap text-sm font-semibold">Your databases</h4>
-                  <Button
-                     intent="none"
-                     size="none"
-                     onClick={() => setCreate((prev) => !prev)}
-                     className="group size-6 bg-muted hocus:bg-zinc-300 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,.05)] dark:hocus:bg-zinc-700">
-                     <motion.span
-                        initial={{ rotate: create ? 135 : 0 }}
-                        animate={{ rotate: create ? 135 : 0 }}
-                        transition={{ type: "spring", duration: 0.5, bounce: 0.4 }}
-                        className="block">
-                        <Plus className={cn("size-4")} />
-                     </motion.span>
-                  </Button>
-               </div>
-               <div className="relative w-full">
-                  <Input
-                     intent="none"
-                     size="sm"
-                     value={input}
-                     placeholder="Search database"
-                     onChange={(ev) => setInput(ev.currentTarget.value)}
-                     className="w-full rounded-full bg-background pl-9 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,.05)]"
-                  />
-                  <Search className="pointer-events-none absolute left-3 top-2.5 size-4 shrink-0 text-zinc-500 dark:text-zinc-400" />
-               </div>
-            </div>
-
-            {memoizedInnerAsideList}
-         </motion.aside>
-      </div>
+                        <div className="flex grow p-3">{memoizedCreateDatabaseForm}</div>
+                     </motion.div>
+                  )}
+               </AnimatePresence>
+               <AsideContent databases={databases} create={create} onCreateChange={(open) => setCreate(open)} />
+            </>
+         </div>
+      );
+   return (
+      <>
+         <Sheet open={sheet} onOpenChange={setSheet}>
+            <SheetContent side="left" className="flex border-0 p-0" close={false}>
+               <AsideContent
+                  databases={databases}
+                  create={create}
+                  smallScreen={true}
+                  onCreateChange={(open) => setCreate(open)}
+               />
+            </SheetContent>
+         </Sheet>
+      </>
    );
 };
