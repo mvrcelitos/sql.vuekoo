@@ -1,6 +1,7 @@
-import { cn } from "@/lib/utils";
-import { Table2 } from "lucide-react";
 import Link from "next/link";
+import { Table2 } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 export default async function NotFound() {
    const uuid = "";

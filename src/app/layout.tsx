@@ -5,10 +5,10 @@ import { GeistSans } from "geist/font/sans";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { config } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 import "./globals.css";
-import { config } from "@/config/site";
 
 export const metadata: Metadata = {
    title: {

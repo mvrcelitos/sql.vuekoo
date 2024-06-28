@@ -4,10 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import { Code, Palette, Settings } from "lucide-react";
 
 import { NavigationMenuItems } from "@/components/navigation-menu/data";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
+import { ThemeSubContent } from "@/components/navigation-menu/theme-sub-content";
 import { Button } from "@/components/ui/button";
 import {
    DropdownMenu,
@@ -17,9 +17,9 @@ import {
    DropdownMenuSubTrigger,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Code, Palette, Settings } from "lucide-react";
-import { ThemeSubContent } from "@/components/navigation-menu/theme-sub-content";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { getBreakpoint } from "@/lib/get-measures";
+import { cn } from "@/lib/utils";
 
 export const NavigationMenu = () => {
    const pathname = usePathname();

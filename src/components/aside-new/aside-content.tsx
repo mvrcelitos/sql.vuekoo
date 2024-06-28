@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { motion } from "framer-motion";
 import { Plus, Search } from "lucide-react";
 
@@ -10,7 +11,6 @@ import { cn } from "@/lib/utils";
 
 import { DatabasesReturn } from "./_components/create-database/schema";
 import { DatabaseList } from "./_components/database-list";
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
 
 interface AsideContentProps {
    databases: DatabasesReturn;

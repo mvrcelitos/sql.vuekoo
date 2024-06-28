@@ -1,8 +1,9 @@
-import { getDatabase, getDatabaseData } from "@/lib/database.helpers";
-import { cn } from "@/lib/utils";
-import { Table2 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Table2 } from "lucide-react";
+
+import { getDatabase, getDatabaseData } from "@/lib/database.helpers";
+import { cn } from "@/lib/utils";
 
 export default async function Page({ params }: { params: { uuid: string } }) {
    const database = getDatabase(params.uuid);

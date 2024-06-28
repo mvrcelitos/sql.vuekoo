@@ -1,23 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Plus, Search } from "lucide-react";
 
 import { CreateDatabaseForm } from "@/components/aside-new/_components/create-database/form";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { AsideContent } from "@/components/aside-new/aside-content";
+import { useAsideStore } from "@/components/aside-new/aside-store";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { getBreakpoint } from "@/lib/get-measures";
 
 import { DatabasesReturn } from "./_components/create-database/schema";
-import { DatabaseList } from "./_components/database-list";
-import { AsideContent } from "@/components/aside-new/aside-content";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
-import { useAsideStore } from "@/components/aside-new/aside-store";
-import { getBreakpoint, getWidth } from "@/lib/get-measures";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface AsideClientProps {
    databases: DatabasesReturn;

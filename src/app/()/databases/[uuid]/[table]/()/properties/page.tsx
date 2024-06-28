@@ -1,3 +1,4 @@
+import { PropertiesDataTableToolbar } from "@/app/()/[database]/[table]/(properties)/toolbar";
 import { TableColumnHeader } from "@/components/table-column-header";
 import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -8,7 +9,6 @@ import { cn } from "@/lib/utils";
 
 import { getProperties } from "./actions";
 import { paramsProps, searchParamsProps } from "./types";
-import { PropertiesDataTableToolbar } from "@/app/()/[database]/[table]/(properties)/toolbar";
 
 export const generateMetadata = async ({ params }: { params: paramsProps }) => ({
    title: params?.table,

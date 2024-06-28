@@ -1,9 +1,10 @@
-import "server-only";
 import { cookies } from "next/headers";
 
 import { DatabaseType } from "@/interfaces/cookies/databases";
-import { GetDatabaseDataReturn, GetDatabaseReturn, GetDatabasesReturn, OptionalsProps } from "@/lib/database/types";
 import { DatabaseFactory } from "@/lib/database";
+import { GetDatabaseDataReturn, GetDatabaseReturn, GetDatabasesReturn, OptionalsProps } from "@/lib/database/types";
+
+import "server-only";
 
 export const getDatabases = function <T extends boolean = false>(optionals?: OptionalsProps<T>): GetDatabasesReturn<T> {
    const details = (optionals?.details ?? false) as T;

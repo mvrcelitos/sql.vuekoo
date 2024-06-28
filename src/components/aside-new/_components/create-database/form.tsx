@@ -20,6 +20,7 @@ import {
 } from "@/components/form-components";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { availableDatabases } from "@/constants/available-databases";
 import { Entries } from "@/interfaces/entries";
 
@@ -30,7 +31,6 @@ import {
    createDatabaseFormSchema,
    DatabaseConnectionParamsReturn,
 } from "./schema";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const TestConnectionStates = {
    idle: {

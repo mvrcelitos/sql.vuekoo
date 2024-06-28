@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { DataTable } from "@/components/data-table";
 import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { TableWrapper } from "@/components/ui/table";
@@ -6,7 +8,6 @@ import { DatabaseFactory } from "@/lib/database";
 import { getDatabase } from "@/lib/database.helpers";
 
 import { paramsProps, searchParamsProps } from "./types";
-import { notFound } from "next/navigation";
 
 interface FieldProps<T extends string = string> {
    name: T;

@@ -1,8 +1,8 @@
-import { Flex } from "@/components/ui/layout";
+import Link from "next/link";
+import { Database } from "lucide-react";
+
 import { getDatabases } from "@/lib/database.helpers";
 import { cn } from "@/lib/utils";
-import { Database } from "lucide-react";
-import Link from "next/link";
 
 export default function NotFound() {
    const databases = getDatabases() ?? [];

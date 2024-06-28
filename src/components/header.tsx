@@ -3,22 +3,12 @@
 import Link from "next/link";
 import { Menu } from "lucide-react";
 
-import { ScriptButton } from "@/components/header-buttons";
-import { HeaderThemeContent } from "@/components/header-theme-content";
-import { Button, buttonVariants } from "@/components/ui/button";
-import {
-   DropdownMenu,
-   DropdownMenuContent,
-   DropdownMenuItem,
-   DropdownMenuSeparator,
-   DropdownMenuSub,
-   DropdownMenuSubTrigger,
-   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import { config } from "@/config/site";
 import { useAsideStore } from "@/components/aside-new/aside-store";
+import { ScriptButton } from "@/components/header-buttons";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { config } from "@/config/site";
+import { cn } from "@/lib/utils";
 
 export const Header = () => {
    const { sheet, setSheet } = useAsideStore();
