@@ -38,31 +38,35 @@ interface DatabaseItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
    hover: boolean;
 }
 
-const availableStates = ["idle", "pending", "connected", "error"] as const;
+const availableStates = ["idle", "pending", "connected", "error", "loading"] as const;
 type AvailableStates = (typeof availableStates)[number];
 
 export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database, hover, ...props }, ref) => {
+   // Data control hooks
+   const pathname = usePathname();
+   const pathnameType: "properties" | "data" =
+      pathname?.replace(/\/databases\/(.+?)\/(\w+?)\//, "") === "data" ? "data" : "properties";
+
    // Animation useStates
    const [open, setOpen] = useState<boolean>(false);
-   const [state, setState] = useState<AvailableStates>("idle");
+   const [state, setState] = useState<AvailableStates>(
+      pathname?.startsWith(`/databases/${database.uuid}`) ? "loading" : "idle",
+   );
    const [optionsOpen, setOptionsOpen] = useState<boolean>(false);
 
    // Data useStates
    const [data, setData] = useState<{ tables: string[]; views: string[] } | null>();
 
-   const pathname = usePathname();
-   const pathnameType: "properties" | "data" =
-      pathname?.replace(/\/databases\/(.+?)\/(\w+?)\//, "") === "data" ? "data" : "properties";
-
    const getData = useCallback(async () => {
       const res = await getDatabaseData(database.uuid);
       return res;
-   }, [database]);
+   }, []);
 
    const onButtonClick = useCallback(async () => {
       switch (state) {
          case "pending":
             break;
+         case "loading":
          case "idle": {
             setState("pending");
             const response = await getData();
@@ -92,9 +96,23 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
       }
    }, [state]);
 
-   const optionsButton = useMemo(() => {
+   const Icon = useMemo(() => {
+      switch (state) {
+         case "idle":
+            return <Zap key={state} className="size-4" />;
+         case "loading":
+         case "pending":
+            return <Loader2 key={state} className="size-4 animate-spin" />;
+         case "connected":
+            return <ChevronRight key={state} className="size-4" />;
+         case "error":
+            return <X key={state} className="size-4" />;
+      }
+   }, [state]);
+
+   const DropdownOptions = useMemo(() => {
       let content: React.ReactNode;
-      if (state === "pending") return null;
+      if (state === "pending" || state === "loading") return null;
       switch (state) {
          case "idle":
             content = (
@@ -195,24 +213,11 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
       );
    }, [state, open, optionsOpen]);
 
-   const Icon = useMemo(() => {
-      switch (state) {
-         case "idle":
-            return <Zap key={state} className="size-4" />;
-         case "pending":
-            return <Loader2 key={state} className="size-4 animate-spin" />;
-         case "connected":
-            return <ChevronRight key={state} className="size-4" />;
-         case "error":
-            return <X key={state} className="size-4" />;
-      }
-   }, [state]);
-
    useEffect(() => {
-      if (pathname?.startsWith(`/databases/${database.uuid}`)) {
+      if (pathname?.startsWith(`/databases/${database.uuid}`) && ["idle", "loading"].includes(state)) {
          onButtonClick();
       }
-   }, []);
+   }, [pathname]);
 
    return (
       <div {...props} className="relative text-sm text-zinc-800 dark:text-zinc-200" ref={ref}>
@@ -256,7 +261,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
                className="dark:light dark relative z-[1] cursor-pointer truncate text-sm text-muted underline-offset-2 hover:underline">
                {database.name}
             </Link>
-            {optionsButton}
+            {DropdownOptions}
          </div>
          {state === "connected" && open && (
             <div className="flex flex-col bg-muted p-1 text-zinc-800 dark:text-zinc-200">
