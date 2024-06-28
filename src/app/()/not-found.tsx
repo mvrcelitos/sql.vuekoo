@@ -44,6 +44,9 @@ export default function NotFound() {
                         <p className="text-sm ">{database.name}</p>
                      </Link>
                   ))}
+                  {!databases?.length && (
+                     <p className="animate-content-in px-2 text-sm text-800 [--stagger:4]">No databases found</p>
+                  )}
                </div>
             </div>
             {/* <div className="flex flex-col gap-2">
