@@ -14,8 +14,10 @@ export const DatabaseList = ({ databases }: { databases: DatabasesReturn }) => {
          {databases?.map((database, index) => {
             return (
                <DatabaseItem
-                  database={database}
                   key={database.uuid}
+                  database={database}
+                  index={index}
+                  count={databases.length || 0}
                   hover={hover == index}
                   onMouseEnter={() => setHover(index)}
                />
