@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
+   ArrowDown,
+   ArrowUp,
    ChevronRight,
    Copy,
    Loader2,
@@ -31,11 +33,14 @@ import { Separator } from "@/components/ui/separator";
 import { availableDatabases } from "@/constants/available-databases";
 import { cn } from "@/lib/utils";
 
-import { getDatabaseData } from "./actions";
+import { getDatabaseData, moveDatabase } from "./actions";
+import { toast } from "sonner";
 
 interface DatabaseItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
    database: DatabaseReturn;
    hover: boolean;
+   index: number;
+   count: number;
 }
 
 const availableStates = ["idle", "pending", "connected", "error", "loading"] as const;
@@ -43,6 +48,7 @@ type AvailableStates = (typeof availableStates)[number];
 
 export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database, hover, ...props }, ref) => {
    // Data control hooks
+   const router = useRouter();
    const pathname = usePathname();
    const pathnameType: "properties" | "data" =
       pathname?.replace(/\/databases\/(.+?)\/(\w+?)\//, "") === "data" ? "data" : "properties";
@@ -56,6 +62,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
 
    // Data useStates
    const [data, setData] = useState<{ tables: string[]; views: string[] } | null>();
+   const [moving, setMoving] = useState<"up" | "down" | null>(null);
 
    const getData = useCallback(async () => {
       const res = await getDatabaseData(database.uuid);
@@ -95,6 +102,18 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
          }
       }
    }, [state]);
+
+   const onMoveDatabase = useCallback(
+      async (direction: "up" | "down") => {
+         setMoving(direction);
+         const res = await moveDatabase(database.uuid, direction);
+         setMoving(null);
+         if (!res.ok) return toast.error(res.message);
+         router.refresh();
+         setOptionsOpen(false);
+      },
+      [database],
+   );
 
    const Icon = useMemo(() => {
       switch (state) {
@@ -160,7 +179,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
             break;
       }
       return (
-         <DropdownMenu onOpenChange={(open) => setOptionsOpen(open)}>
+         <DropdownMenu open={optionsOpen} onOpenChange={(open) => setOptionsOpen(open)}>
             <DropdownMenuTrigger asChild>
                <Button
                   intent="ghost"
@@ -187,14 +206,40 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
                   <Copy className="mr-2 size-4 shrink-0" />
                   Copy URL
                </DropdownMenuItem>
+               {props.index > 0 ? (
+                  <DropdownMenuItem
+                     intent="default"
+                     disabled={moving === "up"}
+                     onSelect={async (ev) => {
+                        ev.preventDefault();
+                        await onMoveDatabase("up");
+                     }}>
+                     {moving === "up" ? (
+                        <Loader2 className="mr-2 size-4 shrink-0 animate-spin" />
+                     ) : (
+                        <ArrowUp className="mr-2 size-4 shrink-0" />
+                     )}
+                     Move up
+                  </DropdownMenuItem>
+               ) : null}
+               {props.index < props.count - 1 ? (
+                  <DropdownMenuItem
+                     intent="default"
+                     disabled={moving === "down"}
+                     onSelect={async (ev) => {
+                        ev.preventDefault();
+                        onMoveDatabase("down");
+                     }}>
+                     {moving === "down" ? (
+                        <Loader2 className="mr-2 size-4 shrink-0 animate-spin" />
+                     ) : (
+                        <ArrowDown className="mr-2 size-4 shrink-0" />
+                     )}
+                     Move down
+                  </DropdownMenuItem>
+               ) : null}
                <DropdownMenuSeparator />
-               <DropdownMenuItem
-                  intent="default"
-                  onSelect={async (ev) => {
-                     const protocol = availableDatabases.find((x) => x.id === database.type)?.protocol;
-                     const url = `${protocol}://${database.username}:${database.password}@${database.host}:${database.port}/${database.database}`;
-                     navigator.clipboard.writeText(url);
-                  }}>
+               <DropdownMenuItem intent="default" disabled={true}>
                   <Pencil className="mr-2 size-4 shrink-0" />
                   Rename
                </DropdownMenuItem>
@@ -211,7 +256,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
             </DropdownMenuContent>
          </DropdownMenu>
       );
-   }, [state, open, optionsOpen]);
+   }, [state, open, optionsOpen, moving]);
 
    useEffect(() => {
       if (pathname?.startsWith(`/databases/${database.uuid}`) && ["idle", "loading"].includes(state)) {
