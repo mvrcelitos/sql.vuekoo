@@ -1,22 +1,35 @@
 import { DatabaseType } from "@/interfaces/cookies/databases";
 
-export interface Optionals<T extends boolean> {
+export interface OptionalsProps<T extends boolean> {
    details?: T;
 }
 
+interface GetDatabasesSucessReturn {
+   ok: true;
+   databases: DatabaseType[];
+}
+interface GetDatabasesErrorReturn<TErrors extends string = "parsing"> {
+   ok: false;
+   message: string;
+   error: TErrors;
+}
+export type GetDatabasesReturn<T extends boolean> = T extends true
+   ? GetDatabasesSucessReturn | GetDatabasesErrorReturn
+   : DatabaseType[] | null;
+
 //#region GetDatabaseReturnInnerInterfaces
-interface GetDatabaseReturnSuccess {
+interface GetDatabaseSuccessReturn {
    ok: true;
    database: DatabaseType;
 }
-interface GetDatabaseReturnError<TErrors = "not-found" | "parsing" | "no-databases"> {
+interface GetDatabaseErrorReturn<TErrors extends string = "not-found" | "parsing" | "no-databases"> {
    ok: false;
    message: string;
    error: TErrors;
 }
 //#endregion
 export type GetDatabaseReturn<T extends boolean> = T extends true
-   ? GetDatabaseReturnSuccess | GetDatabaseReturnError
+   ? GetDatabaseSuccessReturn | GetDatabaseErrorReturn
    : DatabaseType | null;
 
 interface GetDatabaseDataType {
