@@ -8,7 +8,7 @@ export const ThemeSubContent = () => {
    const { setTheme, theme } = useTheme();
 
    return (
-      <DropdownMenuSubContent sideOffset={48}>
+      <DropdownMenuSubContent>
          <DropdownMenuItem intent="default" className="text-[13px]" onClick={() => setTheme("light")}>
             <Sun className="mr-2 size-4 shrink-0" />
             <span>Light theme</span>
