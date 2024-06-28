@@ -169,7 +169,7 @@ export const CreateDatabaseForm = ({ onClose }: { onClose?: () => void }) => {
                <FormPassword intent="primary" type="password" />
                <FormMessage />
             </FormField>
-            <Separator className="my-2" />
+            <Separator className="-mx-3 w-auto" />
             <Button
                type="button"
                intent="outline"
@@ -206,7 +206,7 @@ export const CreateDatabaseForm = ({ onClose }: { onClose?: () => void }) => {
                </AnimatePresence>
             </Button>
          </div>
-         <div className="-m-3 flex flex-col gap-2 border-t border-t-muted bg-accent p-3 sm:gap-4">
+         <div className="-m-3 mt-0 flex flex-col gap-2 border-t border-t-muted bg-accent p-3 sm:gap-4">
             <div className="mt-auto flex flex-wrap items-center justify-end gap-2 md:gap-4">
                <Button type="button" intent="ghost" onClick={onClose} disabled={form?.formState.isSubmitting}>
                   Cancel
