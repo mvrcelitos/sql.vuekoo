@@ -8,8 +8,6 @@ export default async function Page({ params }: { params: { uuid: string } }) {
    const database = getDatabase(params.uuid);
    if (!database) notFound();
 
-   console.log({ database });
-
    const data = await getDatabaseData(database);
 
    return (
