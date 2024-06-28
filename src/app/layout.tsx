@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
          <body className={cn("flex h-dvh max-h-lvh min-h-svh flex-col overflow-hidden", GeistSans.className)}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                <Header />
-               <div className="flex min-h-[calc(100svh-37px)] flex-initial flex-wrap md:flex-nowrap">{children}</div>
+               <div className="flex min-h-[calc(100svh-37px)] flex-initial">{children}</div>
                <Toaster />
             </ThemeProvider>
             <Analytics />
