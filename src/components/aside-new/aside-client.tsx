@@ -17,6 +17,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { useAsideStore } from "@/components/aside-new/aside-store";
 import { getBreakpoint, getWidth } from "@/lib/get-measures";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface AsideClientProps {
    databases: DatabasesReturn;
@@ -83,6 +84,14 @@ export const AsideClient = ({ databases }: AsideClientProps) => {
                />
             </SheetContent>
          </Sheet>
+         <Dialog open={create} onOpenChange={(o) => (o ? undefined : setCreate(false))}>
+            <DialogContent className="overflow-hidden bg-background !p-3">
+               <DialogHeader>
+                  <DialogTitle>Connect new database</DialogTitle>
+               </DialogHeader>
+               {memoizedCreateDatabaseForm}
+            </DialogContent>
+         </Dialog>
       </>
    );
 };
