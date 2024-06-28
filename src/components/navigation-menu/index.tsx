@@ -19,11 +19,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Code, Palette, Settings } from "lucide-react";
 import { ThemeSubContent } from "@/components/navigation-menu/theme-sub-content";
+import { getBreakpoint } from "@/lib/get-measures";
 
 export const NavigationMenu = () => {
    const pathname = usePathname();
 
    const [hover, setHover] = useState<number | null>(null);
+   const isMobile = !getBreakpoint("md");
 
    return (
       <nav className="z-[2] flex h-[52px] w-full flex-row items-center justify-between gap-2 border-muted bg-background py-2 max-md:border-b sm:gap-4 md:h-full md:w-[52px] md:max-w-[52px] md:flex-col md:border-r">
@@ -91,7 +93,7 @@ export const NavigationMenu = () => {
                      <Settings className="size-5 text-foreground/70 group-aria-selected:text-primary group-hocus:text-foreground" />
                   </Button>
                </DropdownMenuTrigger>
-               {/* <DropdownMenuContent align="start" side="left" className="block md:hidden">
+               <DropdownMenuContent align={isMobile ? "start" : "end"} side={isMobile ? "left" : "right"}>
                   <DropdownMenuSub>
                      <DropdownMenuSubTrigger intent="default">
                         <Palette className="mr-2 size-4 shrink-0" />
@@ -103,20 +105,7 @@ export const NavigationMenu = () => {
                      <Code className="mr-2 size-4 shrink-0" />
                      Source Code
                   </DropdownMenuItem>
-               </DropdownMenuContent> */}
-               {/* <DropdownMenuContent align="end" side="right" className="hidden md:block">
-                  <DropdownMenuSub>
-                     <DropdownMenuSubTrigger intent="default">
-                        <Palette className="mr-2 size-4 shrink-0" />
-                        Theme
-                     </DropdownMenuSubTrigger>
-                     <ThemeSubContent />
-                  </DropdownMenuSub>
-                  <DropdownMenuItem intent="default">
-                     <Code className="mr-2 size-4 shrink-0" />
-                     Source Code
-                  </DropdownMenuItem>
-               </DropdownMenuContent> */}
+               </DropdownMenuContent>
             </DropdownMenu>
          </div>
       </nav>
