@@ -6,6 +6,7 @@ import { DatabaseFactory } from "@/lib/database";
 import { getDatabase } from "@/lib/database.helpers";
 
 import { paramsProps, searchParamsProps } from "./types";
+import { notFound } from "next/navigation";
 
 interface FieldProps<T extends string = string> {
    name: T;
@@ -29,16 +30,20 @@ const getData = async (params: paramsProps, searchParams: searchParamsProps) => 
    const limit = searchParams.limit?.replace(/\D/g, "") || DefaultQueryParams.limit;
    const sort = searchParams.sort ?? DefaultQueryParams.orderBy;
 
-   const data = await connection.query<unknown, FieldProps>(
-      `SELECT * FROM ${params.table} as t ORDER BY ${
-         searchParams?.sort ? `t."${searchParams?.sort}"` : DefaultQueryParams.orderBy
-      } ${ordenation} LIMIT ${limit}`,
-   );
-   if (!data) return;
-
-   const hiddenColumns = searchParams?.hide?.split(",") ?? [];
-   data.fields = data.fields.filter((field: any) => !hiddenColumns.includes(field.name));
-   return data;
+   try {
+      const data = await connection.query<unknown, FieldProps>(
+         `SELECT * FROM ${params.table} as t ORDER BY ${sort} ${ordenation} LIMIT ${limit}`,
+      );
+      if (!data) return;
+      const hiddenColumns = searchParams?.hide?.split(",") ?? [];
+      data.fields = data.fields.filter((field: any) => !hiddenColumns.includes(field.name));
+      return data;
+   } catch (err) {
+      // @ts-ignore
+      if (err?.code === "42P01") {
+         notFound();
+      }
+   }
 };
 
 export default async function Page({ params, searchParams }: { params: paramsProps; searchParams: searchParamsProps }) {
