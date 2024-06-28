@@ -26,14 +26,14 @@ export const NavigationMenu = () => {
    const [hover, setHover] = useState<number | null>(null);
 
    return (
-      <nav className="z-[2] flex h-full w-[52px] max-w-[52px] flex-col items-center justify-between gap-2 border-r border-r-muted bg-background py-2 md:gap-4">
-         <div className="flex flex-col items-center p-2" onMouseLeave={() => setHover(null)}>
+      <nav className="z-[2] flex h-[52px] w-full flex-row items-center justify-between gap-2 border-muted bg-background py-2 max-md:border-b sm:gap-4 md:h-full md:w-[52px] md:max-w-[52px] md:flex-col md:border-r">
+         <div className="flex flex-row items-center p-2 md:flex-col" onMouseLeave={() => setHover(null)}>
             {NavigationMenuItems.map((props, index) => {
                const isActive = props.forcedActive === true ? true : props?.regex?.test(pathname) ?? false;
                return (
                   <div
                      key={index}
-                     className="flex items-center py-2 first:pt-0 last:pb-0 md:py-3"
+                     className="flex items-center px-1 first:pt-0 last:pb-0 md:px-0 md:py-3"
                      onMouseEnter={() => setHover(index)}
                      onMouseLeave={() => setHover(index)}>
                      <NavigationMenuItem {...props} aria-selected={isActive}>
@@ -70,32 +70,55 @@ export const NavigationMenu = () => {
                               />
                            )}
                         </AnimatePresence>
-                        <props.icon className="relative z-10 size-5 text-foreground/70 group-aria-selected:text-primary group-hocus:text-foreground" />
+                        <props.icon
+                           className={cn(
+                              "relative z-10 size-5",
+                              isActive ? "text-primary" : "text-foreground/70 group-hocus:text-foreground",
+                           )}
+                        />
                      </NavigationMenuItem>
                   </div>
                );
             })}
          </div>
-         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-               <Button intent="ghost" size="icon-sm">
-                  <Settings className="size-5 text-foreground/70 group-aria-selected:text-primary group-hocus:text-foreground" />
-               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" side="right">
-               <DropdownMenuSub>
-                  <DropdownMenuSubTrigger intent="default">
-                     <Palette className="mr-2 size-4 shrink-0" />
-                     Theme
-                  </DropdownMenuSubTrigger>
-                  <ThemeSubContent />
-               </DropdownMenuSub>
-               <DropdownMenuItem intent="default">
-                  <Code className="mr-2 size-4 shrink-0" />
-                  Source Code
-               </DropdownMenuItem>
-            </DropdownMenuContent>
-         </DropdownMenu>
+         <div className="px-2 md:px-0">
+            <DropdownMenu>
+               <DropdownMenuTrigger asChild>
+                  <Button
+                     intent="ghost"
+                     size="icon-sm"
+                     className="aria-expanded:bg-muted dark:aria-expanded:highlight-5">
+                     <Settings className="size-5 text-foreground/70 group-aria-selected:text-primary group-hocus:text-foreground" />
+                  </Button>
+               </DropdownMenuTrigger>
+               {/* <DropdownMenuContent align="start" side="left" className="block md:hidden">
+                  <DropdownMenuSub>
+                     <DropdownMenuSubTrigger intent="default">
+                        <Palette className="mr-2 size-4 shrink-0" />
+                        Theme
+                     </DropdownMenuSubTrigger>
+                     <ThemeSubContent />
+                  </DropdownMenuSub>
+                  <DropdownMenuItem intent="default">
+                     <Code className="mr-2 size-4 shrink-0" />
+                     Source Code
+                  </DropdownMenuItem>
+               </DropdownMenuContent> */}
+               {/* <DropdownMenuContent align="end" side="right" className="hidden md:block">
+                  <DropdownMenuSub>
+                     <DropdownMenuSubTrigger intent="default">
+                        <Palette className="mr-2 size-4 shrink-0" />
+                        Theme
+                     </DropdownMenuSubTrigger>
+                     <ThemeSubContent />
+                  </DropdownMenuSub>
+                  <DropdownMenuItem intent="default">
+                     <Code className="mr-2 size-4 shrink-0" />
+                     Source Code
+                  </DropdownMenuItem>
+               </DropdownMenuContent> */}
+            </DropdownMenu>
+         </div>
       </nav>
    );
 };
