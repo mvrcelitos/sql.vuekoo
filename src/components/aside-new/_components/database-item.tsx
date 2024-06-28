@@ -237,7 +237,10 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
             <Button
                intent="ghost"
                size="none"
-               className="relative z-[1] size-6 shrink-0 hocus:bg-zinc-300 dark:hocus:bg-zinc-700"
+               className={cn(
+                  "relative z-[1] size-6 shrink-0 hocus:bg-zinc-300 dark:hocus:bg-zinc-700",
+                  (state === "pending" || state === "loading") && "pointer-events-none",
+               )}
                onClick={() => onButtonClick()}>
                <AnimatePresence mode="popLayout" initial={false}>
                   <motion.span
