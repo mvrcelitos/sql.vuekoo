@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 
 import { DatabasesReturn } from "@/components/aside-new/_components/create-database/schema";
 import { DatabaseFactory, PSQLDatabase } from "@/lib/database";
+import { getDatabases } from "@/lib/database.helpers";
 
 type GetDatabaseTablesReturn<T extends { tables: any[]; views: any[] }> =
    | { ok: false; message: string }
@@ -57,4 +58,25 @@ export const getDatabaseData = async <T extends { tables: any[]; views: any[] }>
       console.error(error);
       return { ok: false, message: "Error getting database tables and views" };
    }
+};
+
+export const moveDatabase = async (uuid: string, direction: "up" | "down") => {
+   const databases = getDatabases();
+   if (!databases?.length) return { ok: false, message: "No databases found" };
+
+   const index = databases.findIndex((x) => x.uuid === uuid);
+   if (index === -1) return { ok: false, message: "Database not found" };
+
+   if (direction === "up" && index === 0) return { ok: false, message: "Can't move up" };
+   if (direction === "down" && index === databases.length - 1) return { ok: false, message: "Can't move down" };
+
+   const dir = { up: -1, down: 1 }[direction];
+   const database = JSON.parse(JSON.stringify(databases[index]));
+   databases[index] = databases[index + dir];
+   databases[index + dir] = database;
+
+   const c = cookies();
+   c.set("databases", JSON.stringify(databases));
+
+   return { ok: true, message: "Successfully swapped database position" };
 };
