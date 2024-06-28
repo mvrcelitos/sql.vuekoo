@@ -45,23 +45,16 @@ export default function Page() {
                   </p>
                </div>
                <div className="flex items-center justify-center gap-0.5 md:gap-4 md:text-base">
-                  <Link
+                  {/* <Link
                      href={"#"}
                      className={cn(
                         buttonVariants({ intent: "ghost", size: "lg" }),
                         "animate-content-in rounded-full [--stagger:5]",
                      )}>
                      I need help
-                  </Link>
-                  <GetStartedButton className="animate-content-in [--stagger:6]" />
+                  </Link> */}
+                  <GetStartedButton className="animate-content-in [--stagger:5]" />
                </div>
-               {/* <p className="mb-2 text-left text-sm opacity-70 last-of-type:mb-0 sm:text-base md:mb-4">
-                  We are currently suggesting our users to create an account on our system.
-               </p>
-               <p className="mb-2 text-left text-sm opacity-70 last-of-type:mb-0 sm:text-base md:mb-4">
-                  This is due to the fact that it helps you not to lose your banks and settings, in addition to making
-                  this application cross-platform.
-               </p> */}
             </div>
          </main>
       );
