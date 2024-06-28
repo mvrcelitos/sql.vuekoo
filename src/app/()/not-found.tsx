@@ -35,6 +35,7 @@ export default function NotFound() {
                <div>
                   {databases?.slice(0, 10)?.map((database, index) => (
                      <Link
+                        key={database.uuid}
                         href={`/databases/${database.uuid}`}
                         className="animate-content-in flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-800 hocus:bg-muted hocus:text-foreground"
                         // @ts-ignore

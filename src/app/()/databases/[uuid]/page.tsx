@@ -38,6 +38,7 @@ export default async function Page({ params }: { params: { uuid: string } }) {
                <div>
                   {data?.tables?.slice(0, 10)?.map((table, index) => (
                      <Link
+                        key={table}
                         href={`/databases/${database.uuid}/${table}/properties`}
                         className="animate-content-in flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-800 hocus:bg-muted hocus:text-foreground"
                         // @ts-ignore
@@ -56,6 +57,7 @@ export default async function Page({ params }: { params: { uuid: string } }) {
                <div>
                   {data?.views?.slice(0, 10)?.map((view, index) => (
                      <Link
+                        key={view}
                         href={`/databases/${database.uuid}/${view}/properties`}
                         className="animate-content-in flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-800 hocus:bg-muted hocus:text-foreground"
                         // @ts-ignore
