@@ -17,6 +17,9 @@ const config: Config = {
          },
       },
       extend: {
+         screens: {
+            xs: "480px",
+         },
          boxShadow: {
             // "vercel-sm": "0px 1px 1px rgb(0,0,0,.02)",
             // "vercel-md": "0px 4px 8px -4px rgba(0,0,0,.04)",
