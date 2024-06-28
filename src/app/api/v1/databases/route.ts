@@ -27,7 +27,6 @@ export const POST = async (request: Request) => {
       const databases = c.has("databases") ? JSON.parse(c.get("databases")?.value || "{}") : {};
       databases[body.uuid] = body;
 
-      console.log("setting up");
       c.set("databases", JSON.stringify(databases), {
          path: "/",
          maxAge: 2147483647,
