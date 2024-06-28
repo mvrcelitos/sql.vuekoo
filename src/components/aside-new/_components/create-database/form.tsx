@@ -94,7 +94,7 @@ export const CreateDatabaseForm = ({ onClose }: { onClose?: () => void }) => {
             <div className="flex flex-wrap items-center justify-between sm:-my-2">
                <div className="text-sm font-semibold text-foreground">Database connection</div>
                <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger asChild>
                      <Button
                         type="button"
                         intent="ghost"
