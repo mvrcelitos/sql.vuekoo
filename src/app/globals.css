@@ -11,6 +11,7 @@
       --accent: theme("colors.zinc.100");
       --muted: theme("colors.zinc.200");
       --300: theme("colors.zinc.300");
+      --400: theme("colors.zinc.400");
       --500: theme("colors.zinc.500");
       --700: theme("colors.zinc.700");
       --800: theme("colors.zinc.800");
@@ -31,6 +32,7 @@
       --accent: theme("colors.zinc.900");
       --muted: theme("colors.zinc.800");
       --300: theme("colors.zinc.700");
+      --400: theme("colors.zinc.500");
       --500: theme("colors.zinc.400");
       --700: theme("colors.zinc.300");
       --800: theme("colors.zinc.200");
