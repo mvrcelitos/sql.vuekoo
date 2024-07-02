@@ -39,6 +39,7 @@ const config: Config = {
             "accent": "var(--accent)",
             "muted": "var(--muted)",
             "300": "var(--300)",
+            "400": "var(--400)",
             "500": "var(--500)",
             "700": "var(--700)",
             "800": "var(--800)",
