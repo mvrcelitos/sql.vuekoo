@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState, useTransition } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
    ArrowDown,
    ArrowUp,
+   Check,
    ChevronRight,
    Copy,
    Loader2,
@@ -129,6 +130,8 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
       }
    }, [state]);
 
+   const [copied, setCopied] = useState<boolean>(false);
+   const timeout = useRef<NodeJS.Timeout | null>(null);
    const DropdownOptions = useMemo(() => {
       let content: React.ReactNode;
       if (state === "pending" || state === "loading") return null;
@@ -178,6 +181,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
             );
             break;
       }
+
       return (
          <DropdownMenu open={optionsOpen} onOpenChange={(open) => setOptionsOpen(open)}>
             <DropdownMenuTrigger asChild>
@@ -199,11 +203,26 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
                <DropdownMenuItem
                   intent="default"
                   onSelect={async (ev) => {
+                     ev.preventDefault();
                      const protocol = availableDatabases.find((x) => x.id === database.type)?.protocol;
                      const url = `${protocol}://${database.username}:${database.password}@${database.host}:${database.port}/${database.database}`;
                      navigator.clipboard.writeText(url);
+                     if (timeout.current) clearTimeout(timeout.current);
+                     timeout.current = setTimeout(() => setCopied(false), 3000);
+                     setCopied(true);
+                     // toast.success("URL copied to clipboard");
                   }}>
-                  <Copy className="mr-2 size-4 shrink-0" />
+                  <AnimatePresence initial={false} mode="popLayout">
+                     <motion.span
+                        key={copied ? "check" : "copy"}
+                        className="mr-2 size-4 shrink-0"
+                        initial={{ opacity: 0, transform: "scale(0)" }}
+                        animate={{ opacity: 1, transform: "scale(1)" }}
+                        exit={{ opacity: 0, transform: "scale(0)" }}
+                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}>
+                        {copied ? <Check className="size-full" /> : <Copy className="size-full" />}
+                     </motion.span>
+                  </AnimatePresence>
                   Copy URL
                </DropdownMenuItem>
                {props.index > 0 ? (
@@ -256,7 +275,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
             </DropdownMenuContent>
          </DropdownMenu>
       );
-   }, [state, open, optionsOpen, moving]);
+   }, [state, open, optionsOpen, moving, copied, timeout]);
 
    useEffect(() => {
       if (pathname?.startsWith(`/databases/${database.uuid}`) && ["idle", "loading"].includes(state)) {
