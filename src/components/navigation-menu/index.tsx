@@ -101,9 +101,11 @@ export const NavigationMenu = () => {
                      </DropdownMenuSubTrigger>
                      <ThemeSubContent />
                   </DropdownMenuSub>
-                  <DropdownMenuItem intent="default">
-                     <Code className="mr-2 size-4 shrink-0" />
-                     Source Code
+                  <DropdownMenuItem intent="default" className="cursor-pointer" asChild>
+                     <Link href="https://github.com/mvrcelitos/sql.vuekoo" target="_blank">
+                        <Code className="mr-2 size-4 shrink-0" />
+                        Source Code
+                     </Link>
                   </DropdownMenuItem>
                </DropdownMenuContent>
             </DropdownMenu>
