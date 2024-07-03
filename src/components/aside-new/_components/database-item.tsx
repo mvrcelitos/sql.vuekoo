@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-   AlertTriangle,
    ArrowDown,
    ArrowUp,
    Check,
@@ -16,7 +15,6 @@ import {
    Pencil,
    RefreshCcw,
    Table2,
-   Trash,
    Unplug,
    X,
    Zap,
@@ -37,7 +35,7 @@ import { cn } from "@/lib/utils";
 
 import { getDatabaseData, moveDatabase } from "./actions";
 import { toast } from "sonner";
-import { DeleteDatabaseMenuItem } from "@/components/aside-new/_components/delete-database/delete-database-menu-item";
+import { DeleteDatabaseMenuItem } from "@/components/aside-new/_components/delete-database/delete-database";
 
 interface DatabaseItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
    database: DatabaseReturn;
