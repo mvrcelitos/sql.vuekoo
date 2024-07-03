@@ -33,11 +33,9 @@ export const AsideContent = ({ databases, smallScreen, ...props }: AsideContentP
    });
 
    // Memo
+   const filteredDatabases = databases?.filter((x) => x?.name?.toLowerCase().includes(input?.trim()?.toLowerCase()));
    const memoizedInnerAsideList = useMemo(() => {
       try {
-         const filteredDatabases = databases?.filter(
-            (x) => x?.name?.toLowerCase().includes(input?.trim()?.toLowerCase()),
-         );
          return <DatabaseList databases={filteredDatabases} />;
       } catch (err) {
          console.error(err);
