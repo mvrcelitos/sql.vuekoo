@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
+   AlertTriangle,
    ArrowDown,
    ArrowUp,
    Check,
@@ -36,6 +37,7 @@ import { cn } from "@/lib/utils";
 
 import { getDatabaseData, moveDatabase } from "./actions";
 import { toast } from "sonner";
+import { DeleteDatabaseMenuItem } from "@/components/aside-new/_components/delete-database/delete-database-menu-item";
 
 interface DatabaseItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
    database: DatabaseReturn;
@@ -132,6 +134,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
 
    const [copied, setCopied] = useState<boolean>(false);
    const timeout = useRef<NodeJS.Timeout | null>(null);
+
    const DropdownOptions = useMemo(() => {
       let content: React.ReactNode;
       if (state === "pending" || state === "loading") return null;
@@ -262,20 +265,11 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
                   <Pencil className="mr-2 size-4 shrink-0" />
                   Rename
                </DropdownMenuItem>
-               <DropdownMenuItem
-                  intent="danger"
-                  onSelect={async (ev) => {
-                     const protocol = availableDatabases.find((x) => x.id === database.type)?.protocol;
-                     const url = `${protocol}://${database.username}:${database.password}@${database.host}:${database.port}/${database.database}`;
-                     navigator.clipboard.writeText(url);
-                  }}>
-                  <Trash className="mr-2 size-4 shrink-0" />
-                  Delete
-               </DropdownMenuItem>
+               <DeleteDatabaseMenuItem database={database} />
             </DropdownMenuContent>
          </DropdownMenu>
       );
-   }, [state, open, optionsOpen, moving, copied, timeout]);
+   }, [database, state, open, optionsOpen, moving, copied, timeout]);
 
    useEffect(() => {
       if (pathname?.startsWith(`/databases/${database.uuid}`) && ["idle", "loading"].includes(state)) {
