@@ -109,7 +109,7 @@ export const DropdownMenuCheckboxItem = React.forwardRef<
    <DropdownMenuPrimitive.CheckboxItem
       ref={ref}
       className={cn(
-         "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm text-zinc-300 outline-none transition-colors focus:bg-zinc-800 focus:text-zinc-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+         "relative flex cursor-default select-none items-center rounded py-1.5 pl-8 pr-2 text-sm text-zinc-300 outline-none transition-colors focus:bg-zinc-800 focus:text-zinc-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
          className,
       )}
       checked={checked}
@@ -131,7 +131,7 @@ export const DropdownMenuRadioItem = React.forwardRef<
    <DropdownMenuPrimitive.RadioItem
       ref={ref}
       className={cn(
-         "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm text-zinc-300 outline-none transition-colors focus:bg-zinc-800 focus:text-zinc-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+         "relative flex cursor-default select-none items-center rounded py-1.5 pl-8 pr-2 text-sm text-zinc-300 outline-none transition-colors focus:bg-zinc-800 focus:text-zinc-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
          className,
       )}
       {...props}>
