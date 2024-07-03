@@ -40,8 +40,9 @@ export const buttonVariants = cva({
          ],
          destructive: [
             "bg-red-500 hover:bg-rose-600 active:bg-rose-600",
+            "dark:bg-red-600 dark:hover:bg-rose-700 dark:active:bg-rose-700",
             "text-zinc-100 hover:text-zinc-50 active:text-zinc-50",
-            "focus-visible:outline-red-500/50",
+            "focus-visible:outline-red-500/50 dark:focus-visible:outline-red-600/50",
          ],
          opaque: [
             "bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:active:bg-zinc-700",
