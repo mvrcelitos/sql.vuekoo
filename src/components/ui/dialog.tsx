@@ -5,6 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Dialog = DialogPrimitive.Root;
 
@@ -31,25 +32,38 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const DialogContent = React.forwardRef<
    React.ElementRef<typeof DialogPrimitive.Content>,
-   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-   <DialogPortal>
-      <DialogOverlay />
-      <DialogPrimitive.Content
-         ref={ref}
-         className={cn(
-            "fixed left-[50%] top-[50%] z-[101] grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-xl border border-muted bg-background duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
-            className,
-         )}
-         {...props}>
-         {children}
-         <DialogPrimitive.Close className="absolute right-3 top-3 rounded-md bg-transparent p-1.5 text-zinc-500 opacity-70 !outline-none transition-opacity hover:opacity-100 disabled:pointer-events-none hocus:bg-zinc-200 hocus:text-zinc-700 dark:bg-transparent dark:text-zinc-400 dark:focus:bg-zinc-800 dark:focus:text-zinc-200">
-            <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
-         </DialogPrimitive.Close>
-      </DialogPrimitive.Content>
-   </DialogPortal>
-));
+   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & { close?: boolean }
+>(({ close = true, className, children, ...props }, ref) => {
+   const DialogClose = motion(DialogPrimitive.Close);
+   return (
+      <DialogPortal>
+         <DialogOverlay />
+         <DialogPrimitive.Content
+            ref={ref}
+            className={cn(
+               "fixed left-[50%] top-[50%] z-[101] grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-xl border border-muted bg-background duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
+               className,
+            )}
+            {...props}>
+            {children}
+            <AnimatePresence initial={false}>
+               {close ? (
+                  <DialogClose
+                     transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                     disabled={!close}
+                     initial={{ opacity: 0, transform: "scale(0)" }}
+                     animate={{ opacity: 1, transform: "scale(1)" }}
+                     exit={{ opacity: 0 }}
+                     className="absolute right-3 top-3 rounded-md bg-transparent p-1.5 text-500 !outline-none transition-colors disabled:pointer-events-none hocus:bg-muted hocus:text-700">
+                     <X className="h-4 w-4" />
+                     <span className="sr-only">Close</span>
+                  </DialogClose>
+               ) : null}
+            </AnimatePresence>
+         </DialogPrimitive.Content>
+      </DialogPortal>
+   );
+});
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
