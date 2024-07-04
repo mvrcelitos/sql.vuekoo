@@ -39,3 +39,7 @@ interface GetDatabaseDataType {
 export type GetDatabaseDataReturn<T extends boolean> = T extends true
    ? { ok: false; message: string } | { ok: true; message: string; data: GetDatabaseDataType }
    : GetDatabaseDataType | null;
+
+export type SetDatabasesReturn<T extends boolean> = T extends true
+   ? { ok: true } | { ok: false; message: string }
+   : boolean;
