@@ -13,5 +13,3 @@ export type DatabaseType = {
    username: string;
    password: string;
 };
-
-export type DatabasesType = DatabaseType[];
