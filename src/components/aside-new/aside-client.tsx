@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { CreateDatabaseForm } from "@/components/aside-new/_components/create-database/form";
 import { AsideContent } from "@/components/aside-new/aside-content";
 import { useAsideStore } from "@/components/aside-new/aside-store";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogBody, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { getBreakpoint } from "@/lib/get-measures";
 
@@ -24,8 +24,8 @@ export const AsideClient = ({ databases }: AsideClientProps) => {
    const { sheet, setSheet } = useAsideStore();
 
    const memoizedCreateDatabaseForm = useMemo(
-      () => <CreateDatabaseForm onClose={() => setCreate(false)} />,
-      [setCreate],
+      () => <CreateDatabaseForm onClose={() => setCreate(false)} isTablet={!isTablet} />,
+      [isTablet, setCreate],
    );
 
    if (isTablet)
@@ -72,17 +72,17 @@ export const AsideClient = ({ databases }: AsideClientProps) => {
                <AsideContent
                   databases={databases}
                   create={create}
-                  smallScreen={true}
+                  isTablet={true}
                   onCreateChange={(open) => setCreate(open)}
                />
             </SheetContent>
          </Sheet>
          <Dialog open={create} onOpenChange={(o) => (o ? undefined : setCreate(false))}>
-            <DialogContent className="overflow-hidden bg-background !p-3">
+            <DialogContent className="overflow-hidden bg-background">
                <DialogHeader>
                   <DialogTitle>Connect new database</DialogTitle>
                </DialogHeader>
-               {memoizedCreateDatabaseForm}
+               <DialogBody>{memoizedCreateDatabaseForm}</DialogBody>
             </DialogContent>
          </Dialog>
       </>
