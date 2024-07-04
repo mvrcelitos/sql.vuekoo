@@ -17,10 +17,10 @@ interface AsideContentProps {
    create?: boolean;
    defaultCreate?: boolean;
    onCreateChange?: (open: boolean) => void;
-   smallScreen?: boolean;
+   isTablet?: boolean;
 }
 
-export const AsideContent = ({ databases, smallScreen, ...props }: AsideContentProps) => {
+export const AsideContent = ({ databases, isTablet, ...props }: AsideContentProps) => {
    // Search database hooks
    const [input, setInput] = useState<string>("");
 
@@ -33,9 +33,11 @@ export const AsideContent = ({ databases, smallScreen, ...props }: AsideContentP
    });
 
    // Memo
-   const filteredDatabases = databases?.filter((x) => x?.name?.toLowerCase().includes(input?.trim()?.toLowerCase()));
    const memoizedInnerAsideList = useMemo(() => {
       try {
+         const filteredDatabases = databases?.filter(
+            (x) => x?.name?.toLowerCase().includes(input?.trim()?.toLowerCase()),
+         );
          return <DatabaseList databases={filteredDatabases} />;
       } catch (err) {
          console.error(err);
@@ -46,7 +48,7 @@ export const AsideContent = ({ databases, smallScreen, ...props }: AsideContentP
    return (
       <motion.aside
          initial={{ opacity: 0, width: 0 }}
-         animate={{ opacity: 1, width: smallScreen ? "100%" : create ? 256 : 304 }}
+         animate={{ opacity: 1, width: isTablet ? "100%" : create ? 256 : 304 }}
          transition={{ type: "spring", duration: 0.5, bounce: 0.15 }}
          className={cn(
             "modern-scroll relative z-[31] flex min-h-[50svh] flex-col overflow-y-auto overflow-x-hidden border-r border-r-muted bg-accent",
