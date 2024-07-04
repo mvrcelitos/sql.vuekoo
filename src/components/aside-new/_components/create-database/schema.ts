@@ -75,7 +75,11 @@ export const databaseSchema = z
          .optional()
          .default(false),
 
-      created_at: z.string().datetime().nullable().default(new Date().toISOString()),
+      created_at: z
+         .string()
+         .datetime()
+         .nullish()
+         .transform((x) => (x === undefined || x === null ? new Date().toISOString() : x)),
       updated_at: z.string().datetime().nullable().default(null),
    })
    .and(databaseConnectionParamsSchema);
