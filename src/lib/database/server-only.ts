@@ -2,13 +2,7 @@ import { cookies } from "next/headers";
 
 import { DatabaseType } from "@/interfaces/cookies/databases";
 import { DatabaseFactory } from "@/lib/database";
-import {
-   GetDatabaseDataReturn,
-   GetDatabaseReturn,
-   GetDatabasesReturn,
-   OptionalsProps,
-   SetDatabasesReturn,
-} from "@/lib/database/types";
+import { GetDatabaseDataReturn, OptionalsProps, SetDatabasesReturn } from "@/lib/database/types";
 
 import "server-only";
 
