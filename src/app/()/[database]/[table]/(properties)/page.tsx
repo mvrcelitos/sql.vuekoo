@@ -5,7 +5,7 @@ import { PropertiesDataTableToolbar } from "@/app/()/[database]/[table]/(propert
 import { TableColumnHeader } from "@/components/table-column-header";
 import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { getDatabase } from "@/lib/database/server-only";
+import { findDatabase } from "@/lib/database/functions";
 import { TableCellFormatter } from "@/lib/table-cell-formatter";
 import { cn } from "@/lib/utils";
 
@@ -47,7 +47,7 @@ export type GetTableReturn = Omit<pg.QueryResult<any>, "fields" | "rows"> & {
 const getTable = async (uuid: string, table: string, params: searchParamsProps) => {
    let client;
    try {
-      const database = getDatabase(uuid);
+      const database = await findDatabase(uuid);
       if (!database) return;
 
       client = new pg.Client({

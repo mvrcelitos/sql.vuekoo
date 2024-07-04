@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { Database } from "lucide-react";
 
-import { getDatabases } from "@/lib/database/server-only";
+import { getDatabases } from "@/lib/database/functions";
 import { cn } from "@/lib/utils";
 
-export default function NotFound() {
-   const databases = getDatabases() ?? [];
+export default async function NotFound() {
+   const databases = (await getDatabases()) ?? [];
 
    return (
       <main className="flex h-full w-full flex-initial flex-col items-center justify-center overflow-hidden p-4">

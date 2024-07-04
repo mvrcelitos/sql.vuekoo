@@ -5,7 +5,7 @@ import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { TableWrapper } from "@/components/ui/table";
 import { DefaultQueryParams } from "@/constants/default-query-params";
 import { DatabaseFactory } from "@/lib/database";
-import { getDatabase } from "@/lib/database.helpers";
+import { findDatabase } from "@/lib/database/functions";
 
 import { paramsProps, searchParamsProps } from "./types";
 
@@ -21,7 +21,7 @@ interface FieldProps<T extends string = string> {
 
 const getData = async (params: paramsProps, searchParams: searchParamsProps) => {
    "use server";
-   const database = getDatabase(params.uuid);
+   const database = await findDatabase(params.uuid);
    if (!database) return;
 
    const connection = await DatabaseFactory(database.type)?.connectWithDatabase(database);

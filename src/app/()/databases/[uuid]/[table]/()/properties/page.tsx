@@ -3,7 +3,7 @@ import { TableColumnHeader } from "@/components/table-column-header";
 import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { DatabaseFactory } from "@/lib/database";
-import { getDatabase } from "@/lib/database.helpers";
+import { findDatabase } from "@/lib/database/functions";
 import { TableCellFormatter } from "@/lib/table-cell-formatter";
 import { cn } from "@/lib/utils";
 
@@ -16,7 +16,7 @@ export const generateMetadata = async ({ params }: { params: paramsProps }) => (
 
 const getData = async (uuid: string, table: string) => {
    "use server";
-   const database = getDatabase(uuid);
+   const database = await findDatabase(uuid);
    if (!database) return;
 
    const connection = await DatabaseFactory(database.type)?.connectWithDatabase(database);
