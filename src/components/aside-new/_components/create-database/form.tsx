@@ -31,6 +31,7 @@ import {
    createDatabaseFormSchema,
    DatabaseConnectionParamsReturn,
 } from "./schema";
+import { cn } from "@/lib/utils";
 
 const TestConnectionStates = {
    idle: {
@@ -52,7 +53,11 @@ const TestConnectionStates = {
    },
 };
 
-export const CreateDatabaseForm = ({ onClose }: { onClose?: () => void }) => {
+interface CreateDatabaseFormProps {
+   onClose?: () => void;
+   isTablet?: boolean;
+}
+export const CreateDatabaseForm = ({ onClose, isTablet }: CreateDatabaseFormProps) => {
    const form = useForm<CreateDatabaseFormInput>({
       defaultValues: { type: "psql" },
       resolver: zodResolver(createDatabaseFormSchema),
@@ -61,7 +66,7 @@ export const CreateDatabaseForm = ({ onClose }: { onClose?: () => void }) => {
    const [state, setState] = useState<keyof typeof TestConnectionStates>("idle");
    const currentState = TestConnectionStates[state];
 
-   const { handleSubmit, register } = form;
+   const { handleSubmit } = form;
    return (
       <Form
          form={form}
@@ -70,7 +75,10 @@ export const CreateDatabaseForm = ({ onClose }: { onClose?: () => void }) => {
             toast?.[res?.ok == false ? "error" : "success"]?.(res?.message);
             onClose?.();
          })}
-         className="relative -m-3 grid grow grid-cols-1 grid-rows-[minmax(0,1fr)_minmax(0,auto)] overflow-hidden p-3">
+         className={cn(
+            isTablet ? "-mx-4 -my-2 p-2 px-4" : "-m-3 p-3",
+            "relative grid grow grid-cols-1 grid-rows-[minmax(0,1fr)_minmax(0,auto)] overflow-hidden",
+         )}>
          <div className="flex flex-col gap-2 sm:gap-4">
             <FormField name="type">
                <FormLabel className="mb-1.5" required>
@@ -90,7 +98,7 @@ export const CreateDatabaseForm = ({ onClose }: { onClose?: () => void }) => {
                <FormInput />
                <FormMessage />
             </FormField>
-            <Separator className="-mx-3 w-auto" />
+            <Separator className={cn(isTablet ? "-mx-4" : "-mx-3", "w-auto")} />
             <div className="flex flex-wrap items-center justify-between sm:-my-2">
                <div className="text-sm font-semibold text-foreground">Database connection</div>
                <Tooltip>
@@ -169,7 +177,7 @@ export const CreateDatabaseForm = ({ onClose }: { onClose?: () => void }) => {
                <FormPassword intent="primary" type="password" />
                <FormMessage />
             </FormField>
-            <Separator className="-mx-3 w-auto" />
+            <Separator className={cn(isTablet ? "-mx-4" : "-mx-3", "w-auto")} />
             <Button
                type="button"
                intent="outline"
@@ -206,7 +214,11 @@ export const CreateDatabaseForm = ({ onClose }: { onClose?: () => void }) => {
                </AnimatePresence>
             </Button>
          </div>
-         <div className="-m-3 mt-0 flex flex-col gap-2 border-t border-t-muted bg-accent p-3 sm:gap-4">
+         <div
+            className={cn(
+               isTablet ? "-mx-4 -mb-2 p-4" : "-m-3 p-3",
+               "mt-0 flex flex-col gap-2 border-t border-t-muted bg-accent sm:gap-4",
+            )}>
             <div className="mt-auto flex flex-wrap items-center justify-end gap-2 md:gap-4">
                <Button type="button" intent="ghost" onClick={onClose} disabled={form?.formState.isSubmitting}>
                   Cancel
