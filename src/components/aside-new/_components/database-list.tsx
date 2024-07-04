@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import { DatabasesReturn } from "./create-database/schema";
 import { DatabaseItem } from "./database-item";
-import { AnimatePresence } from "framer-motion";
 
 export const DatabaseList = ({ databases }: { databases: DatabasesReturn }) => {
    // Animation useState
