@@ -5,7 +5,7 @@ import { PropertiesDataTableToolbar } from "@/app/()/[database]/[table]/(propert
 import { TableColumnHeader } from "@/components/table-column-header";
 import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { getDatabase } from "@/lib/database.helpers";
+import { getDatabase } from "@/lib/database/server-only";
 import { TableCellFormatter } from "@/lib/table-cell-formatter";
 import { cn } from "@/lib/utils";
 
