@@ -16,6 +16,11 @@ export const metadata: Metadata = {
       template: `%s · ${config.title}`,
    },
    description: "Database managers for the modern web.",
+   icons: {
+      icon: "/logo.svg",
+      shortcut: "/logo.svg",
+      apple: "/logo.svg",
+   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
