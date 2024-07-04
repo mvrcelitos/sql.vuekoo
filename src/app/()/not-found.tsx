@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Database } from "lucide-react";
 
-import { getDatabases } from "@/lib/database.helpers";
+import { getDatabases } from "@/lib/database/server-only";
 import { cn } from "@/lib/utils";
 
 export default function NotFound() {
