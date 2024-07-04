@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 import { DatabasesReturn } from "@/components/aside-new/_components/create-database/schema";
 import { DatabaseFactory, PSQLDatabase } from "@/lib/database";
-import { getDatabases } from "@/lib/database/server-only";
+import { getDatabases } from "@/lib/database/functions";
 
 type GetDatabaseTablesReturn<T extends { tables: any[]; views: any[] }> =
    | { ok: false; message: string }
@@ -61,7 +61,7 @@ export const getDatabaseData = async <T extends { tables: any[]; views: any[] }>
 };
 
 export const moveDatabase = async (uuid: string, direction: "up" | "down") => {
-   const databases = getDatabases();
+   const databases = await getDatabases();
    if (!databases?.length) return { ok: false, message: "No databases found" };
 
    const index = databases.findIndex((x) => x.uuid === uuid);
