@@ -2,10 +2,10 @@
 
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
 
 const Dialog = DialogPrimitive.Root;
 
@@ -111,10 +111,10 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export {
    Dialog,
+   DialogBody,
    DialogClose,
    DialogContent,
    DialogDescription,
-   DialogBody,
    DialogFooter,
    DialogHeader,
    DialogOverlay,

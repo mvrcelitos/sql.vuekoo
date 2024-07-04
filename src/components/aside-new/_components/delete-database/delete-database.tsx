@@ -1,3 +1,9 @@
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
+import { AlertTriangle, Loader2, Trash2 } from "lucide-react";
+import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import {
    Dialog,
@@ -11,11 +17,6 @@ import {
 } from "@/components/ui/dialog";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { deleteDatabase } from "@/lib/database/functions";
-import { AnimatePresence, motion } from "framer-motion";
-import { AlertTriangle, Loader2, Trash2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
-import { toast } from "sonner";
 
 interface DeleteDatabaseProps {
    database: {

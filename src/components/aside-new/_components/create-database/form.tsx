@@ -23,6 +23,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { availableDatabases } from "@/constants/available-databases";
 import { Entries } from "@/interfaces/entries";
+import { cn } from "@/lib/utils";
 
 import { createDatabase, testConnection } from "./actions";
 import {
@@ -31,7 +32,6 @@ import {
    createDatabaseFormSchema,
    DatabaseConnectionParamsReturn,
 } from "./schema";
-import { cn } from "@/lib/utils";
 
 const TestConnectionStates = {
    idle: {

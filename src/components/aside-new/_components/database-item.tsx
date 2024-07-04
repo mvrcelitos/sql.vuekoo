@@ -19,8 +19,10 @@ import {
    X,
    Zap,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import { DatabaseReturn } from "@/components/aside-new/_components/create-database/schema";
+import { DeleteDatabaseMenuItem } from "@/components/aside-new/_components/delete-database/delete-database";
 import { Button } from "@/components/ui/button";
 import {
    DropdownMenu,
@@ -34,8 +36,6 @@ import { availableDatabases } from "@/constants/available-databases";
 import { cn } from "@/lib/utils";
 
 import { getDatabaseData, moveDatabase } from "./actions";
-import { toast } from "sonner";
-import { DeleteDatabaseMenuItem } from "@/components/aside-new/_components/delete-database/delete-database";
 
 interface DatabaseItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
    database: DatabaseReturn;
