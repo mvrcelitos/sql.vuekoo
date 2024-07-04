@@ -10,6 +10,7 @@ import {
    databasesSchema,
 } from "@/components/aside-new/_components/create-database/schema";
 import { DatabaseFactory } from "@/lib/database";
+import { getDatabases, createDatabase as serverCreateDatabase } from "@/lib/database/functions";
 
 const COOKIES_KEY = "databases";
 
@@ -49,37 +50,13 @@ export const testConnection = async (data: DatabaseConnectionParamsReturn) => {
 };
 
 export const createDatabase = async (data: CreateDatabaseFormReturn) => {
-   const c = cookies();
-
    const dataSafe = databaseSchema.safeParse(data);
    if (dataSafe.success !== true) {
       console.warn("ERROR: Database schema is invalid");
       return { ok: false, message: "Invalid database schema!" };
    }
 
-   const databases = c?.get("databases")?.value;
-   if (!databases || databases == "[]") {
-      c.set(COOKIES_KEY, JSON.stringify([dataSafe.data]));
-      return { ok: true, message: "Database sucessfully added!" };
-   }
-
-   try {
-      const databasesSafe = databasesSchema.safeParse(JSON.parse(databases));
-      if (databasesSafe.success !== true) {
-         c.set(COOKIES_KEY, JSON.stringify([dataSafe.data]));
-         return { ok: true, message: "Database sucessfully added!" };
-      }
-
-      c.set(COOKIES_KEY, JSON.stringify([...databasesSafe.data, dataSafe.data]), {
-         maxAge: 1000 * 60 * 60 * 24 * 7,
-         httpOnly: process.env.NODE_ENV === "production",
-         secure: process.env.NODE_ENV === "production",
-      });
-      return { ok: true, message: "Database sucessfully added!" };
-   } catch (error) {
-      console.warn("ERROR: Trying to create a database");
-      console.error(error);
-      console.log("return 4");
-      return { ok: false, message: "An unexpected error happened!" };
-   }
+   const response = await serverCreateDatabase(dataSafe.data, { details: true });
+   if (!response.ok) return { ok: false, message: response.message };
+   return { ok: true, message: "Database sucessfully added!" };
 };
