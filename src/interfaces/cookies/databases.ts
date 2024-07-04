@@ -5,7 +5,7 @@ export type DatabaseType = {
    name: string;
    readOnly: boolean;
    created_at: string;
-   updated_at: string;
+   updated_at: string | null;
    type: AvailableDatabaseIds;
    host: string;
    port: number;
