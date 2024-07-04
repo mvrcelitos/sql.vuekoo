@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-import { DatabasesType } from "@/interfaces/cookies/databases";
+import { DatabaseType } from "@/interfaces/cookies/databases";
 
 import { swapSchema } from "./schema";
 
@@ -14,7 +14,7 @@ export const PUT = async (request: Request) => {
 
       const c = cookies();
       if (!c.has("databases")) return new Response("Not found", { status: 404 });
-      const databases: DatabasesType = JSON.parse(c.get("databases")?.value || "{}");
+      const databases: DatabaseType[] = JSON.parse(c.get("databases")?.value || "{}");
 
       const { from, to } = safeBody.data;
 
