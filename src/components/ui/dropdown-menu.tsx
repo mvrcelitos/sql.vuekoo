@@ -28,7 +28,7 @@ export const dropdownMenuItemsVariants = cva({
          primary: "focus:bg-primary focus:text-zinc-50 dark:focus:bg-primary dark:focus:text-zinc-50",
          warning: "focus:bg-yellow-400 focus:text-amber-900 dark:focus:bg-yellow-700 dark:focus:text-orange-50",
          danger:
-            "text-red-500 focus:bg-red-200 focus:text-rose-600 dark:text-red-400 dark:focus:bg-red-800 dark:focus:text-rose-100",
+            "text-red-500 focus:bg-red-200 focus:text-rose-600 dark:text-red-400 dark:focus:bg-red-900 dark:focus:text-rose-100",
       },
    },
    defaultVariants: {
