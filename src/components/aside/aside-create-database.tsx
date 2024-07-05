@@ -89,22 +89,7 @@ export const AsideCreateDatabaseForm = () => {
                         startTransition(async () => {
                            try {
                               await axios.post("/api/v1/databases/test", { url: form.watch("url") });
-                              toast.custom(
-                                 (t) => (
-                                    <div className="flex items-center gap-2 rounded-lg bg-emerald-400 p-4 dark:bg-emerald-500">
-                                       <div data-icon>
-                                          <Check className="h-5 w-5 shrink-0 text-foreground" height={20} width={20} />
-                                       </div>
-                                       <div data-content>
-                                          <div data-title>Yeay!</div>
-                                          <div data-description style={{ opacity: "0.7" }}>
-                                             The test connection was sucessfull
-                                          </div>
-                                       </div>
-                                    </div>
-                                 ),
-                                 { style: { width: "min(100%, calc(100vw - 32px))", fontSize: 13 } },
-                              );
+                              toast.success("The test connection was sucessfull");
                            } catch (err) {
                               console.error(err);
                               toast.custom(
