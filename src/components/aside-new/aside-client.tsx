@@ -61,7 +61,12 @@ export const AsideClient = ({ databases }: AsideClientProps) => {
                      </motion.div>
                   )}
                </AnimatePresence>
-               <AsideContent databases={databases} create={create} onCreateChange={(open) => setCreate(open)} />
+               <AsideContent
+                  key="aside-content"
+                  databases={databases}
+                  create={create}
+                  onCreateChange={(open) => setCreate(open)}
+               />
             </>
          </div>
       );
@@ -70,6 +75,7 @@ export const AsideClient = ({ databases }: AsideClientProps) => {
          <Sheet open={sheet} onOpenChange={setSheet}>
             <SheetContent side="left" className="flex border-0 p-0" close={false}>
                <AsideContent
+                  key="aside-content"
                   databases={databases}
                   create={create}
                   isTablet={true}
