@@ -72,7 +72,9 @@ export const CreateDatabaseForm = ({ onClose, isTablet }: CreateDatabaseFormProp
          form={form}
          onSubmit={handleSubmit(async (d) => {
             const res = await createDatabase(d as unknown as CreateDatabaseFormReturn);
-            toast?.[res?.ok == false ? "error" : "success"]?.(res?.message);
+            if (!res.ok) {
+               toast.error(res.message);
+            }
             onClose?.();
          })}
          className={cn(
@@ -118,7 +120,6 @@ export const CreateDatabaseForm = ({ onClose, isTablet }: CreateDatabaseFormProp
                            for (const entry of entries) {
                               form?.setValue(entry[0], entry[1]);
                            }
-                           toast?.success?.(res.message);
                         }}>
                         <Clipboard className="size-4" />
                      </Button>
