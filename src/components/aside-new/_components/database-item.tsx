@@ -11,11 +11,13 @@ import {
    ChevronRight,
    Copy,
    Loader2,
+   LucideIcon,
    MoreVertical,
    Pencil,
    RefreshCcw,
    Table2,
    Unplug,
+   View,
    X,
    Zap,
 } from "lucide-react";
@@ -263,13 +265,17 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
 
    return (
       <div {...props} className="relative text-sm text-zinc-800 dark:text-zinc-200" ref={ref}>
-         <div className="group relative flex items-center justify-start gap-2 px-2 py-1.5">
+         <div
+            className={cn(
+               "group relative flex items-center justify-start gap-2 border-b px-2 py-1.5",
+               open ? "border-zinc-300 bg-accent dark:border-zinc-700" : "border-muted",
+            )}>
             <AnimatePresence>
                {(hover || optionsOpen === true) && open == false && (
                   <motion.div
                      layoutId="aside-hover-database"
                      initial={{ opacity: 0 }}
-                     animate={{ opacity: 1 }}
+                     animate={{ opacity: 0.5 }}
                      exit={{ opacity: 0 }}
                      transition={{ type: "spring", duration: 0.2, bounce: 0.1 }}
                      className="pointer-events-none absolute inset-0 w-full bg-muted"
@@ -309,9 +315,28 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
             {DropdownOptions}
          </div>
          {state === "connected" && open && (
-            <div className="flex flex-col bg-muted p-1 text-zinc-800 dark:text-zinc-200">
-               <Separator className="-mt-1 mb-1 bg-zinc-300 dark:bg-zinc-700" />
-               {data?.tables?.map((table) => {
+            <div className="flex flex-col bg-muted text-zinc-800 dark:text-zinc-200">
+               <ContentSection
+                  name="Tables"
+                  data={
+                     data?.tables?.map((table) => ({
+                        name: table,
+                        href: `/databases/${database.uuid}/${table}/${pathnameType}`,
+                        icon: Table2,
+                     })) ?? []
+                  }
+               />
+               <ContentSection
+                  name="Views"
+                  data={
+                     data?.views?.map((view) => ({
+                        name: view,
+                        href: `/databases/${database.uuid}/${view}/${pathnameType}`,
+                        icon: View,
+                     })) ?? []
+                  }
+               />
+               {/* {data?.tables?.map((table) => {
                   const isSelected = !!pathname?.match(
                      new RegExp(`^/databases/${database.uuid}/${table}/(\\w+)(/.*)?$`),
                   );
@@ -332,10 +357,62 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
                         <span className="relative z-[1] max-w-full truncate text-sm">{table}</span>
                      </Link>
                   );
-               })}
+               })} */}
             </div>
          )}
       </div>
    );
 });
 DatabaseItem.displayName = "DatabaseItem";
+
+interface ContentSectionProps {
+   name: string;
+   data: { name: string; href: string; icon?: LucideIcon }[];
+}
+
+const ContentSection = ({ name, data }: ContentSectionProps) => {
+   const [open, setOpen] = useState(false);
+   const pathname = usePathname();
+
+   return (
+      <div className="group/section">
+         <div
+            className={cn(
+               "group relative flex items-center justify-start gap-2 border-b px-2 py-1.5 pl-3",
+               open
+                  ? "border-zinc-300 bg-accent dark:border-zinc-700"
+                  : "border-zinc-300 bg-muted group-last/section:border-b-0 dark:border-zinc-700",
+            )}>
+            <Button
+               intent="ghost"
+               size="none"
+               className={cn("relative z-[1] size-6 shrink-0 hocus:bg-zinc-300 dark:hocus:bg-zinc-700")}
+               onClick={() => setOpen((x) => !x)}>
+               <ChevronRight className={cn("size-4 transition-transform", open ? "rotate-90" : "rotate-0")} />
+            </Button>
+            <p className="dark:light dark relative z-[1] truncate text-sm text-muted">{name}</p>
+         </div>
+         {open ? (
+            <div className="flex flex-col bg-muted p-1 text-800">
+               {data?.map((item) => {
+                  const isCurrent = pathname == item.href;
+                  return (
+                     <Link
+                        aria-selected={isCurrent || undefined}
+                        key={item.name}
+                        href={item.href}
+                        className={cn(
+                           "flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hocus:bg-300 hocus:text-foreground",
+                        )}>
+                        {item?.icon ? (
+                           <item.icon className={cn("size-4 shrink-0", isCurrent ? "text-primary" : "text-400")} />
+                        ) : null}
+                        <span className="relative z-[1] max-w-full truncate text-sm">{item.name}</span>
+                     </Link>
+                  );
+               })}
+            </div>
+         ) : null}
+      </div>
+   );
+};
