@@ -46,7 +46,7 @@ const InputPassword = React.forwardRef<HTMLInputElement, InputProps>(({ classNam
             size="icon"
             intent="ghost"
             onClick={() => setType((x) => (x === "password" ? "text" : "password"))}
-            className="absolute right-1 top-1 h-8 w-8">
+            className="absolute right-1 top-[3px] h-8 w-8">
             <ButtonIcon className="aspect-square h-4 w-4 shrink-0" height={16} width={16} />
          </Button>
       </div>
