@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { UseFormReturn } from "react-hook-form";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Clipboard, Loader2, X, Zap } from "lucide-react";
 import { toast } from "sonner";
@@ -26,12 +25,7 @@ import { Entries } from "@/interfaces/entries";
 import { cn } from "@/lib/utils";
 
 import { createDatabase, testConnection } from "./actions";
-import {
-   CreateDatabaseFormInput,
-   CreateDatabaseFormReturn,
-   createDatabaseFormSchema,
-   DatabaseConnectionParamsReturn,
-} from "./schema";
+import { CreateDatabaseFormInput, CreateDatabaseFormReturn, DatabaseConnectionParamsReturn } from "./schema";
 
 const TestConnectionStates = {
    idle: {
@@ -54,26 +48,24 @@ const TestConnectionStates = {
 };
 
 interface CreateDatabaseFormProps {
-   onClose?: () => void;
+   form: UseFormReturn<CreateDatabaseFormInput>;
    isTablet?: boolean;
+   onClose?: () => void;
 }
-export const CreateDatabaseForm = ({ onClose, isTablet }: CreateDatabaseFormProps) => {
-   const form = useForm<CreateDatabaseFormInput>({
-      defaultValues: { type: "psql" },
-      resolver: zodResolver(createDatabaseFormSchema),
-   });
-
+export const CreateDatabaseForm = ({ form, isTablet, onClose }: CreateDatabaseFormProps) => {
    const [state, setState] = useState<keyof typeof TestConnectionStates>("idle");
    const currentState = TestConnectionStates[state];
 
-   const { handleSubmit } = form;
+   const { reset, handleSubmit } = form;
    return (
       <Form
          form={form}
-         onSubmit={handleSubmit(async (d) => {
-            const res = await createDatabase(d as unknown as CreateDatabaseFormReturn);
+         onSubmit={handleSubmit(async (d: CreateDatabaseFormReturn) => {
+            const res = await createDatabase(d);
             if (!res.ok) {
                toast.error(res.message);
+            } else {
+               reset();
             }
             onClose?.();
          })}

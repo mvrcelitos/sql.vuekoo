@@ -10,7 +10,13 @@ import { Dialog, DialogBody, DialogContent, DialogHeader, DialogTitle } from "@/
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { getBreakpoint } from "@/lib/get-measures";
 
-import { DatabasesReturn } from "./_components/create-database/schema";
+import {
+   CreateDatabaseFormInput,
+   createDatabaseFormSchema,
+   DatabasesReturn,
+} from "./_components/create-database/schema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface AsideClientProps {
    databases: DatabasesReturn;
@@ -23,10 +29,20 @@ export const AsideClient = ({ databases }: AsideClientProps) => {
 
    const { sheet, setSheet } = useAsideStore();
 
-   const memoizedCreateDatabaseForm = useMemo(
-      () => <CreateDatabaseForm onClose={() => setCreate(false)} isTablet={!isTablet} />,
-      [isTablet, setCreate],
-   );
+   const form = useForm<CreateDatabaseFormInput>({
+      defaultValues: { type: "psql" },
+      resolver: zodResolver(createDatabaseFormSchema),
+   });
+   const memoizedCreateDatabaseForm = useMemo(() => {
+      return (
+         <CreateDatabaseForm
+            key="create-database-form"
+            form={form}
+            isTablet={!isTablet}
+            onClose={() => setCreate(false)}
+         />
+      );
+   }, [isTablet, setCreate]);
 
    if (isTablet)
       return (
