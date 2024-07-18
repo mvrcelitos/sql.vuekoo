@@ -25,6 +25,13 @@ export const getDatabases = async function <T extends boolean = false>(
 
    try {
       const databases = JSON.parse(cookieDatabases!);
+
+      const isArray = Array.isArray(databases);
+      if (!isArray) {
+         if (!details) return [] as DatabaseType[] as GetDatabasesReturn<T>;
+         return { ok: true, databases: [] as DatabaseType[] } as GetDatabasesReturn<T>;
+      }
+
       if (!details) return databases as GetDatabasesReturn<T>;
       return { ok: true, databases } as GetDatabasesReturn<T>;
    } catch (err) {
