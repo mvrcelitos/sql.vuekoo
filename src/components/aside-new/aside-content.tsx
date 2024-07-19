@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { motion } from "framer-motion";
 import { Plus, Search } from "lucide-react";
 

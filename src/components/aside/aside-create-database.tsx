@@ -4,7 +4,7 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { AlertCircle, Check, ChevronRight, Loader2, Plug, Plus } from "lucide-react";
+import { AlertCircle, ChevronRight, Loader2, Plug, Plus } from "lucide-react";
 import { toast } from "sonner";
 import * as z from "zod";
 

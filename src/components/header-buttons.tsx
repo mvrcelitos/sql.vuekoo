@@ -3,19 +3,12 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
 import { Code, Paintbrush, ScrollText, Settings } from "lucide-react";
+import { Check, Laptop, Moon, Sun } from "lucide-react";
 
 import { useDatabaseStore } from "@/components/aside/use-database-store";
 import { buttonVariants } from "@/components/ui/button";
-import {
-   DropdownMenu,
-   DropdownMenuContent,
-   DropdownMenuItem,
-   DropdownMenuSub,
-   DropdownMenuSubTrigger,
-   DropdownMenuSubContent,
-   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
    Dialog,
    DialogContent,
@@ -24,11 +17,17 @@ import {
    DialogTitle,
    DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+   DropdownMenu,
+   DropdownMenuContent,
+   DropdownMenuItem,
+   DropdownMenuSub,
+   DropdownMenuSubContent,
+   DropdownMenuSubTrigger,
+   DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-
-import { useTheme } from "next-themes";
-import { Check, Laptop, Moon, Sun } from "lucide-react";
 export const ScriptButton = () => {
    const pathname = usePathname()?.split("?")?.[0];
    const [open, setOpen] = React.useState<boolean>(false);

@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
    ArrowDown,
    ArrowUp,
-   ArrowUpRight,
-   Check,
    ChevronRight,
    Copy,
    Loader2,
@@ -26,21 +24,10 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
+import { ChangeDatabaseForm } from "@/components/aside-new/_components/change-database/form";
 import { DatabaseReturn } from "@/components/aside-new/_components/create-database/schema";
 import { DeleteDatabaseMenuItem } from "@/components/aside-new/_components/delete-database/delete-database";
 import { Button } from "@/components/ui/button";
-import {
-   DropdownMenu,
-   DropdownMenuContent,
-   DropdownMenuItem,
-   DropdownMenuSeparator,
-   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
-import { availableDatabases } from "@/constants/available-databases";
-import { cn } from "@/lib/utils";
-
-import { getDatabaseData, moveDatabase } from "./actions";
 import {
    ContextMenu,
    ContextMenuContent,
@@ -57,8 +44,18 @@ import {
    DialogHeader,
    DialogTitle,
 } from "@/components/ui/dialog";
-import { ChangeDatabaseForm } from "@/components/aside-new/_components/change-database/form";
-import { Input, InputProps } from "@/components/ui/input";
+import {
+   DropdownMenu,
+   DropdownMenuContent,
+   DropdownMenuItem,
+   DropdownMenuSeparator,
+   DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { availableDatabases } from "@/constants/available-databases";
+import { cn } from "@/lib/utils";
+
+import { getDatabaseData, moveDatabase } from "./actions";
 
 interface DatabaseItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
    database: DatabaseReturn;

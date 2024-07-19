@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Clipboard, Loader2, X, Zap } from "lucide-react";
 import { toast } from "sonner";
@@ -31,7 +32,6 @@ import {
    createDatabaseFormSchema,
    DatabaseConnectionParamsReturn,
 } from "./schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 const TestConnectionStates = {
    idle: {
