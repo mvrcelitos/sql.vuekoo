@@ -29,10 +29,10 @@ const config: Config = {
                "0px 1px 1px rgb(0,0,0,.02), 0px 4px 8px -4px rgba(0,0,0,.04), 0px 16px 24px -8px rgba(0,0,0,.06)",
          },
          height: {
-            content: "calc(100dvh - var(--header-height))",
+            content: "calc(100dvh - 33px)",
          },
          maxHeight: {
-            content: "calc(100lvh - var(--header-height)))",
+            content: "calc(100lvh - 33px))",
          },
          colors: {
             "background": "rgb(var(--background) / <alpha-value>)",

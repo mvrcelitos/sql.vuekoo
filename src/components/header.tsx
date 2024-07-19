@@ -14,10 +14,7 @@ export const Header = () => {
    const { sheet, setSheet } = useAsideStore();
 
    return (
-      <header
-         // @ts-expect-error
-         style={{ "--header-height": "33px" }}
-         className="sticky left-0 top-0 z-40 flex h-[--header-height] w-full shrink-0 justify-between border-b border-b-muted bg-background text-foreground">
+      <header className="sticky left-0 top-0 z-40 flex h-[33px] w-full shrink-0 justify-between border-b border-b-muted bg-background text-foreground">
          <div className="flex items-center">
             <div aria-label="space" className="h-full w-[53px] border-r border-muted max-lg:hidden" />
             <Button
