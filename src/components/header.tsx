@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Code, Menu, Paintbrush, Settings, User2 } from "lucide-react";
+import { Menu, User2 } from "lucide-react";
 
 import { useAsideStore } from "@/components/aside-new/aside-store";
 import { ConfigButton, ScriptButton } from "@/components/header-buttons";
