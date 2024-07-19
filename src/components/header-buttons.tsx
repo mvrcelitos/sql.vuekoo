@@ -1,6 +1,5 @@
 "use client";
 
-// import { appWindow } from "@tauri-apps/api/window";
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -34,7 +33,7 @@ export const ScriptButton = () => {
                   onClick={() => {
                      setOpen(true);
                   }}
-                  className={cn(buttonVariants({ intent: "ghost", size: "icon-sm" }), "rounded-none")}>
+                  className={cn(buttonVariants({ intent: "ghost", size: "icon-xs" }), "rounded-none hover:bg-accent")}>
                   <ScrollText className="size-4 shrink-0" />
                </DialogTrigger>
             </TooltipTrigger>
