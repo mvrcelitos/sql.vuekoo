@@ -336,8 +336,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
                <Link
                   href={`/databases/${database.uuid}`}
                   className="group/link mr relative z-[1] grid cursor-pointer overflow-hidden rounded-md px-2 py-1 text-sm text-800 underline-offset-2 duration-150 hocus:bg-muted">
-                  {/* <p className="truncate">{database.name}</p> */}
-                  <p className="w-full truncate">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                  <p className="truncate">{database.name}</p>
                </Link>
                {DropdownOptions}
             </div>
