@@ -19,18 +19,15 @@ export const buttonVariants = cva({
             "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-secondary/70",
          ],
          grayscale: [
-            "bg-zinc-900 hover:bg-zinc-950 active:bg-zinc-950 text-zinc-200 hover:text-zinc-50 active:text-zinc-50",
-            "dark:bg-zinc-200 dark:hover:bg-zinc-50 dark:active:bg-zinc-50 dark:text-zinc-800 dark:hover:text-zinc-900 dark:active:text-zinc-900",
-            "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-500 dark:focus-visible:ring-zinc-400",
+            "bg-c800 hover:bg-foreground active:bg-foreground text-muted hover:text-background active:text-background",
+            "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-c500",
          ],
          discrete: [
-            "bg-zinc-200 hover:bg-zinc-800 active:bg-zinc-800 text-zinc-700 hover:text-zinc-50 active:text-zinc-50",
-            "dark:bg-zinc-800 dark:hover:bg-zinc-200 dark:active:bg-zinc-200 dark:text-zinc-200 dark:hover:text-zinc-900 dark:active:text-zinc-900",
-            "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-200 dark:focus-visible:ring-zinc-800",
+            "bg-muted hover:bg-c800 active:bg-c800 text-c800 hover:text-foreground active:text-foreground",
+            "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-muted",
          ],
          ghost: [
-            "bg-transparent hover:bg-zinc-200 focus-visible:bg-zinc-200 text-zinc-600 hover:text-zinc-800",
-            "dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-800/70 dark:focus-visible:bg-zinc-800/70",
+            "bg-transparent hover:bg-muted focus-visible:bg-muted text-c500 hover:text-c800",
             "dark:hover:highlight-5 dark:focus-visible:highlight-5",
          ],
          success: [
@@ -44,16 +41,13 @@ export const buttonVariants = cva({
             "text-zinc-100 hover:text-zinc-50 active:text-zinc-50",
             "focus-visible:outline-red-500/50 dark:focus-visible:outline-red-600/50",
          ],
-         opaque: [
-            "bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:active:bg-zinc-700",
-            "text-zinc-700 hover:text-zinc-800 active:text-zinc-800 dark:text-zinc-300 dark:hover:text-zinc-200 dark:active:text-zinc-200",
-         ],
+         opaque: ["bg-muted hover:bg-c300 active:bg-c300 text-c700 hover:text-c800 active:text-c800"],
          outline: [
-            "bg-background border border-zinc-300 dark:border-zinc-700",
+            "bg-background border border-c300",
             "hover:bg-muted active:bg-muted",
-            "text-zinc-600 hover:text-zinc-800 active:text-zinc-800 dark:text-zinc-300 dark:hover:text-zinc-50 dark:active:text-zinc-50",
+            "text-c700 hover:text-c900 active:text-c900",
             "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-800",
-            "hover:shadow-[0px_1px_1px_rgb(0,0,0,.02),0px_4px_8px_-4px_rgba(0,0,0,.04),0px_16px_24px_-8px_rgba(0,0,0,.06)] focus-visible::shadow-[0px_1px_1px_rgb(0,0,0,.02),0px_4px_8px_-4px_rgba(0,0,0,.04),0px_16px_24px_-8px_rgba(0,0,0,.06)] transition-shadow",
+            "hover:shadow-vercel-lg focus-visible::shadow-[0px_1px_1px_rgb(0,0,0,.02),0px_4px_8px_-4px_rgba(0,0,0,.04),0px_16px_24px_-8px_rgba(0,0,0,.06)] transition-shadow",
          ],
          outline2: [
             "bg-background border-2 border-zinc-300 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400",
