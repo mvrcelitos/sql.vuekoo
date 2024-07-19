@@ -23,7 +23,7 @@ export const AsideClient = ({ databases }: AsideClientProps) => {
    const { sheet, setSheet } = useAsideStore();
 
    const memoizedCreateDatabaseForm = useMemo(() => {
-      return <CreateDatabaseForm key="create-database-form" isTablet={!isTablet} onClose={() => setCreate(false)} />;
+      return <CreateDatabaseForm key="create-database-form" onClose={() => setCreate(false)} />;
    }, [isTablet, setCreate]);
 
    return (
