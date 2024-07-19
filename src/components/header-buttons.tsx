@@ -3,10 +3,19 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ScrollText } from "lucide-react";
+import { Code, Paintbrush, ScrollText, Settings } from "lucide-react";
 
 import { useDatabaseStore } from "@/components/aside/use-database-store";
 import { buttonVariants } from "@/components/ui/button";
+import {
+   DropdownMenu,
+   DropdownMenuContent,
+   DropdownMenuItem,
+   DropdownMenuSub,
+   DropdownMenuSubTrigger,
+   DropdownMenuSubContent,
+   DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
    Dialog,
    DialogContent,
@@ -18,6 +27,8 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
+import { useTheme } from "next-themes";
+import { Check, Laptop, Moon, Sun } from "lucide-react";
 export const ScriptButton = () => {
    const pathname = usePathname()?.split("?")?.[0];
    const [open, setOpen] = React.useState<boolean>(false);
@@ -33,7 +44,10 @@ export const ScriptButton = () => {
                   onClick={() => {
                      setOpen(true);
                   }}
-                  className={cn(buttonVariants({ intent: "ghost", size: "icon-xs" }), "rounded-none hover:bg-accent")}>
+                  className={cn(
+                     buttonVariants({ intent: "ghost", size: "icon-xs" }),
+                     "rounded-none hocus:bg-accent hocus:shadow-inner",
+                  )}>
                   <ScrollText className="size-4 shrink-0" />
                </DialogTrigger>
             </TooltipTrigger>
@@ -87,5 +101,62 @@ export const ScriptButton = () => {
             </ul>
          </DialogContent>
       </Dialog>
+   );
+};
+
+export const ConfigButton = () => {
+   const { setTheme, theme } = useTheme();
+   return (
+      <DropdownMenu>
+         <DropdownMenuTrigger
+            className={cn(
+               buttonVariants({ intent: "ghost", size: "icon-xs" }),
+               "rounded-none hocus:bg-accent hocus:shadow-inner",
+            )}>
+            <Settings className="size-4 shrink-0" />
+         </DropdownMenuTrigger>
+         <DropdownMenuContent align={"end"} sideOffset={0} collisionPadding={0} className="-mr-px rounded-t-none">
+            <DropdownMenuSub>
+               <DropdownMenuSubTrigger intent="default">
+                  <Paintbrush className="mr-2 size-4 shrink-0" />
+                  Theme
+               </DropdownMenuSubTrigger>
+               <DropdownMenuSubContent className="rounded-t-none">
+                  <DropdownMenuItem intent="default" className="text-[13px]" onClick={() => setTheme("light")}>
+                     <Sun className="mr-2 size-4 shrink-0" />
+                     <span>Light</span>
+                     {theme == "light" && (
+                        <Check className="ml-auto size-4 shrink-0 opacity-70" height={16} width={16} />
+                     )}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem intent="default" className="text-[13px]" onClick={() => setTheme("dark")}>
+                     <Moon className="mr-2 size-4 shrink-0" />
+                     <span>Dark</span>
+                     {theme == "dark" && (
+                        <Check className="ml-auto size-4 shrink-0 opacity-70" height={16} width={16} />
+                     )}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem intent="default" className="text-[13px]" onClick={() => setTheme("system")}>
+                     <Laptop className="mr-2 size-4 shrink-0" />
+                     <span>System</span>
+                     {theme == "system" && (
+                        <Check className="ml-auto size-4 shrink-0 opacity-70" height={16} width={16} />
+                     )}
+                  </DropdownMenuItem>
+               </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuItem intent="default" className="cursor-pointer" asChild>
+               <Link href="https://github.com/mvrcelitos/sql.vuekoo" target="_blank">
+                  <Code className="mr-2 size-4 shrink-0" />
+                  Source Code
+               </Link>
+            </DropdownMenuItem>
+            {/* <DropdownMenuSeparator />
+            <DropdownMenuItem intent="danger">
+               <Trash2 className="mr-2 size-4 shrink-0" />
+               Clear
+            </DropdownMenuItem> */}
+         </DropdownMenuContent>
+      </DropdownMenu>
    );
 };
