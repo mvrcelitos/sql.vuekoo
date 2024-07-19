@@ -207,7 +207,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
                   intent="ghost"
                   size="none"
                   className={cn(
-                     "z-[1] size-7 shrink-0 opacity-100 transition-colors aria-expanded:bg-muted aria-expanded:!text-foreground aria-expanded:shadow-vercel-md hocus:bg-muted hocus:text-c800 hocus:shadow-vercel-md dark:aria-expanded:highlight-5",
+                     "z-[1] ml-auto size-7 shrink-0 opacity-100 transition-colors aria-expanded:bg-muted aria-expanded:!text-foreground aria-expanded:shadow-vercel-md hocus:bg-muted hocus:text-c800 hocus:shadow-vercel-md dark:aria-expanded:highlight-5",
                   )}>
                   <MoreVertical className="size-4" />
                </Button>
@@ -297,7 +297,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
                   />
                )}
             </AnimatePresence>
-            <div className="flex h-fit items-center">
+            <div className="flex h-fit w-full items-center">
                <Button
                   intent="ghost"
                   size="none"
