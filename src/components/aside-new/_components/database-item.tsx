@@ -440,24 +440,22 @@ const ContentSection = ({ name, data }: ContentSectionProps) => {
                })}
             </div>
          ) : null}
-         {rename ? (
-            <Dialog open={rename !== null} onOpenChange={(open) => (open ? undefined : setRename(null))}>
-               <DialogContent>
-                  <DialogHeader>
-                     <DialogTitle>Change table settings</DialogTitle>
-                  </DialogHeader>
-                  <DialogBody>
-                     <ChangeDatabaseForm data={rename} />
-                  </DialogBody>
-                  <DialogFooter>
-                     <DialogClose asChild>
-                        <Button intent="ghost">Cancel</Button>
-                     </DialogClose>
-                     <Button intent="primary">Rename</Button>
-                  </DialogFooter>
-               </DialogContent>
-            </Dialog>
-         ) : null}
+         <Dialog open={rename !== null} onOpenChange={(open) => (open ? undefined : setRename(null))}>
+            <DialogContent>
+               <DialogHeader>
+                  <DialogTitle>Change table settings</DialogTitle>
+               </DialogHeader>
+               <DialogBody>
+                  <ChangeDatabaseForm data={rename ?? {}} />
+               </DialogBody>
+               <DialogFooter>
+                  <DialogClose asChild>
+                     <Button intent="ghost">Cancel</Button>
+                  </DialogClose>
+                  <Button intent="primary">Rename</Button>
+               </DialogFooter>
+            </DialogContent>
+         </Dialog>
       </div>
    );
 };
