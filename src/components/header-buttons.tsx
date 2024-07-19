@@ -108,13 +108,18 @@ export const ConfigButton = () => {
    const { setTheme, theme } = useTheme();
    return (
       <DropdownMenu>
-         <DropdownMenuTrigger
-            className={cn(
-               buttonVariants({ intent: "ghost", size: "icon-xs" }),
-               "rounded-none hocus:bg-accent hocus:shadow-inner",
-            )}>
-            <Settings className="size-4 shrink-0" />
-         </DropdownMenuTrigger>
+         <Tooltip>
+            <TooltipTrigger asChild>
+               <DropdownMenuTrigger
+                  className={cn(
+                     buttonVariants({ intent: "ghost", size: "icon-xs" }),
+                     "rounded-none hocus:bg-accent hocus:shadow-inner",
+                  )}>
+                  <Settings className="size-4 shrink-0" />
+               </DropdownMenuTrigger>
+            </TooltipTrigger>
+            <TooltipContent>Settings</TooltipContent>
+         </Tooltip>
          <DropdownMenuContent align={"end"} sideOffset={0} collisionPadding={0} className="-mr-px rounded-t-none">
             <DropdownMenuSub>
                <DropdownMenuSubTrigger intent="default">
