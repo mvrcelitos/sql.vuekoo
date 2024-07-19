@@ -21,10 +21,12 @@ const config: Config = {
             xs: "480px",
          },
          boxShadow: {
-            // "vercel-sm": "0px 1px 1px rgb(0,0,0,.02)",
-            // "vercel-md": "0px 4px 8px -4px rgba(0,0,0,.04)",
-            // "vercel-lg": "0px 16px 24px -8px rgba(0,0,0,.06)",
-            vercel: "0px 1px 1px rgb(0,0,0,.02), 0px 4px 8px -4px rgba(0,0,0,.04), 0px 16px 24px -8px rgba(0,0,0,.06)",
+            "vercel-sm": "0px 1px 1px rgb(0,0,0,.02)",
+            "vercel-md": "0px 1px 1px rgb(0,0,0,.02), 0px 4px 8px -4px rgba(0,0,0,.04)",
+            "vercel-lg":
+               "0px 1px 1px rgb(0,0,0,.02), 0px 4px 8px -4px rgba(0,0,0,.04), 0px 16px 24px -8px rgba(0,0,0,.06)",
+            "vercel":
+               "0px 1px 1px rgb(0,0,0,.02), 0px 4px 8px -4px rgba(0,0,0,.04), 0px 16px 24px -8px rgba(0,0,0,.06)",
          },
          height: {
             content: "calc(100dvh - var(--header-height))",
@@ -45,6 +47,13 @@ const config: Config = {
             "800": "var(--800)",
             "900": "var(--900)",
             "950": "var(--950)",
+            "c300": "var(--300)",
+            "c400": "var(--400)",
+            "c500": "var(--500)",
+            "c700": "var(--700)",
+            "c800": "var(--800)",
+            "c900": "var(--900)",
+            "c950": "var(--950)",
             "border": "var(--border)",
 
             "primary": "rgb(var(--primary) / <alpha-value>)",
