@@ -55,10 +55,9 @@ const TestConnectionStates = {
 
 interface CreateDatabaseFormProps {
    form?: UseFormReturn<CreateDatabaseFormInput>;
-   isTablet?: boolean;
    onClose?: () => void;
 }
-export const CreateDatabaseForm = ({ isTablet, onClose }: CreateDatabaseFormProps) => {
+export const CreateDatabaseForm = ({ onClose }: CreateDatabaseFormProps) => {
    const [state, setState] = useState<keyof typeof TestConnectionStates>("idle");
    const currentState = TestConnectionStates[state];
 
@@ -80,10 +79,7 @@ export const CreateDatabaseForm = ({ isTablet, onClose }: CreateDatabaseFormProp
             }
             onClose?.();
          })}
-         className={cn(
-            isTablet ? "-mx-4 -my-2 p-2 px-4" : "-m-3 p-3",
-            "relative grid grow grid-cols-1 grid-rows-[minmax(0,1fr)_minmax(0,auto)] overflow-hidden",
-         )}>
+         className="relative -mx-4 -my-2 grid grow grid-cols-1 grid-rows-[minmax(0,1fr)_minmax(0,auto)] overflow-hidden p-2 px-4">
          <div className="flex flex-col gap-2 sm:gap-4">
             <FormField name="type">
                <FormLabel className="mb-1.5" required>
@@ -103,7 +99,7 @@ export const CreateDatabaseForm = ({ isTablet, onClose }: CreateDatabaseFormProp
                <FormInput />
                <FormMessage />
             </FormField>
-            <Separator className={cn(isTablet ? "-mx-4" : "-mx-3", "w-auto")} />
+            <Separator className="-mx-4 w-auto" />
             <div className="flex flex-wrap items-center justify-between sm:-my-2">
                <div className="text-sm font-semibold text-foreground">Database connection</div>
                <Tooltip>
@@ -181,7 +177,7 @@ export const CreateDatabaseForm = ({ isTablet, onClose }: CreateDatabaseFormProp
                <FormPassword intent="primary" type="password" />
                <FormMessage />
             </FormField>
-            <Separator className={cn(isTablet ? "-mx-4" : "-mx-3", "w-auto")} />
+            <Separator className="-mx-4 w-auto" />
             <Button
                type="button"
                intent="outline"
@@ -218,11 +214,7 @@ export const CreateDatabaseForm = ({ isTablet, onClose }: CreateDatabaseFormProp
                </AnimatePresence>
             </Button>
          </div>
-         <div
-            className={cn(
-               isTablet ? "-mx-4 -mb-2 p-4" : "-m-3 p-3",
-               "mt-0 flex flex-col gap-2 border-t border-t-muted bg-accent md:gap-4",
-            )}>
+         <div className="-mx-4 -mb-2 mt-0 flex flex-col gap-2 border-t border-t-muted bg-accent p-4 md:gap-4">
             <div className="mt-auto flex flex-wrap items-center justify-end gap-2 md:gap-4">
                <Button type="button" intent="ghost" onClick={onClose} disabled={form?.formState.isSubmitting}>
                   Cancel
