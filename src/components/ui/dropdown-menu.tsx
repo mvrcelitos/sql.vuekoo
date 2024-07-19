@@ -67,10 +67,10 @@ export const DropdownMenuSubContent = React.forwardRef<
    React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
    React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent> &
       VariantProps<typeof dropdownMenuContentVariants>
->(({ className, sideOffset = 7, intent, ...props }, ref) => (
+>(({ className, intent, ...props }, ref) => (
    <DropdownMenuPrimitive.SubContent
       ref={ref}
-      sideOffset={sideOffset}
+      sideOffset={8}
       className={cn("-mt-[5px]", dropdownMenuContentVariants({ intent, className }))}
       {...props}
    />
@@ -81,11 +81,12 @@ export const DropdownMenuContent = React.forwardRef<
    React.ElementRef<typeof DropdownMenuPrimitive.Content>,
    React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> &
       VariantProps<typeof dropdownMenuContentVariants>
->(({ className, sideOffset = 8, intent, ...props }, ref) => (
+>(({ className, intent, ...props }, ref) => (
    <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.Content
          ref={ref}
-         sideOffset={sideOffset}
+         sideOffset={8}
+         collisionPadding={8}
          className={cn(dropdownMenuContentVariants({ intent, className }))}
          {...props}
       />
