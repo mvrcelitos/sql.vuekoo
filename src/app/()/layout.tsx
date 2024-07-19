@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
    return (
       <>
-         <div className="flex min-h-[calc(100sdvh-var(--header-height))] flex-initial flex-col md:flex-row">
+         <div className="flex min-h-[calc(100dvh-var(--header-height))] flex-initial flex-col md:flex-row">
             <NavigationMenu />
             <AsideNew />
             {/* <Aside /> */}
