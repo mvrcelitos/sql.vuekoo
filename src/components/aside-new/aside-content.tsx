@@ -26,12 +26,6 @@ export const AsideContent = ({ databases, isTablet, ...props }: AsideContentProp
 
    // Create database hooks
    const { create: createProp, defaultCreate, onCreateChange } = props;
-   const [create, setCreate] = useControllableState({
-      prop: createProp,
-      defaultProp: defaultCreate,
-      onChange: onCreateChange,
-   });
-
    // Memo
    const memoizedInnerAsideList = useMemo(() => {
       try {
@@ -48,38 +42,32 @@ export const AsideContent = ({ databases, isTablet, ...props }: AsideContentProp
    return (
       <motion.aside
          initial={{ opacity: 0, width: 0 }}
-         animate={{ opacity: 1, width: isTablet ? "100%" : create ? 256 : 304 }}
+         animate={{ opacity: 1, width: isTablet ? "100%" : 304 }}
          transition={{ type: "spring", duration: 0.5, bounce: 0.15 }}
          className={cn(
-            "modern-scroll relative z-[31] flex min-h-[50svh] flex-col overflow-y-auto overflow-x-hidden border-r border-r-muted bg-accent",
+            "modern-scroll relative z-[31] flex min-h-[50svh] flex-col overflow-y-auto overflow-x-hidden border-r border-r-muted bg-background",
          )}>
-         <div className="sticky top-0 z-[2] flex flex-col gap-2 border-b border-b-muted bg-accent p-3">
+         <div className="sticky top-0 z-[2] flex flex-col gap-2 border-b border-b-muted bg-background p-3">
             <div className="flex items-center justify-between gap-2">
                <h4 className="whitespace-nowrap text-sm font-semibold">Your databases</h4>
                <Button
                   intent="none"
                   size="none"
-                  onClick={() => setCreate((prev) => !prev)}
-                  className="group size-6 bg-muted hocus:bg-zinc-300 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,.05)] dark:hocus:bg-zinc-700">
-                  <motion.span
-                     initial={{ rotate: create ? 135 : 0 }}
-                     animate={{ rotate: create ? 135 : 0 }}
-                     transition={{ type: "spring", duration: 0.5, bounce: 0.4 }}
-                     className="block">
-                     <Plus className={cn("size-4")} />
-                  </motion.span>
+                  onClick={() => props?.onCreateChange?.(true)}
+                  className="group size-6 bg-muted hocus:bg-c300 dark:highlight-5">
+                  <Plus className={cn("size-4")} />
                </Button>
             </div>
             <div className="relative w-full">
                <Input
                   intent="none"
-                  size="sm"
+                  size="xs"
                   value={input}
                   placeholder="Search database"
                   onChange={(ev) => setInput(ev.currentTarget.value)}
-                  className="w-full rounded-full bg-background pl-9 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,.05)]"
+                  className="w-full rounded-full bg-accent pl-9 outline-transparent ring-1 ring-zinc-200/50 transition-all focus:shadow-vercel-lg dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,.05)] dark:ring-zinc-800/50"
                />
-               <Search className="pointer-events-none absolute left-3 top-2.5 size-4 shrink-0 text-zinc-500 dark:text-zinc-400" />
+               <Search className="pointer-events-none absolute left-3 top-2 size-4 shrink-0 text-zinc-500 dark:text-zinc-400" />
             </div>
          </div>
 

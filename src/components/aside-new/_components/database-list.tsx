@@ -10,7 +10,7 @@ export const DatabaseList = ({ databases }: { databases: DatabasesReturn }) => {
    const [hover, setHover] = useState<number | null>(null);
 
    return (
-      <div className="flex flex-col gap-0.5" onMouseLeave={() => setHover(null)}>
+      <div className="flex flex-col" onMouseLeave={() => setHover(null)}>
          {databases?.map((database, index) => {
             return (
                <DatabaseItem
