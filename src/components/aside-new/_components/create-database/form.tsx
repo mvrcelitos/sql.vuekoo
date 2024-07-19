@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { UseFormReturn } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Clipboard, Loader2, X, Zap } from "lucide-react";
 import { toast } from "sonner";
@@ -25,7 +25,13 @@ import { Entries } from "@/interfaces/entries";
 import { cn } from "@/lib/utils";
 
 import { createDatabase, testConnection } from "./actions";
-import { CreateDatabaseFormInput, CreateDatabaseFormReturn, DatabaseConnectionParamsReturn } from "./schema";
+import {
+   CreateDatabaseFormInput,
+   CreateDatabaseFormReturn,
+   createDatabaseFormSchema,
+   DatabaseConnectionParamsReturn,
+} from "./schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const TestConnectionStates = {
    idle: {
@@ -48,13 +54,18 @@ const TestConnectionStates = {
 };
 
 interface CreateDatabaseFormProps {
-   form: UseFormReturn<CreateDatabaseFormInput>;
+   form?: UseFormReturn<CreateDatabaseFormInput>;
    isTablet?: boolean;
    onClose?: () => void;
 }
-export const CreateDatabaseForm = ({ form, isTablet, onClose }: CreateDatabaseFormProps) => {
+export const CreateDatabaseForm = ({ isTablet, onClose }: CreateDatabaseFormProps) => {
    const [state, setState] = useState<keyof typeof TestConnectionStates>("idle");
    const currentState = TestConnectionStates[state];
+
+   const form = useForm<CreateDatabaseFormInput>({
+      defaultValues: { type: "psql" },
+      resolver: zodResolver(createDatabaseFormSchema),
+   });
 
    const { reset, handleSubmit } = form;
    return (
@@ -149,7 +160,7 @@ export const CreateDatabaseForm = ({ form, isTablet, onClose }: CreateDatabaseFo
                   <FormInputMask
                      mask={(d) => d?.toString()?.replace(/\D/g, "")}
                      inputMode="numeric"
-                     className="md:rounded-l-none md:focus:z-[1]"
+                     className="md:-ml-px md:max-w-[calc(100%+1px)] md:rounded-l-none md:focus:z-[1]"
                      placeholder={"5432"}
                   />
                   <FormMessage />
@@ -210,7 +221,7 @@ export const CreateDatabaseForm = ({ form, isTablet, onClose }: CreateDatabaseFo
          <div
             className={cn(
                isTablet ? "-mx-4 -mb-2 p-4" : "-m-3 p-3",
-               "mt-0 flex flex-col gap-2 border-t border-t-muted bg-accent sm:gap-4",
+               "mt-0 flex flex-col gap-2 border-t border-t-muted bg-accent md:gap-4",
             )}>
             <div className="mt-auto flex flex-wrap items-center justify-end gap-2 md:gap-4">
                <Button type="button" intent="ghost" onClick={onClose} disabled={form?.formState.isSubmitting}>
