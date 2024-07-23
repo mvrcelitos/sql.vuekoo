@@ -1,4 +1,5 @@
 "use server";
+
 import { cookies } from "next/headers";
 
 import { DatabaseType } from "@/interfaces/cookies/databases";
