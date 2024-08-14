@@ -223,7 +223,7 @@ export const CreateDatabaseForm = ({ onClose }: CreateDatabaseFormProps) => {
             </Button>
          </div>
          <div className="-mx-4 -mb-2 mt-0 flex flex-col gap-2 border-t border-t-muted bg-accent p-4 md:gap-4">
-            <div className="mt-auto flex flex-wrap items-center justify-end gap-2 md:gap-4">
+            <div className="mt-auto flex flex-wrap items-center gap-2">
                <Button type="button" intent="ghost" onClick={onClose} disabled={form?.formState.isSubmitting}>
                   Cancel
                </Button>
