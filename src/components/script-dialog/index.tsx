@@ -101,6 +101,8 @@ export const ScriptProvider = ({ children, ...props }: React.HTMLAttributes<HTML
                         startTransition(async () => {
                            const res = await runScript(uuid!, script);
                            if (!res) return;
+                           setScriptArr([]);
+                           _setUuid(null);
                            setOpen(false);
                         })
                      }>
