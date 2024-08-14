@@ -28,10 +28,17 @@ export const ScriptContext = createContext<ScriptContextProps>({} as ScriptConte
 
 export const ScriptProvider = ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
    const [open, setOpen] = useState(false);
-   const [uuid, setUuid] = useState<string | null>(null);
+   const [uuid, _setUuid] = useState<string | null>(null);
+
    const [scriptArr, setScriptArr] = useState<string[]>([]);
    const [isPending, startTransition] = useTransition();
    const router = useRouter();
+
+   const setUuid = (newUuid: string) => {
+      if (newUuid === uuid) return;
+      setScriptArr([]);
+      _setUuid(newUuid);
+   };
 
    const script = scriptArr?.length > 0 ? (scriptArr.join(";\n") + ";")?.replace(/;;/g, ";") : "";
    const setScript = (script: string) => setScriptArr(script.split("\n"));
