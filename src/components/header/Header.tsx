@@ -4,11 +4,10 @@ import Link from "next/link";
 import { Menu, User2 } from "lucide-react";
 
 import { useAsideStore } from "@/components/aside-new/AsideStore";
-import { ConfigButton, ScriptButton } from "@/components/header-buttons";
+import { ConfigButton } from "@/components/header-buttons";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { config } from "@/config/site";
-import { cn } from "@/lib/utils";
 import { SaveChangesButton } from "@/components/header/buttons/SaveChangesButton";
 
 export const Header = () => {
