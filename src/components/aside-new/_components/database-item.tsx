@@ -48,6 +48,7 @@ import {
    DropdownMenu,
    DropdownMenuContent,
    DropdownMenuItem,
+   dropdownMenuItemsVariants,
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -158,7 +159,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
             content = (
                <>
                   <DropdownMenuItem
-                     intent="warning"
+                     intent="default"
                      onSelect={async (ev) => {
                         onButtonClick();
                      }}>
@@ -172,7 +173,7 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
             content = (
                <>
                   <DropdownMenuItem
-                     intent="warning"
+                     intent="default"
                      onSelect={async (ev) => {
                         onButtonClick();
                      }}>
@@ -437,7 +438,7 @@ const ContentSection = ({ name, data, protocol, uuid }: ContentSectionProps) => 
                               Rename
                            </ContextMenuItem>
                            <ContextMenuSeparator />
-                           <ContextMenuItem>
+                           <ContextMenuItem intent="danger">
                               <Trash2 className="mr-2 size-4 shrink-0" />
                               Delete
                            </ContextMenuItem>
