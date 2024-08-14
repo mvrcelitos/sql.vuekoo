@@ -54,7 +54,7 @@ const DialogContent = React.forwardRef<
                      initial={{ opacity: 0, transform: "scale(0)" }}
                      animate={{ opacity: 1, transform: "scale(1)" }}
                      exit={{ opacity: 0 }}
-                     className="absolute right-3 top-3 rounded-md bg-transparent p-1.5 text-500 !outline-none transition-colors disabled:pointer-events-none hocus:bg-muted hocus:text-700">
+                     className="absolute right-3 top-3 rounded-md bg-transparent p-2 text-500 !outline-none transition-colors disabled:pointer-events-none hocus:bg-muted hocus:text-700">
                      <X className="h-4 w-4" />
                      <span className="sr-only">Close</span>
                   </DialogClose>
