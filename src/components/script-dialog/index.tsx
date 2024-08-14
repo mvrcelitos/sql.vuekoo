@@ -93,26 +93,36 @@ export const ScriptProvider = ({ children, ...props }: React.HTMLAttributes<HTML
                   <Button intent="ghost" onClick={() => cancel()}>
                      Discard
                   </Button>
-                  <Button
-                     disabled={isPending}
-                     intent="primary"
-                     className="gap-2"
-                     onClick={(ev) =>
-                        startTransition(async () => {
-                           const res = await runScript(uuid!, script);
-                           if (!res) return;
-                           setScriptArr([]);
-                           _setUuid(null);
-                           setOpen(false);
-                        })
-                     }>
-                     Run
-                     {isPending ? (
-                        <Loader2 className="size-4 shrink-0 animate-spin" />
-                     ) : (
-                        <ArrowRight className="size-4 shrink-0" />
-                     )}
-                  </Button>
+                  <div>
+                     <Button
+                        intent="outline"
+                        onClick={() => {
+                           navigator.clipboard.writeText(script);
+                           cancel();
+                        }}>
+                        Copy
+                     </Button>
+                     <Button
+                        disabled={isPending}
+                        intent="primary"
+                        className="gap-2"
+                        onClick={(ev) =>
+                           startTransition(async () => {
+                              const res = await runScript(uuid!, script);
+                              if (!res) return;
+                              setScriptArr([]);
+                              _setUuid(null);
+                              setOpen(false);
+                           })
+                        }>
+                        Run
+                        {isPending ? (
+                           <Loader2 className="size-4 shrink-0 animate-spin" />
+                        ) : (
+                           <ArrowRight className="size-4 shrink-0" />
+                        )}
+                     </Button>
+                  </div>
                </DialogFooter>
             </DialogContent>
          </Dialog>
