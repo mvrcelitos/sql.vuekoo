@@ -7,6 +7,7 @@ import { TextArea } from "@/components/ui/textarea";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useState, useTransition } from "react";
+import { toast } from "sonner";
 
 export interface ScriptContextProps {
    script: string;
@@ -97,6 +98,7 @@ export const ScriptProvider = ({ children, ...props }: React.HTMLAttributes<HTML
                      <Button
                         intent="outline"
                         onClick={() => {
+                           toast("Script copied to clipboard");
                            navigator.clipboard.writeText(script);
                            cancel();
                         }}>
