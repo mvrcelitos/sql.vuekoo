@@ -35,6 +35,7 @@ export const databaseConnectionParamsSchema = z.object({
          required_error: "Password can't be blank",
       })
       .min(1, "Password can't be blank"),
+   // ssl: z.boolean().optional().default(false),
 });
 
 export const createDatabaseFormSchema = z

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Code, Palette, Settings } from "lucide-react";
 
-import { NavigationMenuItems } from "@/components/navigation-menu/data";
+import { NavigationMenuItem, navigationMenuItems } from "@/components/navigation-menu/data";
 import { ThemeSubContent } from "@/components/navigation-menu/theme-sub-content";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,40 +20,25 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { getBreakpoint } from "@/lib/get-measures";
 import { cn } from "@/lib/utils";
+import { useNavigationMenuStore } from "@/components/navigation-menu/NavigationMenu.Store";
 
 export const NavigationMenu = () => {
    const pathname = usePathname();
-
-   const [hover, setHover] = useState<number | null>(null);
    const isMobile = !getBreakpoint("md");
+
+   const { selected, setSelected } = useNavigationMenuStore();
 
    return (
       <nav className="z-[2] flex h-[--nav-size] w-full flex-row items-center justify-between gap-2 border-muted bg-accent py-2 [--nav-size:53px] max-md:border-b sm:gap-4 md:h-full md:w-[--nav-size] md:max-w-[--nav-size] md:flex-col md:border-r">
-         <div className="flex flex-row items-center p-2 md:flex-col" onMouseLeave={() => setHover(null)}>
-            {NavigationMenuItems.map((props, index) => {
-               const isActive = props.forcedActive === true ? true : props?.regex?.test(pathname) ?? false;
+         <div className="flex flex-row items-center p-2 md:flex-col">
+            {navigationMenuItems.map((props, index) => {
+               const isActive = selected === props.slug;
                return (
-                  <div
-                     key={index}
-                     className="flex items-center px-1 first:pt-0 last:pb-0 md:px-0 md:py-3"
-                     onMouseEnter={() => setHover(index)}
-                     onMouseLeave={() => setHover(index)}>
-                     <NavigationMenuItem {...props} aria-selected={isActive}>
-                        <AnimatePresence>
-                           {(hover === index || (hover === null && isActive)) && (
-                              <motion.div
-                                 layoutId="navigation-menu-item-hover"
-                                 initial={{ opacity: 0, rotate: 45 }}
-                                 animate={{ opacity: 1, rotate: 45 + 90 * index }}
-                                 exit={{ opacity: 0, rotate: 45 }}
-                                 transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                                 className={cn(
-                                    "pointer-events-none absolute inset-0 overflow-hidden rounded-md",
-                                    isActive ? "bg-primary/20" : "bg-zinc-200 dark:bg-zinc-800",
-                                 )}
-                              />
-                           )}
-                        </AnimatePresence>
+                  <div key={index} className="flex items-center px-1 first:pt-0 last:pb-0 md:px-0 md:py-3">
+                     <Item
+                        {...props}
+                        aria-selected={isActive}
+                        onClick={() => setSelected(isActive ? null : props.slug)}>
                         <AnimatePresence>
                            {isActive && (
                               <motion.div
@@ -75,10 +60,12 @@ export const NavigationMenu = () => {
                         <props.icon
                            className={cn(
                               "relative z-10 size-5",
-                              isActive ? "text-primary" : "text-foreground/70 group-hocus:text-foreground",
+                              isActive
+                                 ? "text-primary"
+                                 : "text-foreground/60 transition-colors group-hocus:text-foreground",
                            )}
                         />
-                     </NavigationMenuItem>
+                     </Item>
                   </div>
                );
             })}
@@ -114,17 +101,17 @@ export const NavigationMenu = () => {
    );
 };
 
-export const NavigationMenuItem = ({
+const Item = ({
    name,
    icon: Icon,
    ...props
-}: Pick<NavigationMenuItem, "name" | "icon"> & React.ComponentPropsWithoutRef<typeof Link>) => {
+}: Pick<NavigationMenuItem, "name" | "icon"> & React.ComponentPropsWithoutRef<typeof Button>) => {
    return (
       <Tooltip>
          <TooltipTrigger asChild>
-            <Link className="group relative size-9 rounded-md p-2" {...props}>
+            <Button {...props} intent="none" className="group relative size-9 rounded-md p-2">
                {props?.children}
-            </Link>
+            </Button>
          </TooltipTrigger>
          <TooltipContent side="right" sideOffset={4}>
             {name}

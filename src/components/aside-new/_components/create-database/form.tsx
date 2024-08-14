@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { pasteURL } from "@/components/aside-new/_components/create-database/utils";
 import {
    Form,
+   FormCheckbox,
    FormField,
    FormInput,
    FormInputMask,
@@ -177,6 +178,13 @@ export const CreateDatabaseForm = ({ onClose }: CreateDatabaseFormProps) => {
                <FormPassword intent="primary" type="password" />
                <FormMessage />
             </FormField>
+            {/* <FormField name="ssl">
+               <div className="flex items-center gap-1.5">
+                  <FormCheckbox />
+                  <span className="text-sm">SSL mode</span>
+               </div>
+               <FormMessage />
+            </FormField> */}
             <Separator className="-mx-4 w-auto" />
             <Button
                type="button"

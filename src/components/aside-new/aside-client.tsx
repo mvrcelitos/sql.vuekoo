@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 
 import { CreateDatabaseForm } from "@/components/aside-new/_components/create-database/form";
 import { AsideContent } from "@/components/aside-new/aside-content";
-import { useAsideStore } from "@/components/aside-new/aside-store";
+import { useAsideStore } from "@/components/aside-new/AsideStore";
 import { Dialog, DialogBody, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { getBreakpoint } from "@/lib/get-measures";

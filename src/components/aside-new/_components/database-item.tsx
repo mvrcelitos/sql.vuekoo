@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
-import { ChangeDatabaseForm } from "@/components/aside-new/_components/change-database/form";
+import { RenameTableForm } from "@/components/aside-new/_components/rename-table/form";
 import { DatabaseReturn } from "@/components/aside-new/_components/create-database/schema";
 import { DeleteDatabaseMenuItem } from "@/components/aside-new/_components/delete-database/delete-database";
 import { Button } from "@/components/ui/button";
@@ -52,7 +52,7 @@ import {
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { availableDatabases } from "@/constants/available-databases";
+import { AvailableDatabaseIds, availableDatabases } from "@/constants/available-databases";
 import { cn } from "@/lib/utils";
 
 import { getDatabaseData, moveDatabase } from "./actions";
@@ -342,6 +342,8 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
             <div className="flex flex-col bg-muted text-zinc-800 dark:text-zinc-200">
                <ContentSection
                   name="Tables"
+                  uuid={database.uuid}
+                  protocol={database.type}
                   onNameChange={() => {}}
                   data={
                      data?.tables?.map((table) => ({
@@ -353,6 +355,8 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
                />
                <ContentSection
                   name="Views"
+                  uuid={database.uuid}
+                  protocol={database.type}
                   data={
                      data?.views?.map((view) => ({
                         name: view,
@@ -371,10 +375,12 @@ DatabaseItem.displayName = "DatabaseItem";
 interface ContentSectionProps {
    name: string;
    data: { name: string; href: string; icon?: LucideIcon }[];
+   uuid: string;
+   protocol: AvailableDatabaseIds;
    onNameChange?: (name: string) => void;
 }
 
-const ContentSection = ({ name, data }: ContentSectionProps) => {
+const ContentSection = ({ name, data, protocol, uuid }: ContentSectionProps) => {
    const [open, setOpen] = useState(false);
    const [rename, setRename] = useState<null | { name: string }>(null);
    const pathname = usePathname();
@@ -445,15 +451,7 @@ const ContentSection = ({ name, data }: ContentSectionProps) => {
                <DialogHeader>
                   <DialogTitle>Change table settings</DialogTitle>
                </DialogHeader>
-               <DialogBody>
-                  <ChangeDatabaseForm data={rename ?? {}} />
-               </DialogBody>
-               <DialogFooter>
-                  <DialogClose asChild>
-                     <Button intent="ghost">Cancel</Button>
-                  </DialogClose>
-                  <Button intent="primary">Rename</Button>
-               </DialogFooter>
+               <RenameTableForm data={rename ?? {}} close={() => setRename(null)} uuid={uuid} protocol={protocol} />
             </DialogContent>
          </Dialog>
       </div>

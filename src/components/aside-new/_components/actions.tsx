@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 import { DatabasesReturn } from "@/components/aside-new/_components/create-database/schema";
 import { DatabaseFactory, PSQLDatabase } from "@/lib/database";
-import { getDatabases } from "@/lib/database/functions";
+import { findDatabase, getDatabases } from "@/lib/database/functions";
 
 type GetDatabaseTablesReturn<T extends { tables: any[]; views: any[] }> =
    | { ok: false; message: string }
@@ -16,24 +16,15 @@ export const getDatabaseData = async <T extends { tables: any[]; views: any[] }>
    const c = cookies();
    if (!c.has("databases")) return { ok: false, message: "No databases found!" };
 
-   const databases = c.get("databases")?.value;
-   if (!databases || databases === "[]") return { ok: false, message: "No databases found" };
-   let parsed: DatabasesReturn;
-   try {
-      parsed = JSON.parse(databases);
-   } catch (err) {
-      console.error(err);
-      return { ok: false, message: "Error parsing databases" };
-   }
-   const unique = parsed.find((x) => x.uuid === uuid);
-   if (!unique) return { ok: false, message: "Database not found" };
+   const database = await findDatabase(uuid);
+   if (!database) return { ok: false, message: "Database not found" };
 
-   const connection = (await DatabaseFactory(unique.type)?.connect({
-      host: unique.host,
-      port: unique.port,
-      database: unique.database,
-      user: unique.username,
-      password: unique.password,
+   const connection = (await DatabaseFactory(database.type)?.connect({
+      host: database.host,
+      port: database.port,
+      database: database.database,
+      user: database.username,
+      password: database.password,
    })) as PSQLDatabase;
    if (!connection) return { ok: false, message: "Error connecting to the database" };
 
