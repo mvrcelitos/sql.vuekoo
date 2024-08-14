@@ -5,6 +5,7 @@ import * as ContextMenuPrimitive from "@radix-ui/react-context-menu";
 import { Check, ChevronRight, Circle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { cva, VariantProps } from "cva";
 
 const ContextMenu = ContextMenuPrimitive.Root;
 
@@ -61,7 +62,7 @@ const ContextMenuContent = React.forwardRef<
       <ContextMenuPrimitive.Content
          ref={ref}
          className={cn(
-            "shadow-vercel-md z-50 min-w-[8rem] overflow-hidden rounded-lg border border-zinc-300 bg-background p-1 text-foreground animate-in fade-in-80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:border-zinc-800",
+            "z-50 min-w-[8rem] overflow-hidden rounded-lg border border-zinc-300 bg-background p-1 text-foreground shadow-vercel-md animate-in fade-in-80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:border-zinc-800",
             className,
          )}
          {...props}
@@ -70,20 +71,27 @@ const ContextMenuContent = React.forwardRef<
 ));
 ContextMenuContent.displayName = ContextMenuPrimitive.Content.displayName;
 
+export const contextMenuItemsVariants = cva({
+   base: "relative flex cursor-default select-none items-center rounded first:rounded-t-md last:rounded-b-md px-2 py-1 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+   variants: {
+      intent: {
+         default: "focus:bg-zinc-200 focus:text-zinc-950 dark:focus:bg-zinc-800 dark:focus:text-zinc-50",
+         primary: "focus:bg-primary focus:text-zinc-50 dark:focus:bg-primary dark:focus:text-zinc-50",
+         warning: "focus:bg-yellow-400 focus:text-amber-900 dark:focus:bg-yellow-700 dark:focus:text-orange-50",
+         danger:
+            "text-red-500 focus:bg-red-200 focus:text-rose-600 dark:text-red-400 dark:focus:bg-rose-950 dark:focus:text-red-300",
+      },
+   },
+   defaultVariants: {
+      intent: "primary",
+   },
+});
+
 const ContextMenuItem = React.forwardRef<
    React.ElementRef<typeof ContextMenuPrimitive.Item>,
-   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Item> & {
-      inset?: boolean;
-   }
->(({ className, inset, ...props }, ref) => (
-   <ContextMenuPrimitive.Item
-      ref={ref}
-      className={cn(
-         "relative flex cursor-default select-none items-center rounded px-2 py-1 text-[13px] text-700 outline-none first:rounded-t-md last:rounded-b-md focus:bg-muted focus:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-         className,
-      )}
-      {...props}
-   />
+   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Item> & VariantProps<typeof contextMenuItemsVariants> & {}
+>(({ intent, className, ...props }, ref) => (
+   <ContextMenuPrimitive.Item ref={ref} className={cn(contextMenuItemsVariants({ intent }), className)} {...props} />
 ));
 ContextMenuItem.displayName = ContextMenuPrimitive.Item.displayName;
 
