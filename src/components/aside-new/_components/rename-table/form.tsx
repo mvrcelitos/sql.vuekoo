@@ -11,14 +11,14 @@ import { AvailableDatabaseIds } from "@/constants/available-databases";
 
 interface Props {
    data: Record<string, any>;
-   close: () => void;
    protocol: AvailableDatabaseIds;
+   afterSubmit?: (data: { name: string }) => void;
    uuid: string;
 }
 
-export const RenameTableForm = ({ data, close, protocol, uuid }: Props) => {
-   const form = useForm({ defaultValues: data });
-   const { setUuid, append, show } = useScript();
+export const RenameTableForm = ({ data, afterSubmit, protocol, uuid }: Props) => {
+   const form = useForm<{ name: string }>({ defaultValues: data });
+   const { setUuid, append } = useScript();
    const { handleSubmit } = form;
 
    return (
@@ -27,10 +27,13 @@ export const RenameTableForm = ({ data, close, protocol, uuid }: Props) => {
             form={form}
             className="gap-4"
             onSubmit={handleSubmit((d) => {
+               if (d.name === data.name) {
+                  afterSubmit?.(d);
+                  return;
+               }
                setUuid(uuid);
                append(queries[protocol].table.rename({ old: data.name, new: d.name }));
-               close();
-               show();
+               afterSubmit?.(d);
             })}>
             <DialogBody>
                <FormField name="name">
