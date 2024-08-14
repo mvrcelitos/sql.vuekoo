@@ -438,7 +438,7 @@ const ContentSection = ({ name, data, protocol, uuid }: ContentSectionProps) => 
                               Rename
                            </ContextMenuItem>
                            <ContextMenuSeparator />
-                           <ContextMenuItem intent="danger">
+                           <ContextMenuItem disabled intent="danger">
                               <Trash2 className="mr-2 size-4 shrink-0" />
                               Delete
                            </ContextMenuItem>
