@@ -12,4 +12,5 @@ export type DatabaseType = {
    database: string;
    username: string;
    password: string;
+   ssl?: boolean;
 };
