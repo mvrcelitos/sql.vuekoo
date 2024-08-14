@@ -33,7 +33,7 @@ export const ScriptProvider = ({ children, ...props }: React.HTMLAttributes<HTML
    const [isPending, startTransition] = useTransition();
    const router = useRouter();
 
-   const script = (scriptArr.join(";\n") + ";")?.replace(/;;/g, ";");
+   const script = scriptArr?.length > 0 ? (scriptArr.join(";\n") + ";")?.replace(/;;/g, ";") : "";
    const setScript = (script: string) => setScriptArr(script.split("\n"));
 
    const append = (line: string) => setScriptArr((x) => [...x, line]);
@@ -70,16 +70,22 @@ export const ScriptProvider = ({ children, ...props }: React.HTMLAttributes<HTML
          }}
          {...props}>
          {children}
-         <Dialog open={open} onOpenChange={(open) => (open ? undefined : cancel())}>
+         <Dialog open={open} onOpenChange={(open) => (open ? undefined : setOpen(false))}>
             <DialogContent className="lg:max-w-3xl">
                <DialogHeader>
                   <DialogTitle>Script Editor</DialogTitle>
                </DialogHeader>
                <DialogBody>
-                  <TextArea defaultValue={script} className="modern-scroll w-full resize-none whitespace-pre" />
+                  <TextArea
+                     readOnly
+                     defaultValue={script}
+                     className="modern-scroll w-full resize-none whitespace-pre"
+                  />
                </DialogBody>
                <DialogFooter>
-                  <Button intent="ghost">Cancel</Button>
+                  <Button intent="ghost" onClick={() => cancel()}>
+                     Discard
+                  </Button>
                   <Button
                      disabled={isPending}
                      intent="primary"
