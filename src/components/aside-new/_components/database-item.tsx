@@ -382,6 +382,8 @@ interface ContentSectionProps {
 
 const ContentSection = ({ name, data, protocol, uuid }: ContentSectionProps) => {
    const [open, setOpen] = useState(false);
+
+   // Rename holds the initial table name that is being renamed, if it is null, then no table is being renamed
    const [rename, setRename] = useState<null | { name: string }>(null);
    const pathname = usePathname();
 
@@ -412,8 +414,7 @@ const ContentSection = ({ name, data, protocol, uuid }: ContentSectionProps) => 
                               aria-selected={isCurrent || undefined}
                               href={item.href}
                               className={cn(
-                                 "group/item flex cursor-pointer items-center gap-2 rounded-md px-2 py-1",
-                                 rename === null ? "hocus:bg-muted hocus:text-foreground" : "",
+                                 "group/item flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hocus:bg-muted hocus:text-foreground",
                               )}>
                               {item?.icon ? (
                                  <item.icon
@@ -451,34 +452,14 @@ const ContentSection = ({ name, data, protocol, uuid }: ContentSectionProps) => 
                <DialogHeader>
                   <DialogTitle>Change table settings</DialogTitle>
                </DialogHeader>
-               <RenameTableForm data={rename ?? {}} close={() => setRename(null)} uuid={uuid} protocol={protocol} />
+               <RenameTableForm
+                  data={rename ?? {}}
+                  uuid={uuid}
+                  protocol={protocol}
+                  afterSubmit={() => setRename(null)}
+               />
             </DialogContent>
          </Dialog>
       </div>
    );
 };
-
-class AutoFocusInput extends React.Component {
-   declare input: HTMLInputElement | null;
-
-   override componentDidMount(): void {
-      console.log("testing", document.activeElement);
-      if (!this?.input) return;
-      this?.input?.focus();
-      console.log("focused", document.activeElement);
-   }
-
-   override render() {
-      return (
-         <Input
-            onClick={(ev) => {
-               ev.stopPropagation();
-            }}
-            autoFocus={true}
-            ref={(input) => {
-               this.input = input;
-            }}
-         />
-      );
-   }
-}
