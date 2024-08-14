@@ -28,7 +28,7 @@ export const NavigationMenu = () => {
    const { selected, setSelected } = useNavigationMenuStore();
 
    return (
-      <nav className="z-[2] flex h-[--nav-size] w-full flex-row items-center justify-between gap-2 border-muted bg-accent py-2 [--nav-size:53px] max-md:border-b sm:gap-4 md:h-full md:w-[--nav-size] md:max-w-[--nav-size] md:flex-col md:border-r">
+      <nav className="z-[2] flex h-[--nav-size] w-full flex-row items-center justify-between gap-2 border-muted bg-accent [--nav-size:53px] max-md:border-b sm:gap-4 md:h-full md:w-[--nav-size] md:max-w-[--nav-size] md:flex-col md:border-r">
          <div className="flex flex-row items-center p-2 md:flex-col">
             {navigationMenuItems.map((props, index) => {
                const isActive = selected === props.slug;
