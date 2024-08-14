@@ -83,7 +83,7 @@ export const contextMenuItemsVariants = cva({
       },
    },
    defaultVariants: {
-      intent: "primary",
+      intent: "default",
    },
 });
 
