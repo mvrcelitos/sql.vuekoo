@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Menu, User2 } from "lucide-react";
 
-import { useAsideStore } from "@/components/aside-new/aside-store";
+import { useAsideStore } from "@/components/aside-new/AsideStore";
 import { ConfigButton, ScriptButton } from "@/components/header-buttons";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
