@@ -22,9 +22,7 @@ export const Header = () => {
                intent="ghost"
                size="icon-xs"
                onClick={() => setSheet(!sheet)}
-               className={cn(
-                  "rounded-none text-[13px] data-[state=open]:bg-zinc-200 data-[state=open]:text-zinc-800 dark:data-[state=open]:bg-zinc-800/70 dark:data-[state=open]:text-zinc-200 lg:hidden",
-               )}>
+               className="rounded-none text-[13px] data-[state=open]:bg-zinc-200 data-[state=open]:text-zinc-800 dark:data-[state=open]:bg-zinc-800/70 dark:data-[state=open]:text-zinc-200 lg:hidden">
                <Menu className="size-4 shrink-0" height={16} width={16} />
             </Button>
             {/* <Separator orientation="vertical" className="h-4 w-px bg-zinc-300 dark:bg-zinc-700" /> */}
