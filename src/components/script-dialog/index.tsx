@@ -94,9 +94,10 @@ export const ScriptProvider = ({ children, ...props }: React.HTMLAttributes<HTML
                   <Button intent="ghost" onClick={() => cancel()}>
                      Discard
                   </Button>
-                  <div>
+                  <div className="flex items-center gap-2">
                      <Button
                         intent="outline"
+                        className="bg-transparent hover:bg-background active:bg-background"
                         onClick={() => {
                            toast("Script copied to clipboard");
                            navigator.clipboard.writeText(script);
