@@ -47,7 +47,7 @@ export const buttonVariants = cva({
             "hover:bg-muted active:bg-muted",
             "text-c700 hover:text-c900 active:text-c900",
             "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-800",
-            "hover:shadow-vercel-lg focus-visible::shadow-[0px_1px_1px_rgb(0,0,0,.02),0px_4px_8px_-4px_rgba(0,0,0,.04),0px_16px_24px_-8px_rgba(0,0,0,.06)] transition-shadow",
+            "hover:shadow-vercel-lg focus-visible::shadow-[0px_1px_1px_rgb(0,0,0,.02),0px_4px_8px_-4px_rgba(0,0,0,.04),0px_16px_24px_-8px_rgba(0,0,0,.06)] transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow]",
          ],
          outline2: [
             "bg-background border-2 border-zinc-300 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400",
