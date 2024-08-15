@@ -22,18 +22,15 @@ import { cn } from "@/lib/utils";
 import { useNavigationMenuStore } from "@/components/navigation-menu/NavigationMenu.Store";
 
 export const NavigationMenu = () => {
-   const pathname = usePathname();
-   const isMobile = !getBreakpoint("md");
-
    const { selected, setSelected } = useNavigationMenuStore();
 
    return (
-      <nav className="z-[2] flex h-[--nav-size] w-full flex-row items-center justify-between gap-2 border-muted bg-accent [--nav-size:53px] max-md:border-b sm:gap-4 md:h-full md:w-[--nav-size] md:max-w-[--nav-size] md:flex-col md:border-r">
-         <div className="flex flex-row items-center p-2 md:flex-col">
+      <nav className="z-[2] flex h-[--nav-size] w-full flex-row items-center justify-between gap-2 border-muted bg-accent [--nav-size:45px] max-md:border-b sm:gap-4 md:h-full md:w-[--nav-size] md:max-w-[--nav-size] md:flex-col md:border-r">
+         <div className="flex flex-row items-center gap-1 p-1 md:flex-col md:gap-4">
             {navigationMenuItems.map((props, index) => {
                const isActive = selected === props.slug;
                return (
-                  <div key={index} className="flex items-center px-1 first:pt-0 last:pb-0 md:px-0 md:py-3">
+                  <div key={index} className="flex items-center">
                      <Item
                         {...props}
                         aria-selected={isActive}
