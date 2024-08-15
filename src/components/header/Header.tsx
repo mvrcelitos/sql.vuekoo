@@ -3,12 +3,15 @@
 import Link from "next/link";
 import { Menu, User2 } from "lucide-react";
 
-import { useAsideStore } from "@/components/aside-new/AsideStore";
-import { ConfigButton } from "@/components/header-buttons";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { config } from "@/config/site";
-import { SaveChangesButton } from "@/components/header/buttons/SaveChangesButton";
+
+import { Separator } from "@/components/ui/separator";
+
+import { Button } from "@/components/ui/button";
+import { useAsideStore } from "@/components/aside-new/AsideStore";
+
+import { ConfigButton } from "./buttons/ConfigButton";
+import { SaveChangesButton } from "./buttons/SaveChangesButton";
 
 export const Header = () => {
    const { sheet, setSheet } = useAsideStore();
@@ -16,7 +19,7 @@ export const Header = () => {
    return (
       <header className="sticky left-0 top-0 z-40 flex h-[33px] w-full shrink-0 justify-between border-b border-b-muted bg-background text-foreground">
          <div className="flex items-center">
-            <div aria-label="space" className="h-full w-[53px] border-r border-muted max-lg:hidden" />
+            <div aria-label="space" className="h-full w-[45px] border-r border-muted max-lg:hidden" />
             <Button
                intent="ghost"
                size="icon-xs"

@@ -1,8 +1,10 @@
-import { useScriptStore } from "@/app/()/[database]/script/_components/use-script-store";
+"use client";
+
+import { Save } from "lucide-react";
+
 import { useScript } from "@/components/script-dialog";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Save } from "lucide-react";
 
 export const SaveChangesButton = () => {
    const { scriptArr, show } = useScript();
