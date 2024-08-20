@@ -76,7 +76,10 @@ export const Td = React.forwardRef<HTMLTableDataCellElement, React.ComponentProp
       return (
          <td
             ref={ref}
-            className={cn("truncate border-r border-zinc-200 px-2 last:border-r-0 dark:border-zinc-800", className)}
+            className={cn(
+               "h-[calc(1.75rem+1px)] truncate border-r border-zinc-200 px-2 last:border-r-0 dark:border-zinc-800",
+               className,
+            )}
             {...props}
          />
       );
