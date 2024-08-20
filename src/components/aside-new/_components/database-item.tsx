@@ -68,237 +68,225 @@ interface DatabaseItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
 const availableStates = ["idle", "pending", "connected", "error", "loading"] as const;
 type AvailableStates = (typeof availableStates)[number];
 
-export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database, hover, ...props }, ref) => {
-   // Data control hooks
-   const router = useRouter();
-   const pathname = usePathname();
-   const pathnameType: "properties" | "data" =
-      pathname?.replace(/\/databases\/(.+?)\/(\w+?)\//, "") === "data" ? "data" : "properties";
+export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(
+   ({ database, hover, className, count, index, ...props }, ref) => {
+      // Data control hooks
+      const router = useRouter();
+      const pathname = usePathname();
+      const pathnameType: "properties" | "data" =
+         pathname?.replace(/\/databases\/(.+?)\/(\w+?)\//, "") === "data" ? "data" : "properties";
 
-   // Animation useStates
-   const [open, setOpen] = useState<boolean>(false);
-   const [state, setState] = useState<AvailableStates>(
-      pathname?.startsWith(`/databases/${database.uuid}`) ? "loading" : "idle",
-   );
-   const [optionsOpen, setOptionsOpen] = useState<boolean>(false);
+      // Animation useStates
+      const [open, setOpen] = useState<boolean>(false);
+      const [state, setState] = useState<AvailableStates>(
+         pathname?.startsWith(`/databases/${database.uuid}`) ? "loading" : "idle",
+      );
+      const [optionsOpen, setOptionsOpen] = useState<boolean>(false);
 
-   // Data useStates
-   const [data, setData] = useState<{ tables: string[]; views: string[] } | null>();
-   const [moving, setMoving] = useState<"up" | "down" | null>(null);
+      // Data useStates
+      const [data, setData] = useState<{ tables: string[]; views: string[] } | null>();
+      const [moving, setMoving] = useState<"up" | "down" | null>(null);
 
-   const getData = useCallback(async () => {
-      const res = await getDatabaseData(database.uuid);
-      return res;
-   }, []);
+      const getData = useCallback(async () => {
+         const res = await getDatabaseData(database.uuid);
+         return res;
+      }, []);
 
-   const onButtonClick = useCallback(async () => {
-      switch (state) {
-         case "pending":
-            break;
-         case "loading":
-         case "idle": {
-            setState("pending");
-            const response = await getData();
-            if (!response.ok) {
-               setState("error");
-               return;
+      const onButtonClick = useCallback(async () => {
+         switch (state) {
+            case "pending":
+               break;
+            case "loading":
+            case "idle": {
+               setState("pending");
+               const response = await getData();
+               if (!response.ok) {
+                  setState("error");
+                  return;
+               }
+               setData(response.data);
+               setState("connected");
+               break;
             }
-            setData(response.data);
-            setState("connected");
-            break;
-         }
-         case "connected": {
-            setOpen((x) => !x);
-            break;
-         }
-         case "error": {
-            setState("pending");
-            const response = await getData();
-            if (!response.ok) {
-               setState("error");
-               return;
+            case "connected": {
+               setOpen((x) => !x);
+               break;
             }
-            setData(response.data);
-            setState("connected");
-            break;
+            case "error": {
+               setState("pending");
+               const response = await getData();
+               if (!response.ok) {
+                  setState("error");
+                  return;
+               }
+               setData(response.data);
+               setState("connected");
+               break;
+            }
          }
-      }
-   }, [state]);
+      }, [state]);
 
-   const onMoveDatabase = useCallback(
-      async (direction: "up" | "down") => {
-         setMoving(direction);
-         const res = await moveDatabase(database.uuid, direction);
-         setMoving(null);
-         if (!res.ok) return toast.error(res.message);
-         router.refresh();
-         setOptionsOpen(false);
-      },
-      [database],
-   );
+      const onMoveDatabase = useCallback(
+         async (direction: "up" | "down") => {
+            setMoving(direction);
+            const res = await moveDatabase(database.uuid, direction);
+            setMoving(null);
+            if (!res.ok) return toast.error(res.message);
+            router.refresh();
+            setOptionsOpen(false);
+         },
+         [database],
+      );
 
-   const Icon = useMemo(() => {
-      switch (state) {
-         case "idle":
-            return <Zap key={state} className="size-4" />;
-         case "loading":
-         case "pending":
-            return <Loader2 key={state} className="size-4 animate-spin" />;
-         case "connected":
-            return <ChevronRight key={state} className="size-4" />;
-         case "error":
-            return <X key={state} className="size-4" />;
-      }
-   }, [state]);
+      const Icon = useMemo(() => {
+         switch (state) {
+            case "idle":
+               return <Zap key={state} className="size-4" />;
+            case "loading":
+            case "pending":
+               return <Loader2 key={state} className="size-4 animate-spin" />;
+            case "connected":
+               return <ChevronRight key={state} className="size-4" />;
+            case "error":
+               return <X key={state} className="size-4" />;
+         }
+      }, [state]);
 
-   const DropdownOptions = useMemo(() => {
-      let content: React.ReactNode;
-      if (state === "pending" || state === "loading") return null;
-      switch (state) {
-         case "idle":
-            content = (
-               <>
+      const DropdownOptions = useMemo(() => {
+         let content: React.ReactNode;
+         if (state === "pending" || state === "loading") return null;
+         switch (state) {
+            case "idle":
+               content = (
+                  <>
+                     <DropdownMenuItem
+                        intent="default"
+                        onSelect={async (ev) => {
+                           onButtonClick();
+                        }}>
+                        <Zap className="mr-2 size-4 shrink-0" />
+                        Connect
+                     </DropdownMenuItem>
+                  </>
+               );
+               break;
+            case "error":
+               content = (
+                  <>
+                     <DropdownMenuItem
+                        intent="default"
+                        onSelect={async (ev) => {
+                           onButtonClick();
+                        }}>
+                        <RefreshCcw className="mr-2 size-4 shrink-0" />
+                        Try again
+                     </DropdownMenuItem>
+                  </>
+               );
+               break;
+            case "connected":
+               content = (
+                  <>
+                     <DropdownMenuItem
+                        intent="danger"
+                        onSelect={async () => {
+                           setData(null);
+                           setOpen(false);
+                           setState("idle");
+                        }}>
+                        <Unplug className="mr-2 size-4 shrink-0" />
+                        Disconnect
+                     </DropdownMenuItem>
+                  </>
+               );
+               break;
+         }
+
+         return (
+            <DropdownMenu open={optionsOpen} onOpenChange={(open) => setOptionsOpen(open)}>
+               <DropdownMenuTrigger asChild>
+                  <Button
+                     intent="ghost"
+                     size="none"
+                     className={cn(
+                        "z-[1] ml-auto size-7 shrink-0 opacity-100 transition-colors aria-expanded:bg-muted aria-expanded:!text-foreground aria-expanded:shadow-vercel-md hocus:bg-muted hocus:text-c800 hocus:shadow-vercel-md dark:aria-expanded:highlight-5",
+                     )}>
+                     <MoreVertical className="size-4" />
+                  </Button>
+               </DropdownMenuTrigger>
+               <DropdownMenuContent>
+                  {content}
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem
                      intent="default"
                      onSelect={async (ev) => {
-                        onButtonClick();
+                        const protocol = availableDatabases.find((x) => x.id === database.type)?.protocol;
+                        const url = `${protocol}://${database.username}:${database.password}@${database.host}:${database.port}/${database.database}`;
+                        try {
+                           navigator.clipboard.writeText(url);
+                        } catch (err) {
+                           return toast.error("Failed to copy URL");
+                        }
                      }}>
-                     <Zap className="mr-2 size-4 shrink-0" />
-                     Connect
+                     <Copy className="mr-2 size-4" />
+                     Copy URL
                   </DropdownMenuItem>
-               </>
-            );
-            break;
-         case "error":
-            content = (
-               <>
-                  <DropdownMenuItem
-                     intent="default"
-                     onSelect={async (ev) => {
-                        onButtonClick();
-                     }}>
-                     <RefreshCcw className="mr-2 size-4 shrink-0" />
-                     Try again
+                  {index > 0 ? (
+                     <DropdownMenuItem
+                        intent="default"
+                        disabled={moving === "up"}
+                        onSelect={async (ev) => {
+                           ev.preventDefault();
+                           await onMoveDatabase("up");
+                        }}>
+                        {moving === "up" ? (
+                           <Loader2 className="mr-2 size-4 shrink-0 animate-spin" />
+                        ) : (
+                           <ArrowUp className="mr-2 size-4 shrink-0" />
+                        )}
+                        Move up
+                     </DropdownMenuItem>
+                  ) : null}
+                  {index < count - 1 ? (
+                     <DropdownMenuItem
+                        intent="default"
+                        disabled={moving === "down"}
+                        onSelect={async (ev) => {
+                           ev.preventDefault();
+                           onMoveDatabase("down");
+                        }}>
+                        {moving === "down" ? (
+                           <Loader2 className="mr-2 size-4 shrink-0 animate-spin" />
+                        ) : (
+                           <ArrowDown className="mr-2 size-4 shrink-0" />
+                        )}
+                        Move down
+                     </DropdownMenuItem>
+                  ) : null}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem intent="default" disabled={true}>
+                     <Pencil className="mr-2 size-4 shrink-0" />
+                     Rename
                   </DropdownMenuItem>
-               </>
-            );
-            break;
-         case "connected":
-            content = (
-               <>
-                  <DropdownMenuItem
-                     intent="danger"
-                     onSelect={async () => {
-                        setData(null);
-                        setOpen(false);
-                        setState("idle");
-                     }}>
-                     <Unplug className="mr-2 size-4 shrink-0" />
-                     Disconnect
-                  </DropdownMenuItem>
-               </>
-            );
-            break;
-      }
+                  <DeleteDatabaseMenuItem database={database} />
+               </DropdownMenuContent>
+            </DropdownMenu>
+         );
+      }, [database, state, optionsOpen, open, moving]);
+
+      useEffect(() => {
+         if (pathname?.startsWith(`/databases/${database.uuid}`) && ["idle", "loading"].includes(state)) {
+            onButtonClick();
+         }
+      }, [pathname]);
 
       return (
-         <DropdownMenu open={optionsOpen} onOpenChange={(open) => setOptionsOpen(open)}>
-            <DropdownMenuTrigger asChild>
-               <Button
-                  intent="ghost"
-                  size="none"
-                  className={cn(
-                     "z-[1] ml-auto size-7 shrink-0 opacity-100 transition-colors aria-expanded:bg-muted aria-expanded:!text-foreground aria-expanded:shadow-vercel-md hocus:bg-muted hocus:text-c800 hocus:shadow-vercel-md dark:aria-expanded:highlight-5",
-                  )}>
-                  <MoreVertical className="size-4" />
-               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-               {content}
-               <DropdownMenuSeparator />
-               <DropdownMenuItem
-                  intent="default"
-                  onSelect={async (ev) => {
-                     const protocol = availableDatabases.find((x) => x.id === database.type)?.protocol;
-                     const url = `${protocol}://${database.username}:${database.password}@${database.host}:${database.port}/${database.database}`;
-                     try {
-                        navigator.clipboard.writeText(url);
-                     } catch (err) {
-                        return toast.error("Failed to copy URL");
-                     }
-                  }}>
-                  <Copy className="mr-2 size-4" />
-                  Copy URL
-               </DropdownMenuItem>
-               {props.index > 0 ? (
-                  <DropdownMenuItem
-                     intent="default"
-                     disabled={moving === "up"}
-                     onSelect={async (ev) => {
-                        ev.preventDefault();
-                        await onMoveDatabase("up");
-                     }}>
-                     {moving === "up" ? (
-                        <Loader2 className="mr-2 size-4 shrink-0 animate-spin" />
-                     ) : (
-                        <ArrowUp className="mr-2 size-4 shrink-0" />
-                     )}
-                     Move up
-                  </DropdownMenuItem>
-               ) : null}
-               {props.index < props.count - 1 ? (
-                  <DropdownMenuItem
-                     intent="default"
-                     disabled={moving === "down"}
-                     onSelect={async (ev) => {
-                        ev.preventDefault();
-                        onMoveDatabase("down");
-                     }}>
-                     {moving === "down" ? (
-                        <Loader2 className="mr-2 size-4 shrink-0 animate-spin" />
-                     ) : (
-                        <ArrowDown className="mr-2 size-4 shrink-0" />
-                     )}
-                     Move down
-                  </DropdownMenuItem>
-               ) : null}
-               <DropdownMenuSeparator />
-               <DropdownMenuItem intent="default" disabled={true}>
-                  <Pencil className="mr-2 size-4 shrink-0" />
-                  Rename
-               </DropdownMenuItem>
-               <DeleteDatabaseMenuItem database={database} />
-            </DropdownMenuContent>
-         </DropdownMenu>
-      );
-   }, [database, state, optionsOpen, open, moving]);
-
-   useEffect(() => {
-      if (pathname?.startsWith(`/databases/${database.uuid}`) && ["idle", "loading"].includes(state)) {
-         onButtonClick();
-      }
-   }, [pathname]);
-
-   return (
-      <div {...props} className="relative text-sm text-zinc-800 dark:text-zinc-200" ref={ref}>
-         <div
-            className={cn(
-               "group relative flex h-[37px] items-center justify-start gap-2 border-b border-muted px-1",
-               open ? "bg-background" : "",
-            )}>
-            <AnimatePresence>
-               {(hover || optionsOpen === true) && open == false && (
-                  <motion.div
-                     layoutId="aside-hover-database"
-                     initial={{ opacity: 0 }}
-                     animate={{ opacity: 0.5 }}
-                     exit={{ opacity: 0 }}
-                     transition={{ type: "spring", duration: 0.2, bounce: 0.1 }}
-                     className="pointer-events-none absolute inset-0 w-full bg-accent"
-                  />
-               )}
-            </AnimatePresence>
-            <div className="flex h-fit w-full items-center">
+         <div {...props} className={cn("relative text-sm text-800", className)} ref={ref}>
+            <div
+               className={cn(
+                  "group flex h-[37px] w-full items-center justify-start border-b border-muted px-1",
+                  open ? "bg-background" : "hover:bg-accent",
+               )}>
                <Button
                   intent="ghost"
                   size="none"
@@ -338,39 +326,39 @@ export const DatabaseItem = React.forwardRef<any, DatabaseItemProps>(({ database
                </Link>
                {DropdownOptions}
             </div>
+            {state === "connected" && open && (
+               <div className="flex flex-col bg-muted text-zinc-800 dark:text-zinc-200">
+                  <ContentSection
+                     name="Tables"
+                     uuid={database.uuid}
+                     protocol={database.type}
+                     onNameChange={() => {}}
+                     data={
+                        data?.tables?.map((table) => ({
+                           name: table,
+                           href: `/databases/${database.uuid}/${table}/${pathnameType}`,
+                           icon: Table2,
+                        })) ?? []
+                     }
+                  />
+                  <ContentSection
+                     name="Views"
+                     uuid={database.uuid}
+                     protocol={database.type}
+                     data={
+                        data?.views?.map((view) => ({
+                           name: view,
+                           href: `/databases/${database.uuid}/${view}/${pathnameType}`,
+                           icon: View,
+                        })) ?? []
+                     }
+                  />
+               </div>
+            )}
          </div>
-         {state === "connected" && open && (
-            <div className="flex flex-col bg-muted text-zinc-800 dark:text-zinc-200">
-               <ContentSection
-                  name="Tables"
-                  uuid={database.uuid}
-                  protocol={database.type}
-                  onNameChange={() => {}}
-                  data={
-                     data?.tables?.map((table) => ({
-                        name: table,
-                        href: `/databases/${database.uuid}/${table}/${pathnameType}`,
-                        icon: Table2,
-                     })) ?? []
-                  }
-               />
-               <ContentSection
-                  name="Views"
-                  uuid={database.uuid}
-                  protocol={database.type}
-                  data={
-                     data?.views?.map((view) => ({
-                        name: view,
-                        href: `/databases/${database.uuid}/${view}/${pathnameType}`,
-                        icon: View,
-                     })) ?? []
-                  }
-               />
-            </div>
-         )}
-      </div>
-   );
-});
+      );
+   },
+);
 DatabaseItem.displayName = "DatabaseItem";
 
 interface ContentSectionProps {
