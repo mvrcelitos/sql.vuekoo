@@ -1,13 +1,13 @@
 "use client";
 
+import { forwardRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
-import { NavigationMenuItem, navigationMenuItems } from "@/components/navigation-menu/data";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
+import { navigationMenuItems } from "./data";
 import { useNavigationMenuStore } from "./NavigationMenu.Store";
-import { useState } from "react";
 
 export const NavigationMenu = () => {
    const { selected, setSelected } = useNavigationMenuStore();
@@ -21,7 +21,7 @@ export const NavigationMenu = () => {
 
                return (
                   <div key={index} className="flex items-center">
-                     <Item
+                     <NavigationMenuItem
                         name={name}
                         aria-label={slug}
                         aria-selected={isActive}
@@ -50,7 +50,7 @@ export const NavigationMenu = () => {
                                  : "text-foreground/60 transition-colors group-hocus:text-foreground",
                            )}
                         />
-                     </Item>
+                     </NavigationMenuItem>
                   </div>
                );
             })}
@@ -59,9 +59,10 @@ export const NavigationMenu = () => {
    );
 };
 
-const Item = ({ name, ...props }: Pick<NavigationMenuItem, "name"> & React.ComponentPropsWithoutRef<"button">) => {
-   const [tooltip, setTooltip] = useState<boolean>(false);
-
+interface NavigationMenuItemProps extends React.ComponentPropsWithoutRef<"button"> {
+   name: string;
+}
+const NavigationMenuItem = forwardRef<HTMLButtonElement, NavigationMenuItemProps>(({ name, ...props }, ref) => {
    return (
       <Tooltip>
          <TooltipTrigger asChild>
@@ -76,4 +77,5 @@ const Item = ({ name, ...props }: Pick<NavigationMenuItem, "name"> & React.Compo
          </TooltipContent>
       </Tooltip>
    );
-};
+});
+NavigationMenuItem.displayName = "NavigationMenuItem";
