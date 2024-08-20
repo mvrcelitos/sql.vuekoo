@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 
 import { DatabaseType } from "@/interfaces/cookies/databases";
 import { setDatabases } from "@/lib/database/server-only";
+import { DatabaseClass, DatabaseFactory, MySQLDatabase, PSQLDatabase } from "@/lib/database";
 
 interface OptionalsProps<T extends boolean> {
    details?: T;
@@ -150,4 +151,36 @@ export const deleteDatabase = async function <T extends boolean = false>(
    if (!details) return response as DeleteDatabaseReturn<T>;
    if (!response) return { ok: false, message: "Error saving databases on cookies" } as DeleteDatabaseReturn<T>;
    return { ok: true } as DeleteDatabaseReturn<T>;
+};
+
+type ConnectionType = NonNullable<ReturnType<typeof DatabaseFactory>>;
+type ConnectDatabaseReturn<T extends boolean> = T extends true
+   ? { ok: true; database: ConnectionType } | { ok: false; message: string }
+   : ConnectionType | false;
+export const connectDatabase = async function <T extends boolean = false>(
+   database: DatabaseType,
+   optionals?: OptionalsProps<T>,
+): Promise<ConnectDatabaseReturn<T>> {
+   const details = (optionals?.details ?? false) as T;
+
+   try {
+      const connection = await DatabaseFactory(database.type)?.connect({
+         host: database.host,
+         port: database.port,
+         database: database.database,
+         user: database.username,
+         password: database.password,
+      });
+
+      if (!connection) {
+         if (!details) return false as ConnectDatabaseReturn<T>;
+         return { ok: false, message: "Error connecting to the database" } as ConnectDatabaseReturn<T>;
+      }
+
+      if (!details) return connection as ConnectDatabaseReturn<T>;
+      return { ok: true, database: connection } as ConnectDatabaseReturn<T>;
+   } catch (error) {
+      if (!details) return false as ConnectDatabaseReturn<T>;
+      return { ok: false, message: "Error connecting to the database" } as ConnectDatabaseReturn<T>;
+   }
 };
