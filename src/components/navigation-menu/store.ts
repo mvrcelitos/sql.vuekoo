@@ -7,6 +7,11 @@ interface NavigationMenuStore {
 }
 
 export const useNavigationMenuStore = create<NavigationMenuStore>((set) => ({
-   selected: "databases",
+   selected:
+      typeof window === undefined
+         ? "databases"
+         : (window?.location?.pathname ?? "")?.startsWith("/terminals/")
+           ? "terminals"
+           : "databases",
    setSelected: (selected) => set({ selected }),
 }));

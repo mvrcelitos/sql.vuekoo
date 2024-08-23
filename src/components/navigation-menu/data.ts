@@ -1,7 +1,7 @@
 import { useAsideStore } from "@/components/aside-new/AsideStore";
 import { Blocks, LucideIcon, Search, Table2, Terminal } from "lucide-react";
 
-export const navigationSlugs = ["databases", "sql", "search", "magic"] as const;
+export const navigationSlugs = ["databases", "terminals", "search", "magic"] as const;
 export type NavigationSlugs = (typeof navigationSlugs)[number];
 
 export interface NavigationMenuItem {
@@ -18,7 +18,7 @@ export const navigationMenuItems: NavigationMenuItem[] = [
       icon: Table2,
    },
    {
-      slug: "sql",
+      slug: "terminals",
       name: "SQL Terminal",
       icon: Terminal,
    },
