@@ -8,7 +8,7 @@ import { config } from "@/config/site";
 import { Separator } from "@/components/ui/separator";
 
 import { Button } from "@/components/ui/button";
-import { useAsideStore } from "@/components/aside-new/AsideStore";
+import { useAsideStore } from "@/components/aside-new/store";
 
 import { ConfigButton } from "./buttons/ConfigButton";
 import { SaveChangesButton } from "./buttons/SaveChangesButton";
