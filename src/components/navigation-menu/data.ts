@@ -1,4 +1,3 @@
-import { useAsideStore } from "@/components/aside-new/AsideStore";
 import { Blocks, LucideIcon, Search, Table2, Terminal } from "lucide-react";
 
 export const navigationSlugs = ["databases", "terminals", "search", "magic"] as const;
