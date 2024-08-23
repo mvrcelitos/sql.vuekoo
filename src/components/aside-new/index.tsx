@@ -1,8 +1,17 @@
-import { AsideClient } from "@/components/aside-new/aside-client";
 import { getDatabases } from "@/lib/database/functions";
 
-export const AsideNew = async ({}) => {
+import { Aside as AsideRoot, AsideHeader, AsideSearch } from "./Aside";
+import { AsideContent } from "./content";
+
+export const Aside = async () => {
    const databases = await getDatabases();
 
-   return <AsideClient databases={databases ?? []} />;
+   return (
+      <AsideRoot>
+         <AsideHeader>
+            <AsideSearch />
+         </AsideHeader>
+         <AsideContent databases={databases ?? []} />
+      </AsideRoot>
+   );
 };
