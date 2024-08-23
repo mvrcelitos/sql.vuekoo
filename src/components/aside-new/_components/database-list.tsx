@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { DatabasesReturn } from "./create-database/schema";
 import { DatabaseItem } from "./database-item";
-import { useAsideStore } from "@/components/aside-new/AsideStore";
+import { useAsideStore } from "@/components/aside-new/store";
 import { cn } from "@/lib/utils";
 
 export const DatabasesList = ({ databases }: { databases: DatabasesReturn }) => {
