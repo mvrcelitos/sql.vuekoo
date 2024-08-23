@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { navigationMenuItems } from "./data";
-import { useNavigationMenuStore } from "./navigation-menu-store";
+import { useNavigationMenuStore } from "./store";
 
 export const NavigationMenu = () => {
    const { selected, setSelected } = useNavigationMenuStore();
