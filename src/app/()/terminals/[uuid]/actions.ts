@@ -15,8 +15,6 @@ export const runScript = async (props: RunScriptProps) => {
       const parse = runScriptBodySchema.safeParse(props);
       if (!parse.success) return { ok: false, message: "Invalid props", error: parse.error };
 
-      console.log(`Running script ${parse?.data?.sql} for ${parse.data.uuid}`);
-
       const database = await findDatabase(parse.data.uuid);
       if (!database) return { ok: false, message: "Database not found" };
 
