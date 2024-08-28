@@ -1,13 +1,14 @@
 "use client";
 
+import { useCallback, useMemo, useRef, useState } from "react";
+import { ChevronDown, Eraser } from "lucide-react";
+
 import { useTerminalContext } from "@/app/()/terminals/[uuid]/context";
 import { DataTable } from "@/components/data-table/DataTable";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { TableWrapper } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { ChevronDown, Eraser } from "lucide-react";
-import { useCallback, useMemo, useRef, useState } from "react";
 
 export const TerminalResults = ({}) => {
    const height = useRef<number | null>(null);

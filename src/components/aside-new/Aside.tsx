@@ -1,5 +1,9 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Plus, Search } from "lucide-react";
+
 import { CreateDatabaseForm } from "@/components/aside-new/_components/create-database";
 import { useAsideStore } from "@/components/aside-new/store";
 import { useNavigationMenuStore } from "@/components/navigation-menu/store";
@@ -9,9 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { getBreakpoint } from "@/lib/get-measures";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
-import { Plus, Search } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
 
 export const Aside = ({ children }: React.PropsWithChildren) => {
    const isTablet = getBreakpoint("lg");

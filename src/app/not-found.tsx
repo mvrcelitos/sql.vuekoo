@@ -1,9 +1,7 @@
 import Link from "next/link";
 
-import { config } from "@/config/site";
-import { cn } from "@/lib/utils";
-
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function NotFound() {
    return (

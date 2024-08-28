@@ -1,5 +1,12 @@
 "use client";
 
+import { useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowRight, Cloud, Loader2, Save, Trash2 } from "lucide-react";
+import { toast } from "sonner";
+import { z } from "zod";
+
 import { useTerminalContext } from "@/app/()/terminals/[uuid]/context";
 import { Form, FormField, FormInput, FormLabel, FormMessage } from "@/components/form-components";
 import { Button } from "@/components/ui/button";
@@ -21,12 +28,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, Cloud, Loader2, Save, Trash2 } from "lucide-react";
-import { useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
 
 const schema = z.object({ name: z.string({ invalid_type_error: "Invalid name" }).min(1, "Name is required") });
 

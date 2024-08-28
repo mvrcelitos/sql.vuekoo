@@ -3,8 +3,8 @@
 import { forwardRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 import { navigationMenuItems } from "./data";
 import { useNavigationMenuStore } from "./store";

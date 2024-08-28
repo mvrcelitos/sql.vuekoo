@@ -2,6 +2,8 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import * as pg from "pg";
 
+import { connectDatabase, findDatabase } from "@/lib/database/functions";
+
 import { putSchema, type putSchemaReturn } from "./schema";
 
 export const GET = async (request: Request, context: { params: { uuid: string } }) => {
@@ -43,25 +45,28 @@ export const GET = async (request: Request, context: { params: { uuid: string } 
 };
 
 export const POST = async (request: Request, context: { params: { uuid: string } }) => {
-   let client;
    try {
       const body = await request.text();
-      const c = cookies();
-
-      const databases = c.has("databases") ? JSON.parse(c.get("databases")?.value || "{}") : {};
-      const database = databases?.[context?.params?.uuid];
-      if (!database) {
-         return new Response("Not found", { status: 404 });
+      if (!body) {
+         return new Response("Invalid body", { status: 400 });
       }
 
-      client = new pg.Client({ connectionString: database.url });
-      client.connect();
+      const database = await findDatabase(context.params.uuid);
+      if (!database) {
+         return new Response("Database not found", { status: 404 });
+      }
+
+      const client = await connectDatabase(database);
+      if (!client) {
+         return new Response("Error connecting to the database", { status: 500 });
+      }
 
       const res = await client.query(body);
+      client.disconnect();
 
       return NextResponse.json({
-         meta: { count: res.rowCount },
-         data: { oid: res.oid, fields: res.fields, rows: res?.rows },
+         meta: { count: res.rowsCount },
+         data: { fields: res.fields, rows: res?.rows },
       });
    } catch (err) {
       // console.error(err.message)
@@ -72,8 +77,6 @@ export const POST = async (request: Request, context: { params: { uuid: string }
          );
       }
       return new Response("Internal server error", { status: 500 });
-   } finally {
-      await client?.end();
    }
 };
 

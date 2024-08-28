@@ -1,13 +1,14 @@
 "use client";
 
+import { createContext, useContext, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowRight, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+
 import { runScript } from "@/components/script-dialog/actions";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { TextArea } from "@/components/ui/textarea";
-import { ArrowRight, Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { createContext, useContext, useState, useTransition } from "react";
-import { toast } from "sonner";
 
 export interface ScriptContextProps {
    script: string;

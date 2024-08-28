@@ -1,4 +1,5 @@
 import { create } from "zustand";
+
 import { NavigationSlugs } from "@/components/navigation-menu/data";
 
 interface NavigationMenuStore {

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import { Check, Code, Laptop, Moon, Paintbrush, Settings, Sun } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 import {
    DropdownMenu,
    DropdownMenuContent,
@@ -15,7 +15,7 @@ import {
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export const ConfigButton = () => {
    const { setTheme, theme } = useTheme();

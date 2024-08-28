@@ -1,11 +1,10 @@
 "use client";
 
+import { useMemo } from "react";
+import { usePathname } from "next/navigation";
+
 import { useTerminalContext } from "@/app/()/terminals/[uuid]/context";
 import { TextArea } from "@/components/ui/textarea";
-import { tryCatch } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 interface FormatLineReturn {
    type: "empty" | "oneline-comment" | "region-comment" | "block";

@@ -24,9 +24,9 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
-import { RenameTableForm } from "@/components/aside-new/_components/rename-table/form";
 import { DatabaseReturn } from "@/components/aside-new/_components/create-database/schema";
 import { DeleteDatabaseMenuItem } from "@/components/aside-new/_components/delete-database/delete-database";
+import { RenameTableForm } from "@/components/aside-new/_components/rename-table/form";
 import { Button } from "@/components/ui/button";
 import {
    ContextMenu,
@@ -37,10 +37,7 @@ import {
 } from "@/components/ui/context-menu";
 import {
    Dialog,
-   DialogBody,
-   DialogClose,
    DialogContent,
-   DialogFooter,
    DialogHeader,
    DialogTitle,
 } from "@/components/ui/dialog";
@@ -48,11 +45,9 @@ import {
    DropdownMenu,
    DropdownMenuContent,
    DropdownMenuItem,
-   dropdownMenuItemsVariants,
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { AvailableDatabaseIds, availableDatabases } from "@/constants/available-databases";
 import { cn } from "@/lib/utils";
 

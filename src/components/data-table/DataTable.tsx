@@ -1,4 +1,3 @@
-import { DataTableInput } from "@/components/data-table/DataTableInput";
 import { TableColumnHeader } from "@/components/table-column-header";
 import { Table, TBody, Td, Th, THead, TRow } from "@/components/ui/table";
 import { TableCellFormatter } from "@/lib/table-cell-formatter";

@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 
-import { DatabasesReturn } from "./create-database/schema";
-import { DatabaseItem } from "./database-item";
 import { useAsideStore } from "@/components/aside-new/store";
 import { cn } from "@/lib/utils";
+
+import { DatabasesReturn } from "./create-database/schema";
+import { DatabaseItem } from "./database-item";
 
 export const DatabasesList = ({ databases }: { databases: DatabasesReturn }) => {
    // Animation useState

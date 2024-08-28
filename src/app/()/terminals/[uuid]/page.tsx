@@ -1,6 +1,6 @@
 import { TerminalResults } from "./_components/terminal-results";
-import { TerminalToolbar } from "./_components/terminal-toolbar";
 import { TerminalTextArea } from "./_components/terminal-textarea";
+import { TerminalToolbar } from "./_components/terminal-toolbar";
 
 export default function Page() {
    return (

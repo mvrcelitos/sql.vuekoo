@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-
-import { DatabasesList } from "@/components/aside-new/_components/database-list";
-import { useNavigationMenuStore } from "@/components/navigation-menu/store";
-import { DatabaseType } from "@/interfaces/cookies/databases";
-import { AnimatePresence, motion } from "framer-motion";
+import { useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
+
+import { DatabasesList } from "@/components/aside-new/_components/database-list";
 import { NavigationSlugs, navigationSlugs } from "@/components/navigation-menu/data";
+import { useNavigationMenuStore } from "@/components/navigation-menu/store";
+import { DatabaseType } from "@/interfaces/cookies/databases";
 
 export const AsideContent = ({ databases }: { databases: DatabaseType[] }) => {
    const previousDirection = useRef<number>(0);

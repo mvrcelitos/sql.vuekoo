@@ -3,8 +3,8 @@
 import { cookies } from "next/headers";
 
 import { DatabaseType } from "@/interfaces/cookies/databases";
+import { DatabaseFactory } from "@/lib/database";
 import { setDatabases } from "@/lib/database/server-only";
-import { DatabaseClass, DatabaseFactory, MySQLDatabase, PSQLDatabase } from "@/lib/database";
 
 interface OptionalsProps<T extends boolean> {
    details?: T;

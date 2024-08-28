@@ -1,12 +1,13 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useRef, useState, useTransition } from "react";
-import { runScript } from "./actions";
 import { usePathname } from "next/navigation";
-import { DatabaseQueryReturn } from "@/lib/database";
-import axios from "axios";
 import { toast } from "sonner";
+
+import { DatabaseQueryReturn } from "@/lib/database";
 import { tryCatch } from "@/lib/utils";
+
+import { runScript } from "./actions";
 
 interface Script {
    name: string;

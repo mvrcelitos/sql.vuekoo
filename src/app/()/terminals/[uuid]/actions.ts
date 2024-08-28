@@ -1,7 +1,8 @@
 "use server";
 
-import { connectDatabase, findDatabase } from "@/lib/database/functions";
 import { z } from "zod";
+
+import { connectDatabase, findDatabase } from "@/lib/database/functions";
 
 const runScriptBodySchema = z.object({
    uuid: z.string().uuid("Invalid database UUID"),

@@ -3,13 +3,13 @@ import { Analytics } from "@vercel/analytics/react";
 import { GeistSans } from "geist/font/sans";
 
 import { Header } from "@/components/header";
+import { ScriptProvider } from "@/components/script-dialog";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { config } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 import "./globals.css";
-import { ScriptProvider } from "@/components/script-dialog";
 
 export const metadata: Metadata = {
    title: {

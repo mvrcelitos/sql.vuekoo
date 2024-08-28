@@ -1,8 +1,9 @@
 "use client";
 
+import { forwardRef, useState } from "react";
+
 import { TableCellFormatterPropsReturn } from "@/lib/table-cell-formatter";
 import { cn } from "@/lib/utils";
-import { forwardRef, useState } from "react";
 
 export interface DataTableInputProps extends Omit<React.ComponentPropsWithoutRef<"div">, "children"> {
    type: "null" | "string" | "number" | "boolean" | "date" | "array" | "object";

@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 
 import { Form, FormField, FormInput, FormLabel, FormMessage } from "@/components/form-components";
 import { useScript } from "@/components/script-dialog";
-import { DialogBody, DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { queries } from "@/constants/queries";
+import { DialogBody, DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { AvailableDatabaseIds } from "@/constants/available-databases";
+import { queries } from "@/constants/queries";
 
 interface Props {
    data: Record<string, any>;
