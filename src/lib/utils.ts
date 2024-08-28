@@ -66,3 +66,19 @@ export class localStorage {
       return this.storage;
    }
 }
+
+export const tryCatch = <T extends unknown, F extends unknown>(fn: () => T, fallback: F) => {
+   try {
+      return fn?.();
+   } catch (error) {
+      return fallback;
+   }
+};
+
+export const tryCatchAsync = async <T extends unknown, F extends unknown>(fn: () => Promise<T>, fallback: F) => {
+   try {
+      return await fn?.();
+   } catch (error) {
+      return fallback;
+   }
+};
