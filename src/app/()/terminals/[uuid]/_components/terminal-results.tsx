@@ -48,14 +48,13 @@ export const TerminalResults = ({}) => {
          window.addEventListener("pointermove", recalculate, { signal: signal.signal });
 
          const onDragEnd = () => {
-            if (!isDragging) return;
             setIsDragging(false);
-            signal.abort();
             if (parent.style.maxHeight === `${minHeight}px`) {
                setOpen(false);
-               return;
+            } else {
+               height.current = parseFloat(parent.style.maxHeight) || minHeight;
             }
-            height.current = parseFloat(parent.style.maxHeight) || minHeight;
+            signal.abort();
          };
 
          // When mouse ups, remove the event listener
