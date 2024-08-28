@@ -47,20 +47,21 @@ export const TerminalResults = ({}) => {
          const signal = new AbortController();
          window.addEventListener("pointermove", recalculate, { signal: signal.signal });
 
+         const onDragEnd = () => {
+            if (!isDragging) return;
+            setIsDragging(false);
+            signal.abort();
+            if (parent.style.maxHeight === `${minHeight}px`) {
+               setOpen(false);
+               return;
+            }
+            height.current = parseFloat(parent.style.maxHeight) || minHeight;
+         };
+
          // When mouse ups, remove the event listener
-         window.addEventListener(
-            "pointerup",
-            () => {
-               setIsDragging(false);
-               if (parent.style.maxHeight === `${minHeight}px`) {
-                  setOpen(false);
-               } else {
-                  height.current = parseFloat(parent.style.maxHeight) || minHeight;
-               }
-               signal.abort();
-            },
-            { once: true },
-         );
+         window.addEventListener("pointerup", () => onDragEnd(), { once: true, signal: signal.signal });
+
+         window.addEventListener("blur", () => onDragEnd(), { once: true, signal: signal.signal });
 
          return () => {};
       },
