@@ -5,7 +5,6 @@ import {
    RowsTableButton,
    VisibilityButton,
 } from "@/components/data-table-buttons";
-import { Flex } from "@/components/ui/layout";
 import { Separator } from "@/components/ui/separator";
 
 export const buttons = [
@@ -21,7 +20,7 @@ export type DataTableToolbarProps = {
 
 export const DataTableToolbar = ({ rows, ...props }: DataTableToolbarProps) => {
    return (
-      <Flex className="h-10 flex-[0_0_auto] items-center justify-between gap-2 bg-transparent px-2 py-1">
+      <div className="h-10 w-full flex-[0_0_auto] items-center justify-between gap-2 overflow-hidden bg-transparent p-1">
          <ul aria-orientation="horizontal" className="space-x-1">
             <li className="inline-block align-middle">
                <RefreshButton />
@@ -45,6 +44,6 @@ export const DataTableToolbar = ({ rows, ...props }: DataTableToolbarProps) => {
          <span className="pr-1 text-xs text-zinc-700 dark:text-zinc-300">
             {rows || 0} row{(rows || 0) != 1 ? "s" : ""}
          </span>
-      </Flex>
+      </div>
    );
 };
