@@ -9,7 +9,7 @@ interface NavigationMenuStore {
 
 export const useNavigationMenuStore = create<NavigationMenuStore>((set, get) => ({
    selected:
-      typeof window === undefined
+      typeof window === "undefined"
          ? "databases"
          : (window?.location?.pathname ?? "")?.startsWith("/terminals/")
            ? "terminals"
