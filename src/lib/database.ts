@@ -5,10 +5,10 @@ import { DatabaseType } from "@/interfaces/cookies/databases";
 
 import "server-only";
 
-export interface DatabaseQueryReturn<T extends any = unknown, K extends any = unknown> {
+export interface DatabaseQueryReturn<Row extends any = unknown, Field extends any = unknown> {
    rowsCount: number;
-   rows: Array<T>;
-   fields: Array<K>;
+   rows: Array<Row>;
+   fields: Array<Field>;
 }
 
 interface DatabasePSQLQueryFieldsReturn {
@@ -29,7 +29,7 @@ interface DatabaseConfigProps {
    port: number;
 }
 
-export abstract class Database {
+export abstract class DatabaseClass {
    protected declare client: unknown;
    protected declare connectionMethod: "url" | "config";
 
@@ -43,18 +43,8 @@ export abstract class Database {
    ): Promise<DatabaseQueryReturn<Row, Field>>;
 }
 
-export class MySQLDatabase extends Database {
+export class MySQLDatabase extends DatabaseClass {
    protected declare client: mysql.Connection;
-
-   // public static create(url: string): MySQLDatabase;
-   // public static create(credentials: DatabaseConfigProps): MySQLDatabase;
-   // public static create(props: string | DatabaseConfigProps) {
-   //    if (typeof props == "string") {
-   //       const [username, password, host, port, database] = props?.replace("mysql://", "").split(/\:|\@|:\/|\?/g);
-   //       return new this({ user: username, password, host, port: +port, database });
-   //    }
-   //    return new this(props);
-   // }
 
    public async connect(credentials: DatabaseConfigProps) {
       try {
@@ -114,7 +104,7 @@ export class MySQLDatabase extends Database {
    }
 }
 
-export class PSQLDatabase extends Database {
+export class PSQLDatabase extends DatabaseClass {
    protected declare client: pg.Client;
 
    // public static create(url: string): PSQLDatabase;
