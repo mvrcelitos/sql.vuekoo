@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { DataTable } from "@/components/data-table";
+import { DataTable } from "@/components/data-table/DataTable";
 import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { TableWrapper } from "@/components/ui/table";
 import { DefaultQueryParams } from "@/constants/default-query-params";
@@ -39,9 +39,8 @@ const getData = async (params: paramsProps, searchParams: searchParamsProps) => 
       const hiddenColumns = searchParams?.hide?.split(",") ?? [];
       data.fields = data.fields.filter((field: any) => !hiddenColumns.includes(field.name));
       return data;
-   } catch (err) {
-      // @ts-ignore
-      if (err?.code === "42P01") {
+   } catch (error) {
+      if ((error as { code?: string })?.code === "42P01") {
          notFound();
       }
    }

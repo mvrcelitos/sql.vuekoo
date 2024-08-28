@@ -1,6 +1,6 @@
 "server-only";
 
-import { Database } from "@/lib/database";
+import { DatabaseClass } from "@/lib/database";
 
 export interface RowProps {
    "Column": string;
@@ -20,7 +20,7 @@ export interface FieldProps {
    format: string;
 }
 
-export const getData = async function (database: Database, table: string) {
+export const getData = async function (database: DatabaseClass, table: string) {
    return await database.query<RowProps, FieldProps>(
       `SELECT c.column_name as "Column", c.ordinal_position as "Position", case when c.character_maximum_length > 0 then concat(c.udt_name,'(',c.character_maximum_length,')') else c.udt_name end as "Type", c.is_nullable as "Null?", c.column_default as "Default", replace(pgd.description,'
 ','\n') as "Comment"
