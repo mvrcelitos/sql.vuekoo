@@ -43,3 +43,4 @@ export const DataTableInput = forwardRef<HTMLDivElement, DataTableInputProps>(
       );
    },
 );
+DataTableInput.displayName = "DataTableInput";
