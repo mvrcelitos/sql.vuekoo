@@ -47,6 +47,7 @@ export const TerminalProvider = ({ children }: { children?: React.ReactNode }) =
    const submit = useCallback(
       (sql: string) => {
          setResult(undefined);
+         if (!sql) return;
          startTransition(async () => {
             if (!uuid) return;
             const response = await runScript({ uuid, sql: sql });
