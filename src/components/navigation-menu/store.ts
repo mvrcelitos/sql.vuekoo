@@ -6,7 +6,7 @@ interface NavigationMenuStore {
    setSelected: (selected: NavigationSlugs | null) => void;
 }
 
-export const useNavigationMenuStore = create<NavigationMenuStore>((set) => ({
+export const useNavigationMenuStore = create<NavigationMenuStore>((set, get) => ({
    selected:
       typeof window === undefined
          ? "databases"
