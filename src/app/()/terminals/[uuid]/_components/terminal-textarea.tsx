@@ -16,7 +16,7 @@ interface FormatLineReturn {
 }
 
 export const TerminalTextArea = () => {
-   const { submit, ref } = useTerminalContext();
+   const { saveCurrentScript, submit, ref } = useTerminalContext();
    const pathname = usePathname();
    const uuid = pathname.split("/").pop();
 
@@ -29,6 +29,9 @@ export const TerminalTextArea = () => {
                intent="none"
                className="flex-1 resize-none transition-none md:min-h-[6rem]"
                placeholder="Type some sql on me..."
+               onChange={(ev) => {
+                  saveCurrentScript(ev.currentTarget.value);
+               }}
                onKeyDown={(ev) => {
                   const selected = window.getSelection()?.toString();
 

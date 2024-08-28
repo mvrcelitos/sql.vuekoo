@@ -17,6 +17,7 @@ interface Script {
 interface TerminalContextProps {
    scripts: Script[];
    saveScript: (script: Script) => boolean;
+   saveCurrentScript: (sql: string) => void;
 
    isSubmitting: boolean;
    submit: (sql: string) => void;
@@ -34,6 +35,8 @@ const getTerminals = () =>
       () => JSON.parse(window.localStorage.getItem(`terminals`) ?? "{}") as Record<string, Script[]>,
       {} as Record<string, Script[]>,
    );
+
+const currentScriptReservedName = "_";
 
 export const TerminalProvider = ({ children }: { children?: React.ReactNode }) => {
    const ref = useRef<HTMLTextAreaElement | null>(null);
@@ -64,6 +67,10 @@ export const TerminalProvider = ({ children }: { children?: React.ReactNode }) =
    const saveScript = useCallback(
       ({ name, sql }: Script) => {
          if (!uuid || !sql) return false;
+         if (name === currentScriptReservedName) {
+            toast.error("Name is reserved and can't be used");
+            return false;
+         }
          const terminals = getTerminals();
          if (terminals[uuid] && Array.isArray(terminals[uuid])) {
             const nameIsInUse = terminals[uuid].find((x) => x.name === name);
@@ -82,17 +89,40 @@ export const TerminalProvider = ({ children }: { children?: React.ReactNode }) =
       [uuid],
    );
 
+   const saveCurrentScript = useCallback(
+      (sql: string) => {
+         if (typeof window === "undefined" || !uuid || !ref?.current) return;
+         const terminals = getTerminals();
+         if (terminals?.[uuid] === undefined) terminals[uuid] = [];
+         const exists = terminals?.[uuid].findIndex((x) => x.name === currentScriptReservedName);
+         try {
+            if (exists === -1) {
+               terminals?.[uuid]?.push({ name: currentScriptReservedName, sql });
+               window.localStorage.setItem(`terminals`, JSON.stringify(terminals));
+               return;
+            }
+            terminals[uuid][exists].sql = sql;
+            window.localStorage.setItem(`terminals`, JSON.stringify(terminals));
+         } catch (error) {
+            console.error(error);
+         }
+      },
+      [uuid],
+   );
+
    useEffect(() => {
-      if (typeof window === "undefined") return;
-      if (ref.current) ref.current.value = "";
+      if (typeof window === "undefined" || !uuid) return;
       const terminals = getTerminals();
-      setScripts(terminals?.[uuid!] || []);
+      if (ref.current)
+         ref.current.value = terminals?.[uuid]?.find((x) => x.name === currentScriptReservedName)?.sql || "";
+      setScripts(terminals?.[uuid!]?.filter((terminal) => terminal.name != currentScriptReservedName) || []);
    }, [uuid]);
 
    const clearResults = () => setResult(undefined);
 
    return (
-      <TerminalContext.Provider value={{ scripts, saveScript, submit, isSubmitting, result, clearResults, ref }}>
+      <TerminalContext.Provider
+         value={{ scripts, saveScript, saveCurrentScript, submit, isSubmitting, result, clearResults, ref }}>
          {children}
       </TerminalContext.Provider>
    );
