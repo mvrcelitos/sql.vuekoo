@@ -34,7 +34,7 @@ const InputPassword = React.forwardRef<HTMLInputElement, InputProps>(({ classNam
    return (
       <div className={inputPasswordVariants({ intent })}>
          <Input
-            className={cn(className, "h-[38px] w-full border-0 focus:ring-0")}
+            className={cn(className, "h-[calc(2.5rem-2px)] w-full border-0 focus:ring-0")}
             intent={intent}
             {...props}
             type={type}
@@ -46,8 +46,8 @@ const InputPassword = React.forwardRef<HTMLInputElement, InputProps>(({ classNam
             size="icon"
             intent="ghost"
             onClick={() => setType((x) => (x === "password" ? "text" : "password"))}
-            className="absolute right-1 top-[3px] h-8 w-8">
-            <ButtonIcon className="aspect-square h-4 w-4 shrink-0" height={16} width={16} />
+            className="absolute right-1 top-[.1875rem] h-8 w-8">
+            <ButtonIcon className="aspect-square size-4 shrink-0" height={16} width={16} />
          </Button>
       </div>
    );
