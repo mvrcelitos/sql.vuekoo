@@ -15,7 +15,7 @@ export const GetStartedButton = ({ className }: { className?: string }) => {
             toast("Not implemented yet.");
          }}
          className={cn(
-            buttonVariants({ intent: "main", size: "lg" }),
+            buttonVariants({ intent: "primary", size: "lg" }),
             "rounded-full dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,.05)]",
             className,
          )}>

@@ -9,7 +9,6 @@ export const buttonVariants = cva({
    variants: {
       intent: {
          none: "",
-         main: "bg-primary text-zinc-50 ring-0 ring-offset-0 hocus:bg-primaryActive ring-offset-background focus-visible:ring-offset-2 ring-primary/30 focus-visible:ring-2 ",
          primary: [
             "bg-primary hover:bg-primaryActive active:bg-primaryActive text-zinc-100 hover:text-zinc-50 active:text-zinc-50",
             "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-primary/70",
