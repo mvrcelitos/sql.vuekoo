@@ -23,7 +23,7 @@ export const buttonVariants = cva({
             "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-c500",
          ],
          discrete: [
-            "bg-muted hover:bg-c800 active:bg-c800 text-c800 hover:text-foreground active:text-foreground",
+            "bg-muted hover:bg-c800 focus-visible:bg-c800 text-c800 hover:text-background focus-visible:text-background",
             "focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-muted",
          ],
          ghost: [
