@@ -13,6 +13,7 @@ export const pasteURL = async (): Promise<PasteURLReturn> => {
    }
 
    const matched = clipboardText?.match(
+      // @ts-ignore
       /(?<protocol>\w+(?=:\/{2}))?(?::\/{2})?(?<username>\w+?(?=:[^@\/]))\:(?<password>[^@]+?(?=@))(?:@)(?<host>.*?(?=:\d))(?::)(?<port>\d+(?=\/))(?:\/)(?<database>[^?]+(?=$|(\?.*)?))/,
    );
    if (!matched) return { ok: false, message: "Invalid URL" };
