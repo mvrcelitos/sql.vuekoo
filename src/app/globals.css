@@ -19,11 +19,12 @@
       --950: theme("colors.zinc.950");
 
       --border: theme("colors.zinc.400");
-      /* --primary: #e11d48; */
-      --primary: 7 182 130;
-      --primaryActive: 15 206 145;
       --primary: 0 64 197;
       --primaryActive: 8 88 212;
+      --primary: 0 114 245;
+      --primaryActive: 0 126 255;
+      /* --primary: 219 39 119;
+      --primaryActive: 239 59 139; */
    }
    .dark {
       --background: 9 9 11;
