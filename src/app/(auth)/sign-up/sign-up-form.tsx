@@ -15,11 +15,11 @@ export const SignUpForm = () => {
    const instance = useForm<SignUpFormReturn>({ resolver: SignUpFormResolver });
    const isSubmitting = instance.formState.isSubmitting;
 
-   const signUp = useCallback(async (data: unknown) => {
+   const signUp = useCallback(async (data: SignUpFormReturn) => {
       await new Promise((res) => {
          setTimeout(res, 1500);
       });
-      await SignUp(data)
+      await SignUp(data);
    }, []);
 
    return (
