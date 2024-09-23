@@ -27,31 +27,38 @@ const inputPasswordVariants = cva({
    },
 });
 
-const InputPassword = React.forwardRef<HTMLInputElement, InputProps>(({ className, intent, ...props }, ref) => {
-   const [type, setType] = React.useState<"password" | "text">("password");
-   const ButtonIcon = type === "password" ? Eye : EyeOff;
+export type InputPasswordExtraPropsKeys = "wrapperClassName";
+export type InputPasswordProps = InputProps & {
+   wrapperClassName?: string;
+};
 
-   return (
-      <div className={inputPasswordVariants({ intent })}>
-         <Input
-            className={cn(className, "h-[calc(2.5rem-2px)] w-full border-0 focus:ring-0")}
-            intent={intent}
-            {...props}
-            type={type}
-            ref={ref}
-         />
-         <Button
-            tabIndex={-1}
-            type="button"
-            size="icon"
-            intent="ghost"
-            onClick={() => setType((x) => (x === "password" ? "text" : "password"))}
-            className="absolute right-1 top-[.1875rem] h-8 w-8">
-            <ButtonIcon className="aspect-square size-4 shrink-0" height={16} width={16} />
-         </Button>
-      </div>
-   );
-});
+const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordProps>(
+   ({ className, intent, wrapperClassName, ...props }, ref) => {
+      const [type, setType] = React.useState<"password" | "text">("password");
+      const ButtonIcon = type === "password" ? Eye : EyeOff;
+
+      return (
+         <div className={cn(inputPasswordVariants({ intent }), wrapperClassName)}>
+            <Input
+               className={cn(className, "h-[calc(2.5rem-2px)] w-full border-0 focus:ring-0")}
+               intent={intent}
+               {...props}
+               type={type}
+               ref={ref}
+            />
+            <Button
+               tabIndex={-1}
+               type="button"
+               size="icon"
+               intent="ghost"
+               onClick={() => setType((x) => (x === "password" ? "text" : "password"))}
+               className="absolute right-1 top-[.1875rem] h-8 w-8">
+               <ButtonIcon className="aspect-square size-4 shrink-0" height={16} width={16} />
+            </Button>
+         </div>
+      );
+   },
+);
 InputPassword.displayName = "InputPassword";
 
 export { InputPassword, inputPasswordVariants };
