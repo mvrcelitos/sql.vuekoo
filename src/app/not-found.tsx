@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
 
 export default function NotFound() {
    return (
@@ -15,16 +16,12 @@ export default function NotFound() {
                   Looks like the page you are looking for was not found.
                </p>
             </div>
-            <div className="animate-content-in flex items-center gap-2 duration-500 [--stagger:2] sm:my-2">
-               <span className={cn("block h-0.5 w-12 bg-zinc-200  dark:bg-zinc-800")} />
-               <span className={cn("block h-0.5 w-full grow bg-zinc-200 dark:bg-zinc-800")} />
-               <span className={cn("block h-0.5 w-12 bg-zinc-200  dark:bg-zinc-800")} />
-            </div>
+            <Separator className="animate-content-in [--stagger:2] sm:my-2" />
             <div className="flex items-center justify-center gap-0.5 md:gap-4 md:text-base">
                <Link
                   href="/"
                   className={cn(
-                     buttonVariants({ intent: "outline", size: "lg" }),
+                     buttonVariants({ intent: "primary", size: "lg" }),
                      "animate-content-in rounded-full [--stagger:3]",
                   )}>
                   Return to home
