@@ -191,7 +191,11 @@ const FormInput = ({ className, name, ...props }: InputProps) => {
          aria-describedby={`${name ?? fieldName}-input`}
          {...props}
          {...registered}
-         className={cn(className, error && "border-red-500 dark:border-red-600")}
+         className={cn(
+            className,
+            error &&
+               "border-red-500 ring-1 dark:border-red-600 [&:not(:focus)]:bg-red-500/5 [&:not(:focus)]:ring-red-500 dark:[&:not(:focus)]:bg-red-600/5 dark:[&:not(:focus)]:ring-red-600",
+         )}
          onChange={(ev) => {
             registered.onChange(ev);
             props.onChange?.(ev);
@@ -200,7 +204,7 @@ const FormInput = ({ className, name, ...props }: InputProps) => {
    );
 };
 
-const FormPassword = ({ className, name, ...props }: InputProps) => {
+const FormPassword = ({ name, ...props }: InputProps) => {
    const { register } = useFormContext();
    const { error, name: fieldName } = useFormField();
    const registered = register(name ?? fieldName);
@@ -211,7 +215,11 @@ const FormPassword = ({ className, name, ...props }: InputProps) => {
          aria-describedby={`${name ?? fieldName}-input`}
          {...props}
          {...registered}
-         className={cn(className, error && "border-red-500 dark:border-red-600")}
+         wrapperClassName={
+            error &&
+            "border-red-500 ring-1 dark:border-red-600 [&:not(:focus-within)]:ring-red-500 dark:[&:not(:focus-within)]:ring-red-600"
+         }
+         className={error && "[&:not(:focus)]:bg-red-500/5 dark:[&:not(:focus)]:bg-red-600/5"}
          onChange={(ev) => {
             registered.onChange(ev);
             props.onChange?.(ev);
@@ -309,7 +317,11 @@ const FormTextarea = ({ className, name, ...props }: React.ComponentPropsWithout
          intent="primary"
          {...props}
          {...register(name ?? fieldName)}
-         className={cn(className, error && "border-red-500 dark:border-red-600")}
+         className={cn(
+            className,
+            error &&
+               "border-red-500 ring-1 dark:border-red-600 [&:not(:focus)]:bg-red-500/5 [&:not(:focus)]:ring-red-500 dark:[&:not(:focus)]:bg-red-600/5 dark:[&:not(:focus)]:ring-red-600",
+         )}
       />
    );
 };
