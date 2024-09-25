@@ -15,6 +15,7 @@
       "incremental": true,
       "noImplicitAny": true,
       "noImplicitOverride": true,
+      "typeRoots": ["src/interfaces/global.d.ts"],
       "plugins": [
          {
             "name": "next"
