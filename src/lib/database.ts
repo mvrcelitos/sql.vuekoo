@@ -4,6 +4,7 @@ import pg from "pg";
 import { DatabaseType } from "@/interfaces/cookies/databases";
 
 import "server-only";
+import { config } from "@/config/site";
 
 export interface DatabaseQueryReturn<Row extends any = unknown, Field extends any = unknown> {
    rowsCount: number;
@@ -121,7 +122,7 @@ export class PSQLDatabase extends DatabaseClass {
       try {
          this.client = new pg.Client({
             ...credentials,
-            application_name: "vuekoo/sql",
+            application_name: config.title,
             connectionTimeoutMillis: 30000,
          });
          await this.client.connect();
