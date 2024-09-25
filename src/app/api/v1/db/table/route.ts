@@ -1,3 +1,4 @@
+import { config } from "@/config/site";
 import { NextResponse } from "next/server";
 import * as pg from "pg";
 
@@ -7,7 +8,7 @@ export const POST = async (request: Request) => {
       const body = await request.json();
       console.log("request body", body);
       client = new pg.Client({
-         application_name: "vuekoo/sql",
+         application_name: config.title,
          connectionTimeoutMillis: 30000,
          connectionString: body.url,
       });

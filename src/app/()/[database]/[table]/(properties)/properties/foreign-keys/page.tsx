@@ -8,6 +8,7 @@ import { Table, TableWrapper, TBody, Td, Th, THead, TRow } from "@/components/ui
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { TableCellFormatter } from "@/lib/table-cell-formatter";
 import { cn } from "@/lib/utils";
+import { config } from "@/config/site";
 
 interface paramsProps {
    database: string;
@@ -33,7 +34,7 @@ const getTable = async (uuid: string, table: string, params: searchParamsProps) 
 
       const database = JSON.parse(databases);
       client = new pg.Client({
-         application_name: "vuekoo/sql",
+         application_name: config.title,
          connectionTimeoutMillis: 30000,
          connectionString: database?.[uuid]?.url,
       });
@@ -106,7 +107,7 @@ export default async function Page({ params, searchParams }: { params: paramsPro
                                  key={index}
                                  className={cn(config.className, field?.name === "Comment" && "relative w-[35%]")}>
                                  {field?.name !== "Comment" || cell == null ? (
-                                    config?.format?.(cell) ?? cell
+                                    (config?.format?.(cell) ?? cell)
                                  ) : (
                                     <Tooltip key={index}>
                                        <TooltipTrigger asChild>

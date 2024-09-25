@@ -8,6 +8,7 @@ import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { Flex } from "@/components/ui/layout";
 import { TableWrapper } from "@/components/ui/table";
 import { DefaultQueryParams } from "@/constants/default-query-params";
+import { config } from "@/config/site";
 
 interface paramsProps {
    database: string;
@@ -34,7 +35,7 @@ const getTable = async (uuid: string, table: string, params: searchParamsProps) 
 
       const database = JSON.parse(databases);
       client = new pg.Client({
-         application_name: "vuekoo/sql",
+         application_name: config.title,
          connectionTimeoutMillis: 30000,
          connectionString: database?.[uuid]?.url,
       });

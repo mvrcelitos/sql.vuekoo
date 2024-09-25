@@ -5,6 +5,7 @@ import * as pg from "pg";
 import { connectDatabase, findDatabase } from "@/lib/database/functions";
 
 import { putSchema, type putSchemaReturn } from "./schema";
+import { config } from "@/config/site";
 
 export const GET = async (request: Request, context: { params: { uuid: string } }) => {
    let client;
@@ -14,7 +15,7 @@ export const GET = async (request: Request, context: { params: { uuid: string } 
       const databases = JSON.parse(c.get("databases")?.value || "{}");
 
       client = new pg.Client({
-         application_name: "vuekoo/sql",
+         application_name: config.title,
          connectionTimeoutMillis: 30000,
          connectionString: databases?.[context.params.uuid]?.url,
       });
