@@ -10,6 +10,7 @@ import { config } from "@/config/site";
 
 import { ConfigButton } from "./buttons/ConfigButton";
 import { SaveChangesButton } from "./buttons/SaveChangesButton";
+import { UserButton } from "./buttons/UserButton";
 
 export const Header = () => {
    const { sheet, setSheet } = useAsideStore();
@@ -40,9 +41,7 @@ export const Header = () => {
          </div>
          <div className="flex items-center justify-end">
             <Separator orientation="vertical" />
-            <Button disabled intent="ghost" size="icon-xs" className="rounded-none hover:bg-accent">
-               <User2 className="size-4" />
-            </Button>
+            <UserButton />
             <Separator orientation="vertical" />
             <ConfigButton />
          </div>
