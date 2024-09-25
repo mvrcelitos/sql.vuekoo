@@ -22,7 +22,7 @@ export default function Page() {
          <main className="flex h-full w-full flex-initial flex-col items-center justify-center overflow-hidden p-4 text-foreground">
             <div className="flex max-w-md flex-col gap-2">
                <h1 className="animate-content-in text-center text-2xl font-bold duration-500 [--stagger:0] md:text-3xl">
-                  👋 Hello
+                  Welcome
                </h1>
                <p className="animate-content-in text-center text-sm text-700 duration-500 [--stagger:1] md:text-base">
                   If you are lost, {config.title} is a web application to help you to see and manage your databases,
