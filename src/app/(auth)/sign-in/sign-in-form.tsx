@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormInput, FormLabel, FormMessage, FormPassword } from "@/components/form-components";
@@ -19,14 +20,17 @@ export const SignInForm = () => {
 
    const signIn = useCallback(
       async (d: SignInFormReturn) => {
-         await CheckEmailExists(d);
-         await new Promise((res) => {
-            setTimeout(res, 1500);
-         });
+         toast("Auth system not implemented yet");
+         return;
+
          if (emailIsValid === true) {
-            await SignIn(d);
+            const signIn = await SignIn(d);
+            if (!signIn.ok) toast.error(signIn.message);
             return;
          }
+
+         const exists = await CheckEmailExists(d);
+         if (!exists.ok) return toast.error(exists.message);
          setEmailIsValid(true);
       },
       [emailIsValid],
@@ -35,28 +39,30 @@ export const SignInForm = () => {
    return (
       <Form className="grid grid-cols-1 gap-4" form={instance} onSubmit={instance.handleSubmit(signIn)}>
          <FormField name="email">
-            <FormLabel>E-mail</FormLabel>
+            <div className="flex items-center gap-2">
+               <FormLabel>E-mail</FormLabel>
+               <FormMessage />
+            </div>
             <FormInput autoComplete="email" disabled={emailIsValid ?? isSubmitting} />
-            <FormMessage />
          </FormField>
          {emailIsValid === true ? (
             <FormField name="password">
-               <div className="flex items-center justify-between gap-2">
+               <div className="flex items-center gap-2">
                   <FormLabel>Password</FormLabel>
+                  <FormMessage />
                   <Link
                      aria-disabled={isSubmitting}
                      href="/forgot-password"
-                     className="text-xs text-primary hover:underline focus-visible:underline focus-visible:outline-none"
+                     className="ml-auto text-xs text-primary hover:underline focus-visible:underline focus-visible:outline-none"
                      tabIndex={-1}>
                      Forgot?
                   </Link>
                </div>
                <FormPassword intent="primary" disabled={isSubmitting} />
-               <FormMessage />
             </FormField>
          ) : null}
          <div className="flex w-full flex-col items-center gap-2 sm:flex-row-reverse">
-            <Button disabled={isSubmitting} type="submit" className="relative grow gap-2" size="lg">
+            <Button disabled={isSubmitting} type="submit" className="relative w-full grow gap-2" size="lg">
                <span>{emailIsValid ? "Sign in" : "Next"}</span>
                {isSubmitting ? (
                   <span className="absolute inset-0 flex h-full w-full items-center justify-center rounded-[inherit] bg-[inherit]">

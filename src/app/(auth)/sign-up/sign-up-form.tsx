@@ -10,48 +10,55 @@ import { Button } from "@/components/ui/button";
 
 import { SignUp } from "./actions";
 import { SignUpFormResolver, SignUpFormReturn } from "./sign-up-schema";
+import { toast } from "sonner";
 
 export const SignUpForm = () => {
    const instance = useForm<SignUpFormReturn>({ resolver: SignUpFormResolver });
    const isSubmitting = instance.formState.isSubmitting;
 
    const signUp = useCallback(async (data: SignUpFormReturn) => {
-      await new Promise((res) => {
-         setTimeout(res, 1500);
-      });
+      toast("Auth system not implemented yet");
+      return;
+
       await SignUp(data);
    }, []);
 
    return (
       <Form className="grid grid-cols-1 gap-4" form={instance} onSubmit={instance.handleSubmit(signUp)}>
          <FormField name="name">
-            <FormLabel>Full name</FormLabel>
+            <div className="flex items-center gap-2">
+               <FormLabel required>Full name</FormLabel>
+               <FormMessage />
+            </div>
             <FormInput autoComplete="name" disabled={isSubmitting} />
-            <FormMessage />
          </FormField>
          <FormField name="username">
-            <FormLabel required>Username</FormLabel>
+            <div className="flex items-center gap-2">
+               <FormLabel required>Username</FormLabel>
+               <FormMessage />
+            </div>
             <FormInput autoComplete="username" disabled={isSubmitting} />
-            <FormMessage />
          </FormField>
          <FormField name="email">
-            <FormLabel required>E-mail</FormLabel>
+            <div className="flex items-center gap-2">
+               <FormLabel required>E-mail</FormLabel>
+               <FormMessage />
+            </div>
             <FormInput autoComplete="email" disabled={isSubmitting} />
-            <FormMessage />
          </FormField>
          <FormField name="password">
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
                <FormLabel required>Password</FormLabel>
+               <FormMessage />
                <Link
                   aria-disabled={isSubmitting}
                   href="/forgot-password"
-                  className="text-xs text-primary hover:underline focus-visible:underline focus-visible:outline-none"
+                  className="ml-auto text-xs text-primary hover:underline focus-visible:underline focus-visible:outline-none"
                   tabIndex={-1}>
                   Forgot?
                </Link>
             </div>
             <FormPassword intent="primary" disabled={isSubmitting} autoComplete="current-password" />
-            <FormMessage />
          </FormField>
          <Button disabled={isSubmitting} type="submit" className="relative" size="lg">
             <span>Sign up</span>
