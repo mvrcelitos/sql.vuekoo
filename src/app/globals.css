@@ -9,6 +9,8 @@
       --foreground: 9 9 11;
 
       --accent: theme("colors.zinc.100");
+      --125: #f0f0f2;
+      --150: #ececee;
       --muted: theme("colors.zinc.200");
       --300: theme("colors.zinc.300");
       --400: theme("colors.zinc.400");
@@ -23,6 +25,8 @@
       --primaryActive: 8 88 212;
       --primary: 0 114 245;
       --primaryActive: 0 126 255;
+      --primary: 31 111 235;
+      --primaryActive: 41 123 245;
       /* --primary: 219 39 119;
       --primaryActive: 239 59 139; */
    }
@@ -31,6 +35,8 @@
       --foreground: 250 250 250;
 
       --accent: theme("colors.zinc.900");
+      --125: #1c1c1f;
+      --150: #202023;
       --muted: theme("colors.zinc.800");
       --300: theme("colors.zinc.700");
       --400: theme("colors.zinc.500");
