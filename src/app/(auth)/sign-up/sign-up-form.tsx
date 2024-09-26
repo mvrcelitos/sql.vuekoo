@@ -44,7 +44,7 @@ export const SignUpForm = () => {
                <FormLabel required>E-mail</FormLabel>
                <FormMessage />
             </div>
-            <FormInput autoComplete="email" disabled={isSubmitting} />
+            <FormInput autoComplete="email" disabled={isSubmitting} inputMode="email" />
          </FormField>
          <FormField name="password">
             <div className="flex items-center gap-2">
@@ -58,7 +58,7 @@ export const SignUpForm = () => {
                   Forgot?
                </Link>
             </div>
-            <FormPassword intent="primary" disabled={isSubmitting} autoComplete="current-password" />
+            <FormPassword autoComplete="current-password" intent="primary" disabled={isSubmitting} />
          </FormField>
          <Button disabled={isSubmitting} type="submit" className="relative" size="lg">
             <span>Sign up</span>
